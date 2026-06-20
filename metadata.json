@@ -1,0 +1,6 @@
+{
+  "name": "Ascendant",
+  "description": "An immersive luxury landing page for Ascendant, 17-18 July 2026, featuring sleek typography, smooth scrolling marquee with custom symbols, starry grid background, and responsive panels.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
