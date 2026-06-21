@@ -107,10 +107,10 @@ export default function App() {
       */}
 
       {/* Persistant Starfield background across all page scroll steps */}
-      <Starfield />
+      {!isLoading && <Starfield />}
 
       {/* Dynamic interactive dot grid that responds elegantly to the cursor */}
-      <InteractiveDotGrid />
+      {!isLoading && <InteractiveDotGrid />}
 
       {/* Sleek top screen progressive scroll indicator — scaleX is GPU composited */}
       <div
@@ -126,13 +126,13 @@ export default function App() {
         className="relative w-full min-h-screen flex flex-col justify-between p-6 md:p-12 z-20"
       >
         {/* Subtle, slowly drifting floating dust particle effect */}
-        <FloatingParticles />
+        {!isLoading && <FloatingParticles />}
 
         {/* Top Header Row */}
         <div className="w-full flex justify-between items-center relative z-30">
           {/* Header left: DPS Logo */}
           <div className="flex flex-col items-center justify-center gap-1 mt-2">
-            <div className="h-20 md:h-28 flex items-center justify-center">
+            <div className="h-10 sm:h-16 md:h-24 flex items-center justify-center">
               <img
                 src="/dps_logo.png"
                 alt="Delhi Public School Bangalore East"

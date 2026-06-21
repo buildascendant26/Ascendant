@@ -224,16 +224,54 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
         </div>
         <div
           style={{
-            fontSize: 11,
-            letterSpacing: "0.2em",
-            color: "#444444",
-            textTransform: "uppercase",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "16px",
             opacity: promptOpacity,
             transition: "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
-            animation: promptOpacity === 1 ? "pulsePrompt 2.5s ease-in-out infinite" : "none",
           }}
         >
-          Press ENTER or TAP to continue
+          <div
+            style={{
+              fontSize: 11,
+              letterSpacing: "0.2em",
+              color: "#666666",
+              textTransform: "uppercase",
+              animation: promptOpacity === 1 ? "pulsePrompt 2.5s ease-in-out infinite" : "none",
+            }}
+          >
+            Press ENTER or TAP to continue
+          </div>
+          {phase === "prompt" && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onComplete();
+              }}
+              tabIndex={0}
+              className="boot-button"
+              style={{
+                padding: "10px 28px",
+                backgroundColor: "transparent",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
+                color: "#ffffff",
+                fontFamily: "var(--font-mono), 'JetBrains Mono', monospace",
+                fontSize: "12px",
+                fontWeight: "bold",
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                cursor: "pointer",
+                borderRadius: "4px",
+                outline: "none",
+                transition: "all 0.25s ease-in-out",
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              ENTER SITE
+            </button>
+          )}
         </div>
       </div>
 
@@ -253,6 +291,16 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
         @keyframes blinkCursor {
           0%, 100% { opacity: 1; }
           50%       { opacity: 0; }
+        }
+        .boot-button:hover, .boot-button:focus {
+          background-color: rgba(255, 255, 255, 0.1) !important;
+          border-color: rgba(255, 255, 255, 0.9) !important;
+          box-shadow: 0 0 16px rgba(255, 255, 255, 0.25) !important;
+          transform: translateY(-1px);
+        }
+        .boot-button:active {
+          transform: translateY(1px);
+          box-shadow: 0 0 8px rgba(255, 255, 255, 0.15) !important;
         }
       `}</style>
     </div>

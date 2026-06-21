@@ -26,6 +26,11 @@ export const WaveContour: React.FC = () => {
     };
 
     const draw = () => {
+      if (cssWidth === 0 || cssHeight === 0 || canvas.clientWidth === 0 || canvas.clientHeight === 0) {
+        animationFrameId = requestAnimationFrame(draw);
+        return;
+      }
+
       ctx.fillStyle = '#000';
       ctx.fillRect(0, 0, cssWidth, cssHeight);
 

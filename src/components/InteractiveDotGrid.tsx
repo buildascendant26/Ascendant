@@ -11,36 +11,9 @@ export const InteractiveDotGrid: React.FC = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationId: number;
+    let renderPending = false;
     let width = 0;
     let height = 0;
-
-    const handleResize = () => {
-      const parent = canvas.parentElement || document.body;
-      width = parent.clientWidth;
-      height = parent.clientHeight;
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      mouseRef.current.targetX = e.clientX - rect.left;
-      mouseRef.current.targetY = e.clientY - rect.top;
-    };
-
-    const handleMouseLeave = () => {
-      mouseRef.current.targetX = -1000;
-      mouseRef.current.targetY = -1000;
-    };
-
-    window.addEventListener('resize', handleResize, { passive: true });
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    document.addEventListener('mouseleave', handleMouseLeave, { passive: true });
-    
-    handleResize();
 
     // Increased grid size for fewer dots = much faster rendering
     const gridSize = 40;
@@ -51,7 +24,8 @@ export const InteractiveDotGrid: React.FC = () => {
     mouseRef.current.x = -1000;
     mouseRef.current.y = -1000;
 
-    const draw = () => {
+    const drawGrid = () => {
+      if (canvas.clientWidth === 0 || canvas.clientHeight === 0) return;
       ctx.clearRect(0, 0, width, height);
 
       // Snap mouse position (no lerp = no lag, direct tracking)
@@ -108,24 +82,59 @@ export const InteractiveDotGrid: React.FC = () => {
           }
         }
       }
-
-      animationId = requestAnimationFrame(draw);
     };
 
-    draw();
+    const requestRender = () => {
+      if (document.hidden) return;
+      if (!renderPending) {
+        renderPending = true;
+        requestAnimationFrame(() => {
+          renderPending = false;
+          drawGrid();
+        });
+      }
+    };
+
+    const handleResize = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      requestRender();
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseRef.current.targetX = e.clientX - rect.left;
+      mouseRef.current.targetY = e.clientY - rect.top;
+      requestRender();
+    };
+
+    const handleMouseLeave = () => {
+      mouseRef.current.targetX = -1000;
+      mouseRef.current.targetY = -1000;
+      requestRender();
+    };
+
+    window.addEventListener('resize', handleResize, { passive: true });
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    document.addEventListener('mouseleave', handleMouseLeave, { passive: true });
+    
+    handleResize();
 
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
-      cancelAnimationFrame(animationId);
     };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-100"
+      className="fixed inset-0 w-screen h-screen pointer-events-none z-0 opacity-100"
     />
   );
 };

@@ -73,6 +73,11 @@ export const Starfield: React.FC = () => {
     let animationFrameId: number;
 
     const render = () => {
+      if (document.hidden) {
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
+
       ctx.fillStyle = '#000000';
       ctx.fillRect(0, 0, width, height);
 
@@ -160,7 +165,7 @@ export const Starfield: React.FC = () => {
     <canvas
       id="starfield-canvas"
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-none -z-10 bg-black"
+      className="fixed inset-0 w-screen h-screen pointer-events-none -z-10 bg-black"
     />
   );
 };
