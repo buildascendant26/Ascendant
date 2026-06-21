@@ -4,8 +4,8 @@
  */
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import { Terminal, Cpu, Trophy, ArrowRight, ShieldCheck, Flag, Blocks, Mic2 } from 'lucide-react';
+import ScrambleText from './ScrambleText';
 
 interface HackathonPhase {
   id: number;
@@ -189,15 +189,7 @@ export const Manifesto: React.FC = () => {
 
           {/* Right Side: High-Detail Immersive Display Screen (Grid span 7) */}
           <div className="lg:col-span-7 h-full">
-            <AnimatePresence mode="popLayout">
-              <motion.div
-                key={activePhase.id}
-                initial={{ opacity: 0, scale: 0.97 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.97 }}
-                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="bg-neutral-950 border border-neutral-800 rounded-3xl p-6 md:p-10 relative overflow-hidden flex flex-col justify-between"
-              >
+            <div className="bg-neutral-950 border border-neutral-800 rounded-3xl p-6 md:p-10 relative overflow-hidden flex flex-col justify-between">
                 {/* Visual Glass Sheen Reflection */}
                 <div className="absolute -top-[10%] -left-[10%] w-[50%] h-[50%] bg-white/[0.01] rounded-full blur-3xl pointer-events-none" />
 
@@ -206,39 +198,47 @@ export const Manifesto: React.FC = () => {
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-neutral-900">
                     <div className="space-y-1">
                       <p className="font-mono text-xs tracking-widest text-neutral-400 uppercase font-bold">
-                        {activePhase.phaseNum} • OPERATIONAL MODULE
+                        <ScrambleText as="span" text={`${activePhase.phaseNum} • OPERATIONAL MODULE`} trigger={activePhaseId} />
                       </p>
                       <h3 className="font-display text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
-                        {activePhase.title}
+                        <ScrambleText as="span" text={activePhase.title} trigger={activePhaseId} />
                       </h3>
                       <p className="text-xs font-mono text-neutral-500 italic">
-                        {activePhase.subtitle}
+                        <ScrambleText as="span" text={activePhase.subtitle} trigger={activePhaseId} />
                       </p>
                     </div>
                     <div className="px-4 py-2 bg-neutral-900 rounded-xl border border-neutral-800 text-right shrink-0">
-                      <p className="text-[10px] font-mono text-neutral-500 uppercase">Duration Window</p>
-                      <p className="text-xs font-mono font-bold text-white">{activePhase.duration}</p>
+                      <p className="text-[10px] font-mono text-neutral-500 uppercase">
+                        <ScrambleText as="span" text="Duration Window" trigger={activePhaseId} />
+                      </p>
+                      <p className="text-xs font-mono font-bold text-white">
+                        <ScrambleText as="span" text={activePhase.duration} trigger={activePhaseId} />
+                      </p>
                     </div>
                   </div>
 
                   {/* Core Description block with clean style */}
                   <div className="space-y-3">
-                    <h5 className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest font-semibold">Objective Definition</h5>
+                    <h5 className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest font-semibold">
+                      <ScrambleText as="span" text="Objective Definition" trigger={activePhaseId} />
+                    </h5>
                     <p className="text-neutral-300 text-sm md:text-base leading-relaxed font-light">
-                      {activePhase.description}
+                      <ScrambleText as="span" text={activePhase.description} trigger={activePhaseId} />
                     </p>
                   </div>
 
                   {/* Operational Tags / Focus */}
                   <div className="space-y-3">
-                    <h5 className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest font-semibold">Cognitive Focus Parameters</h5>
+                    <h5 className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest font-semibold">
+                      <ScrambleText as="span" text="Cognitive Focus Parameters" trigger={activePhaseId} />
+                    </h5>
                     <div className="flex flex-wrap gap-2">
                       {activePhase.focusKeywords.map((tag) => (
-                        <span 
-                          key={tag}
+                        <span
+                          key={`${activePhaseId}-${tag}`}
                           className="px-3 py-1.5 rounded-lg text-xs font-mono bg-neutral-900 border border-neutral-800/80 text-neutral-200 hover:border-neutral-500 transition-colors duration-300"
                         >
-                          #{tag.toLowerCase().replace(/\s+/g, '-')}
+                          <ScrambleText as="span" text={`#${tag.toLowerCase().replace(/\s+/g, '-')}`} trigger={activePhaseId} />
                         </span>
                       ))}
                     </div>
@@ -248,20 +248,28 @@ export const Manifesto: React.FC = () => {
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4">
                     {activePhase.systemSpecs.map((spec) => (
                       <div key={spec.label} className="p-3 bg-neutral-900/40 rounded-xl border border-neutral-900 min-w-0">
-                        <p className="text-[9px] font-mono text-neutral-500 uppercase tracking-wider truncate">{spec.label}</p>
-                        <p className="text-[10px] sm:text-xs font-mono font-semibold text-white mt-1 break-all line-clamp-2">{spec.value}</p>
+                        <p className="text-[9px] font-mono text-neutral-500 uppercase tracking-wider truncate">
+                          <ScrambleText as="span" text={spec.label} trigger={activePhaseId} />
+                        </p>
+                        <p className="text-[10px] sm:text-xs font-mono font-semibold text-white mt-1 break-all line-clamp-2">
+                          <ScrambleText as="span" text={spec.value} trigger={activePhaseId} />
+                        </p>
                       </div>
                     ))}
                   </div>
 
                   {/* Technical protocols / clues */}
                   <div className="space-y-3 pt-2">
-                    <h5 className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest font-semibold">Transmission Protocol Guidelines</h5>
+                    <h5 className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest font-semibold">
+                      <ScrambleText as="span" text="Transmission Protocol Guidelines" trigger={activePhaseId} />
+                    </h5>
                     <ul className="space-y-2">
                       {activePhase.detailedClues.map((clue, index) => (
-                        <li key={index} className="flex items-start gap-3 text-xs text-neutral-400 font-light leading-relaxed">
+                        <li key={`${activePhaseId}-${index}`} className="flex items-start gap-3 text-xs text-neutral-400 font-light leading-relaxed">
                           <span className="mt-1 w-1.5 h-1.5 rounded-full bg-white/40 shrink-0" />
-                          <span>{clue}</span>
+                          <span>
+                            <ScrambleText as="span" text={clue} trigger={activePhaseId} />
+                          </span>
                         </li>
                       ))}
                     </ul>
@@ -273,12 +281,15 @@ export const Manifesto: React.FC = () => {
                 <div className="mt-8 pt-6 border-t border-neutral-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] font-mono text-neutral-500 relative z-10">
                   <div className="flex items-center gap-2">
                     <ShieldCheck className="w-4 h-4 text-neutral-400" />
-                    <span>AUTHENTIC SHA256 ENCRYPTED TRANSACTION PROTOCOLS REGISTERED</span>
+                    <span>
+                      <ScrambleText as="span" text="AUTHENTIC SHA256 ENCRYPTED TRANSACTION PROTOCOLS REGISTERED" trigger={activePhaseId} />
+                    </span>
                   </div>
-                  <span className="bg-neutral-900 px-2 py-0.5 rounded text-neutral-400">REV. 2026.1.18</span>
+                  <span className="bg-neutral-900 px-2 py-0.5 rounded text-neutral-400">
+                    <ScrambleText as="span" text="REV. 2026.1.18" trigger={activePhaseId} />
+                  </span>
                 </div>
-              </motion.div>
-            </AnimatePresence>
+            </div>
           </div>
 
         </div>
