@@ -105,14 +105,8 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
     };
   }, []);
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (phase === "prompt" && e.key === "Enter") {
-      onComplete();
-    }
-  };
-
-  // Mobile: tap anywhere to continue when prompt phase is active
-  const handleTap = () => {
+  // Click anywhere to continue when prompt phase is active
+  const handleClick = () => {
     if (phase === "prompt") {
       onComplete();
     }
@@ -124,11 +118,8 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
   return (
     <div
       ref={containerRef}
-      tabIndex={0}
-      onKeyDown={handleKeyDown}
-      onClick={handleTap}
-      onTouchEnd={handleTap}
-      className="fixed inset-0 bg-black flex items-center justify-center outline-none"
+      onClick={handleClick}
+      className="fixed inset-0 bg-black flex items-center justify-center outline-none cursor-pointer"
       style={{ fontFamily: "var(--font-mono), 'JetBrains Mono', 'Courier New', monospace", touchAction: "manipulation" }}
       aria-label="Ascendant boot sequence"
     >
@@ -255,37 +246,8 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
               animation: promptOpacity === 1 ? "pulsePrompt 2.5s ease-in-out infinite" : "none",
             }}
           >
-            {isMobile ? "TAP TO CONTINUE" : "Press ENTER to continue"}
+            {isMobile ? "TAP TO CONTINUE" : "CLICK ANYWHERE to continue"}
           </div>
-          {phase === "prompt" && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onComplete();
-              }}
-              tabIndex={0}
-              className="boot-button"
-              style={{
-                padding: "10px 28px",
-                backgroundColor: "transparent",
-                border: "1px solid rgba(255, 255, 255, 0.3)",
-                color: "#ffffff",
-                fontFamily: "var(--font-mono), 'JetBrains Mono', monospace",
-                fontSize: "12px",
-                fontWeight: "bold",
-                letterSpacing: "0.15em",
-                textTransform: "uppercase",
-                cursor: "pointer",
-                borderRadius: "4px",
-                outline: "none",
-                transition: "all 0.25s ease-in-out",
-                position: "relative",
-                overflow: "hidden",
-              }}
-            >
-              ENTER SITE
-            </button>
-          )}
         </div>
       </div>
 
