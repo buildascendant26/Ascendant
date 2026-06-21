@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Calendar, Layers, MapPin } from 'lucide-react';
 import { EventSlot } from '../types';
 import { TimelineBackground } from './TimelineBackground';
+import ScrambleText from './ScrambleText';
 
 export const Timeline: React.FC = () => {
   const [activeDay, setActiveDay] = useState<'17' | '18'>('17');
@@ -197,10 +198,10 @@ export const Timeline: React.FC = () => {
                     {/* Title and subtitle */}
                     <div>
                       <h4 className="font-display text-sm md:text-base font-bold text-white tracking-tight">
-                        {slot.title}
+                        <ScrambleText as="span" text={slot.title} trigger={activeDay} />
                       </h4>
                       <p className="text-[11px] text-neutral-500 italic font-light">
-                        {slot.subtitle}
+                        <ScrambleText as="span" text={slot.subtitle} trigger={activeDay} />
                       </p>
                     </div>
                   </div>
@@ -229,15 +230,15 @@ export const Timeline: React.FC = () => {
                       <div className="px-4 pb-4 pt-1 border-t border-neutral-900/60 text-xs text-neutral-400">
                         {/* Summary Block */}
                         <div className="space-y-2">
-                          <p className="font-light leading-relaxed text-neutral-400">{slot.description}</p>
+                          <p className="font-light leading-relaxed text-neutral-400"><ScrambleText as="span" text={slot.description} trigger={activeDay} /></p>
                           <div className="flex items-center gap-4 text-[10px] font-mono text-neutral-500">
                             <span className="flex items-center gap-1">
                               <MapPin className="w-3 h-3 text-neutral-400" />
-                              {slot.venue}
+                              <ScrambleText as="span" text={slot.venue} trigger={activeDay} />
                             </span>
                             <span className="flex items-center gap-1">
                               <Layers className="w-3 h-3 text-neutral-400" />
-                              Duration: {slot.duration}
+                              Duration: <ScrambleText as="span" text={slot.duration} trigger={activeDay} />
                             </span>
                           </div>
                         </div>
