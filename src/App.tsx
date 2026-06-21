@@ -28,7 +28,9 @@ import { Calendar, Compass, ShieldCheck, MapPin } from "lucide-react";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(() => {
+    return !sessionStorage.getItem("ascendant_intro_seen");
+  });
   const [isRegistering, setIsRegistering] = useState<boolean>(false);
   // Ref for direct DOM updates — avoids React re-renders on every scroll tick
   const progressBarRef = React.useRef<HTMLDivElement>(null);
@@ -91,7 +93,10 @@ export default function App() {
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="fixed inset-0 w-screen h-screen z-[100] bg-black"
           >
-            <VideoLoader onComplete={() => setIsLoading(false)} />
+            <VideoLoader onComplete={() => {
+              sessionStorage.setItem("ascendant_intro_seen", "true");
+              setIsLoading(false);
+            }} />
           </motion.div>
         )}
       </AnimatePresence>

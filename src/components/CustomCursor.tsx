@@ -70,8 +70,8 @@ export const CustomCursor: React.FC = () => {
     document.addEventListener('mouseenter', handleMouseEnter);
 
     const animate = () => {
-      currentX.current += (targetX.current - currentX.current) * 0.5;
-      currentY.current += (targetY.current - currentY.current) * 0.5;
+      currentX.current = targetX.current;
+      currentY.current = targetY.current;
 
       rotation.current += isHoveringInteractiveRef.current ? 1.5 : 0.4;
 

@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import { Terminal, Cpu, Trophy, ArrowRight, ShieldCheck, Flag, Blocks, Mic2 } from 'lucide-react';
 import ScrambleText from './ScrambleText';
+import TypewriterText from './TypewriterText';
 
 interface HackathonPhase {
   id: number;
@@ -180,10 +181,8 @@ export const Manifesto: React.FC = () => {
             })}
 
             {/* Quick specifications legend footer */}
-            <div className="pt-6 px-4 flex items-center justify-between text-[11px] font-mono text-neutral-500 border-t border-neutral-900">
-              <span>SYNC LATENCY: 0.1ms</span>
-              <span>•</span>
-              <span>NETWORK BOUNDARY: ELITE DOME INTERNAL</span>
+            <div className="pt-6 px-4 flex items-center justify-center text-[11px] font-mono text-neutral-500 border-t border-neutral-900">
+              <TypewriterText text="THIS TOO SHALL PASS" speed={60} />
             </div>
           </div>
 
