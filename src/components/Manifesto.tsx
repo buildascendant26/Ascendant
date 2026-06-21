@@ -130,21 +130,21 @@ export const Manifesto: React.FC = () => {
                 <div
                   key={phase.id}
                   onClick={() => setActivePhaseId(phase.id)}
-                  className={`group relative p-6 border rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 ease-out flex items-start gap-5 ${
+                  className={`group relative p-6 border rounded-2xl overflow-hidden cursor-pointer transition-all duration-200 ease-out flex items-start gap-5 ${
                     isActive 
                       ? 'bg-neutral-950 border-neutral-600 shadow-[0_10px_30px_rgba(255,255,255,0.02)]' 
                       : 'bg-neutral-950/20 border-neutral-900 hover:border-neutral-800'
                   }`}
                 >
                   {/* Selector indicator tab */}
-                  <div className={`absolute left-0 top-0 bottom-0 w-1.5 transition-all duration-500 ${
+                  <div className={`absolute left-0 top-0 bottom-0 w-1.5 transition-all duration-200 ${
                     isActive 
                       ? 'bg-white h-full' 
                       : 'bg-transparent h-0 group-hover:h-1/2 group-hover:bg-neutral-800'
                   }`} />
 
                   {/* Active Indicator Pulse Ring in icon */}
-                  <div className={`p-3 rounded-xl border transition-all duration-500 shrink-0 ${
+                  <div className={`p-3 rounded-xl border transition-all duration-200 shrink-0 ${
                     isActive 
                       ? 'bg-neutral-900 border-neutral-700' 
                       : 'bg-neutral-950 border-neutral-900 group-hover:border-neutral-800'
@@ -189,13 +189,13 @@ export const Manifesto: React.FC = () => {
 
           {/* Right Side: High-Detail Immersive Display Screen (Grid span 7) */}
           <div className="lg:col-span-7 h-full">
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
               <motion.div
                 key={activePhase.id}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.4, ease: 'easeOut' }}
+                initial={{ opacity: 0, scale: 0.97 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.97 }}
+                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                 className="bg-neutral-950 border border-neutral-800 rounded-3xl p-6 md:p-10 relative overflow-hidden flex flex-col justify-between"
               >
                 {/* Visual Glass Sheen Reflection */}
