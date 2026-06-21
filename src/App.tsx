@@ -28,9 +28,10 @@ import { Calendar, Compass, ShieldCheck, MapPin } from "lucide-react";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isRegistering, setIsRegistering] = useState<boolean>(false);
+  // Ref for direct DOM updates — avoids React re-renders on every scroll tick
+  const progressBarRef = React.useRef<HTMLDivElement>(null);
 
   // Lock scrolling during the interactive calibration loading phase or registration flow
   useEffect(() => {
@@ -44,17 +45,31 @@ export default function App() {
     };
   }, [isLoading, isRegistering]);
 
-  // Monitor scroll progress for glowing indicator
+  // Fluid scroll progress bar — RAF + direct DOM + GPU-accelerated transform
   useEffect(() => {
-    const handleScroll = () => {
+    let rafId: number | null = null;
+
+    const update = () => {
       const totalScroll =
         document.documentElement.scrollHeight - window.innerHeight;
-      if (totalScroll > 0) {
-        setScrollProgress((window.scrollY / totalScroll) * 100);
+      const progress = totalScroll > 0 ? window.scrollY / totalScroll : 0;
+      if (progressBarRef.current) {
+        progressBarRef.current.style.transform = `scaleX(${progress})`;
+      }
+      rafId = null;
+    };
+
+    const handleScroll = () => {
+      if (rafId === null) {
+        rafId = requestAnimationFrame(update);
       }
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   const handleSmoothScroll = (targetId: string) => {
@@ -81,8 +96,8 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* High-fidelity custom sensor reticle cursor */}
-      <CustomCursor />
+      {/* High-fidelity custom sensor reticle cursor (only after video intro) */}
+      {!isLoading && <CustomCursor />}
 
       {/* Persistant Starfield background across all page scroll steps */}
       <Starfield />
@@ -90,11 +105,12 @@ export default function App() {
       {/* Dynamic interactive dot grid that responds elegantly to the cursor */}
       <InteractiveDotGrid />
 
-      {/* Sleek top screen progressive scroll indicator */}
+      {/* Sleek top screen progressive scroll indicator — scaleX is GPU composited */}
       <div
+        ref={progressBarRef}
         id="scroll-progress-indicator"
-        className="fixed top-0 left-0 h-[2.5px] bg-white z-40 transition-all duration-100 shadow-[0_0_8px_rgba(255,255,255,0.8)]"
-        style={{ width: `${scrollProgress}%` }}
+        className="fixed top-0 left-0 h-[2.5px] bg-white z-40 shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+        style={{ width: '100%', transform: 'scaleX(0)', transformOrigin: 'left center', willChange: 'transform' }}
       />
 
       {/* Core Redesigned Hero Landing View (Height 100vh - exact screenshot style) */}
@@ -238,7 +254,7 @@ export default function App() {
           </div>
 
           {/* Right Column containing the dynamic topographical wave mesh */}
-          <div className="hidden lg:flex lg:col-span-5 w-full h-[35vh] sm:h-[45vh] lg:h-[60vh] items-center justify-center relative order-1 lg:order-2">
+          <div className="hidden lg:flex lg:col-span-5 w-full h-[35vh] sm:h-[45vh] lg:h-[60vh] items-center justify-center relative order-1 lg:order-2 overflow-hidden">
             <motion.div
               initial={{ opacity: 0, scale: 0.92, filter: "blur(8px)" }}
               animate={

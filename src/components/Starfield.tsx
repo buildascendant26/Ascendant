@@ -79,8 +79,8 @@ export const Starfield: React.FC = () => {
       ctx.fillRect(0, 0, width, height);
 
       // Damp mouse coordinates for parallax
-      mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 0.05;
-      mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 0.05;
+      mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 1;
+      mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 1;
 
       // Damp mouse coordinates for pixel coordinates (smooth cursor follow)
       if (mouseRef.current.targetPixelX !== -1000) {
@@ -88,8 +88,8 @@ export const Starfield: React.FC = () => {
           mouseRef.current.pixelX = mouseRef.current.targetPixelX;
           mouseRef.current.pixelY = mouseRef.current.targetPixelY;
         } else {
-          mouseRef.current.pixelX += (mouseRef.current.targetPixelX - mouseRef.current.pixelX) * 0.15;
-          mouseRef.current.pixelY += (mouseRef.current.targetPixelY - mouseRef.current.pixelY) * 0.15;
+          mouseRef.current.pixelX += (mouseRef.current.targetPixelX - mouseRef.current.pixelX) * 1;
+          mouseRef.current.pixelY += (mouseRef.current.targetPixelY - mouseRef.current.pixelY) * 1;
         }
 
         // Draw soft, subtle custom light spotlight under/around the dots

@@ -73,8 +73,8 @@ export const CustomCursor: React.FC = () => {
     // Dynamic rotation and smooth interpolation (lerping) loop
     const animate = () => {
       // Lerp custom position for smooth interactive lag
-      currentX.current += (targetX.current - currentX.current) * 0.15;
-      currentY.current += (targetY.current - currentY.current) * 0.15;
+      currentX.current += (targetX.current - currentX.current) * 1;
+      currentY.current += (targetY.current - currentY.current) * 1;
       
       // Infinite continuous rotation speed adapts when hovering
       rotation.current += isHoveringInteractiveRef.current ? 1.5 : 0.4;

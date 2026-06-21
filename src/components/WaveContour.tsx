@@ -12,80 +12,76 @@ export const WaveContour: React.FC = () => {
 
     let animationFrameId: number;
     let time = 0;
+    let cssWidth = 0;
+    let cssHeight = 0;
 
-    const handleResize = () => {
+    const setSize = () => {
       const rect = canvas.parentElement?.getBoundingClientRect();
-      canvas.width = (rect?.width || window.innerWidth) * window.devicePixelRatio;
-      canvas.height = (rect?.height || window.innerHeight) * window.devicePixelRatio;
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      cssWidth = rect?.width ?? window.innerWidth;
+      cssHeight = rect?.height ?? window.innerHeight;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.round(cssWidth * dpr);
+      canvas.height = Math.round(cssHeight * dpr);
+      // Reset transform completely, then apply dpr scale once
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
-    window.addEventListener('resize', handleResize);
-    handleResize();
-
     const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Solid black background — covers everything behind it
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, 0, cssWidth, cssHeight);
 
-      const width = canvas.width / window.devicePixelRatio;
-      const height = canvas.height / window.devicePixelRatio;
+      const cx = cssWidth * 0.5;
+      const cy = cssHeight * 0.5;
 
-      // Center the graphic in the canvas area, slightly shifted to match the screenshot
-      const centerX = width * 0.55;
-      const centerY = height * 0.5;
+      // Scale rings to always fit within the canvas with a safe margin
+      const minDim = Math.min(cssWidth, cssHeight);
+      const maxRadius = minDim * 0.46; // outermost ring uses 46% of smallest dimension
+      const numRings = 14;
+      const ringStep = maxRadius / numRings;
+      const wobbleAmp = minDim * 0.04; // wobble proportional to size
 
-      // Draw 14 concentric contour rings
-      const numRings = 15;
-      const step = 15; // spacing between rings
-
-      time += 0.008; // slow, majestic frequency drift
+      time += 0.007;
 
       for (let i = 0; i < numRings; i++) {
-        // base radius for this ring
-        const baseRadius = 110 + i * step;
-
+        const baseR = ringStep * (i + 1);
         ctx.beginPath();
-        const numSegments = 180;
-        
-        for (let j = 0; j <= numSegments; j++) {
-          const angle = (j / numSegments) * Math.PI * 2;
-          
-          // Generative multi-harmonic wobble mimicking the exact fluid curves in the screenshot
-          const wobble1 = Math.sin(angle * 3.2 - time + i * 0.12) * 22;
-          const wobble2 = Math.cos(angle * 4.8 + time * 1.5 - i * 0.08) * 14;
-          const wobble3 = Math.sin(angle * 1.8 + time * 0.5) * 18;
-          
-          // Anisotropic stretching to give it that organic tilted oval topograhical look
-          const stretchX = 1 + Math.sin(angle) * 0.15;
-          
-          // Combined radius pertubations
-          const r = baseRadius + (wobble1 + wobble2 + wobble3) * (0.35 + 0.65 * (i / numRings));
-          
-          // Convert polar to cartesian coordinates with optional custom squeeze
-          const x = centerX + Math.cos(angle) * r * stretchX * 1.1;
-          const y = centerY + Math.sin(angle) * r * 0.95;
 
-          if (j === 0) {
-            ctx.moveTo(x, y);
-          } else {
-            // Smooth natural curves using line segments
-            ctx.lineTo(x, y);
-          }
+        const segments = 200;
+        for (let j = 0; j <= segments; j++) {
+          const angle = (j / segments) * Math.PI * 2;
+
+          const w1 = Math.sin(angle * 3.2 - time + i * 0.13) * wobbleAmp;
+          const w2 = Math.cos(angle * 4.7 + time * 1.4 - i * 0.09) * wobbleAmp * 0.6;
+          const w3 = Math.sin(angle * 1.9 + time * 0.6) * wobbleAmp * 0.75;
+
+          const stretch = 1 + Math.sin(angle) * 0.12;
+          const r = baseR + (w1 + w2 + w3) * (0.3 + 0.7 * (i / numRings));
+
+          const x = cx + Math.cos(angle) * r * stretch;
+          const y = cy + Math.sin(angle) * r * 0.92;
+
+          j === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
         }
 
         ctx.closePath();
 
-        // High-fidelity aesthetic: Outer rings are dimmer and softer
-        const opacityRatio = 1 - (i / numRings) * 0.55;
-        const alpha = 0.25 * opacityRatio;
-        
-        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
-        ctx.lineWidth = i === 0 ? 1.5 : 1.0;
+        // Inner rings slightly brighter, outer rings fade — all very dark
+        const fade = 1 - (i / numRings) * 0.5;
+        ctx.strokeStyle = `rgba(80, 80, 80, ${0.5 * fade})`;
+        ctx.lineWidth = i < 3 ? 0.9 : 0.7;
         ctx.stroke();
       }
 
       animationFrameId = requestAnimationFrame(draw);
     };
 
+    const handleResize = () => {
+      setSize();
+    };
+
+    window.addEventListener('resize', handleResize);
+    setSize();
     draw();
 
     return () => {
@@ -97,7 +93,7 @@ export const WaveContour: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="w-full h-full opacity-85 select-none pointer-events-none"
+      className="w-full h-full select-none pointer-events-none"
     />
   );
 };

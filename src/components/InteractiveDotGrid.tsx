@@ -19,9 +19,11 @@ export const InteractiveDotGrid: React.FC = () => {
       const parent = canvas.parentElement || document.body;
       width = parent.clientWidth;
       height = parent.clientHeight;
-      canvas.width = width * window.devicePixelRatio;
-      canvas.height = height * window.devicePixelRatio;
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      // Reset transform fully before applying DPR — prevents scale from compounding on each resize
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -52,18 +54,13 @@ export const InteractiveDotGrid: React.FC = () => {
     const draw = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Smooth mouse coordinate tracking (inertia lag for luxury feeling)
+      // Instant mouse coordinate tracking (no lag)
       if (mouseRef.current.targetX === -1000) {
-        mouseRef.current.x += (-1000 - mouseRef.current.x) * 0.1;
-        mouseRef.current.y += (-1000 - mouseRef.current.y) * 0.1;
+        mouseRef.current.x = -1000;
+        mouseRef.current.y = -1000;
       } else {
-        if (mouseRef.current.x === -1000) {
-          mouseRef.current.x = mouseRef.current.targetX;
-          mouseRef.current.y = mouseRef.current.targetY;
-        } else {
-          mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 0.12;
-          mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 0.12;
-        }
+        mouseRef.current.x = mouseRef.current.targetX;
+        mouseRef.current.y = mouseRef.current.targetY;
       }
 
       const mX = mouseRef.current.x;

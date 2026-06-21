@@ -18,7 +18,7 @@ export const AscendantSymbol: React.FC<AscendantSymbolProps> = ({
     <svg
       id="ascendant-symbol-svg"
       viewBox="0 0 100 100"
-      className={`${className} overflow-visible`}
+      className={`${className} overflow-hidden`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

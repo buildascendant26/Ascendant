@@ -278,15 +278,15 @@ export const BoldQuote: React.FC<BoldQuoteProps> = ({ isLoader = false, onEnter 
       ctx.clearRect(0, 0, width, height);
 
       // Damp mouse & drag interactions for buttery smooth animation
-      mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 0.06;
-      mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 0.06;
+      mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 1;
+      mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 1;
       
-      dragX += (targetDragX - dragX) * 0.08;
-      dragY += (targetDragY - dragY) * 0.08;
+      dragX += (targetDragX - dragX) * 1;
+      dragY += (targetDragY - dragY) * 1;
 
       // Dissipate click-induced spin bursts gracefully over time
-      mouseRef.current.spinBurstX += (0 - mouseRef.current.spinBurstX) * 0.05;
-      mouseRef.current.spinBurstY += (0 - mouseRef.current.spinBurstY) * 0.05;
+      mouseRef.current.spinBurstX += (0 - mouseRef.current.spinBurstX) * 1;
+      mouseRef.current.spinBurstY += (0 - mouseRef.current.spinBurstY) * 1;
 
       // Click shockwave ripple progression
       if (mouseRef.current.shockwaveActive) {
@@ -298,7 +298,7 @@ export const BoldQuote: React.FC<BoldQuoteProps> = ({ isLoader = false, onEnter 
 
       // Smoothly interpolate hover reactions
       const targetRadiusFactor = mouseRef.current.worldHovered ? 1.08 : 1.0;
-      hoverRadiusFactor += (targetRadiusFactor - hoverRadiusFactor) * 0.08;
+      hoverRadiusFactor += (targetRadiusFactor - hoverRadiusFactor) * 1;
 
       // Apply tactile spring physics collapse-and-rebound equations
       const springK = 0.16;       // Spring tension stiffness
@@ -312,7 +312,7 @@ export const BoldQuote: React.FC<BoldQuoteProps> = ({ isLoader = false, onEnter 
       const currentRadius = radius * finalRadiusFactor;
 
       const targetColorInterp = mouseRef.current.worldHovered ? 1.0 : 0.0;
-      colorInterpolation += (targetColorInterp - colorInterpolation) * 0.1;
+      colorInterpolation += (targetColorInterp - colorInterpolation) * 1;
 
       // Create a glowing dynamic interpolated color (interpolate from white to vivid teal-cyan)
       const r = Math.round(255 - colorInterpolation * (255 - 45));
