@@ -23,6 +23,7 @@ import { InteractiveDotGrid } from "./components/InteractiveDotGrid";
 import { InteractiveFooter } from "./components/InteractiveFooter";
 import { RegistrationPage } from "./components/RegistrationPage";
 import { AscendantSymbol } from "./components/AscendantSymbol";
+import CountdownTimer from "./components/CountdownTimer";
 import ascendantLogo from "./components/ascendant_logo.png";
 import { Calendar, Compass, ShieldCheck, MapPin } from "lucide-react";
 
@@ -280,12 +281,14 @@ export default function App() {
         {/* Bottom indicator Row */}
         <div className="w-full flex justify-between items-end relative z-30 pt-4">
           {/* Bottom left telemetries */}
-          <div className="hidden md:block font-mono text-[9px] text-neutral-500 space-y-1">
+          <div className="hidden md:block font-mono text-[9px] text-neutral-500">
             <p className="flex items-center gap-1.5">
               <MapPin className="w-3.5 h-3.5 text-neutral-400" />
-              PORTAL: CO-DOME 42 • SENSOR ACTIVE
+              DELHI PUBLIC SCHOOL BANGALORE EAST
             </p>
-            <p>STREAM BANDWIDTH: LIVE 98.4 MBPS • 2026.06.18</p>
+            <p className="mt-1">
+              <CountdownTimer />
+            </p>
           </div>
 
           {/* Bottom right indicator */}
