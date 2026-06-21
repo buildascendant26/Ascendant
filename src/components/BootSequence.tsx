@@ -39,9 +39,20 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
   const [titleOpacity, setTitleOpacity] = useState(0);
   const [titleScale, setTitleScale] = useState(0.92);
   const [promptOpacity, setPromptOpacity] = useState(0);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(
+        ('ontouchstart' in window) || 
+        navigator.maxTouchPoints > 0 || 
+        window.innerWidth < 768
+      );
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     const timers: ReturnType<typeof setTimeout>[] = [];
     let t = 0;
 
@@ -88,7 +99,10 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
       containerRef.current?.focus();
     }, t));
 
-    return () => timers.forEach(clearTimeout);
+    return () => {
+      timers.forEach(clearTimeout);
+      window.removeEventListener('resize', checkMobile);
+    };
   }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -241,7 +255,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
               animation: promptOpacity === 1 ? "pulsePrompt 2.5s ease-in-out infinite" : "none",
             }}
           >
-            Press ENTER or TAP to continue
+            {isMobile ? "TAP TO CONTINUE" : "Press ENTER to continue"}
           </div>
           {phase === "prompt" && (
             <button
