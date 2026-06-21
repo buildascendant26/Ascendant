@@ -96,7 +96,27 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ isOpen, onClose, onNavig
                     <span className="font-mono text-xs md:text-sm text-neutral-500 group-hover:text-white transition-colors duration-300">
                       {item.num}
                     </span>
-                    <div className="relative overflow-hidden">
+                    <div className="relative overflow-hidden flex items-center gap-4">
+                      {item.target === 'home' && (
+                        <div className="overflow-hidden w-0 group-hover:w-[5.83em] transition-all duration-300">
+                          <img src="/menu-home.gif" alt="" className="h-[5.07em] w-auto object-contain shrink-0" />
+                        </div>
+                      )}
+                      {item.target === 'vision' && (
+                        <div className="overflow-hidden w-0 group-hover:w-[9.38em] transition-all duration-300">
+                          <img src="/menu-phases.gif" alt="" className="h-[8.17em] w-auto object-contain shrink-0" />
+                        </div>
+                      )}
+                      {item.target === 'summit-quote' && (
+                        <div className="overflow-hidden w-0 group-hover:w-[9.38em] transition-all duration-300">
+                          <img src="/menu-essence.gif" alt="" className="h-[8.17em] w-auto object-contain shrink-0" />
+                        </div>
+                      )}
+                      {item.target === 'program' && (
+                        <div className="overflow-hidden w-0 group-hover:w-[9.38em] transition-all duration-300">
+                          <img src="/menu-chronology.gif" alt="" className="h-[8.17em] w-auto object-contain shrink-0" />
+                        </div>
+                      )}
                       <span className="font-display text-4xl md:text-7xl font-bold tracking-tight text-neutral-300 group-hover:text-white transition-colors duration-300 block">
                         {item.label}
                       </span>
