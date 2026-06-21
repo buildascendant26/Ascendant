@@ -5,7 +5,7 @@
 
 import React, { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
-import { Sparkles, Quote } from 'lucide-react';
+
 
 interface Point3D {
   x: number;
@@ -722,16 +722,9 @@ export const BoldQuote: React.FC<BoldQuoteProps> = ({ isLoader = false, onEnter 
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mt-8 md:mt-12 pt-6 border-t border-neutral-900 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-6 font-mono text-[10px] md:text-xs text-neutral-500"
           >
-            <div className="flex items-center gap-2.5">
-              <Quote className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
-              <span className="tracking-wider uppercase">ASCENDANT SUMMIT PROTOCOL IV</span>
-            </div>
-
-            <div className="flex items-center gap-3 text-neutral-400 group cursor-default">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="tracking-widest uppercase text-[9px] sm:text-[10px] font-bold">TUNED FREQUENCY ACTIVE</span>
-              <Sparkles className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
-            </div>
+            <p className="italic tracking-wide leading-relaxed">
+              "Your mind is like this water… if you allow it to settle, the answer becomes clear."
+            </p>
           </motion.div>
         )}
 

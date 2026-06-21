@@ -276,18 +276,6 @@ export const Manifesto: React.FC = () => {
 
                 </div>
 
-                {/* Secure Handshake Seal footer */}
-                <div className="mt-8 pt-6 border-t border-neutral-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] font-mono text-neutral-500 relative z-10">
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-neutral-400" />
-                    <span>
-                      <ScrambleText as="span" text="AUTHENTIC SHA256 ENCRYPTED TRANSACTION PROTOCOLS REGISTERED" trigger={activePhaseId} />
-                    </span>
-                  </div>
-                  <span className="bg-neutral-900 px-2 py-0.5 rounded text-neutral-400">
-                    <ScrambleText as="span" text="REV. 2026.1.18" trigger={activePhaseId} />
-                  </span>
-                </div>
             </div>
           </div>
 
