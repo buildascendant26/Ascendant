@@ -278,15 +278,15 @@ export const BoldQuote: React.FC<BoldQuoteProps> = ({ isLoader = false, onEnter 
       ctx.clearRect(0, 0, width, height);
 
       // Damp mouse & drag interactions for buttery smooth animation
-      mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 1;
-      mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 1;
+      mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 0.12;
+      mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 0.12;
       
-      dragX += (targetDragX - dragX) * 1;
-      dragY += (targetDragY - dragY) * 1;
+      dragX += (targetDragX - dragX) * 0.12;
+      dragY += (targetDragY - dragY) * 0.12;
 
       // Dissipate click-induced spin bursts gracefully over time
-      mouseRef.current.spinBurstX += (0 - mouseRef.current.spinBurstX) * 1;
-      mouseRef.current.spinBurstY += (0 - mouseRef.current.spinBurstY) * 1;
+      mouseRef.current.spinBurstX *= 0.95;
+      mouseRef.current.spinBurstY *= 0.95;
 
       // Click shockwave ripple progression
       if (mouseRef.current.shockwaveActive) {
@@ -298,7 +298,7 @@ export const BoldQuote: React.FC<BoldQuoteProps> = ({ isLoader = false, onEnter 
 
       // Smoothly interpolate hover reactions
       const targetRadiusFactor = mouseRef.current.worldHovered ? 1.08 : 1.0;
-      hoverRadiusFactor += (targetRadiusFactor - hoverRadiusFactor) * 1;
+      hoverRadiusFactor += (targetRadiusFactor - hoverRadiusFactor) * 0.08;
 
       // Apply tactile spring physics collapse-and-rebound equations
       const springK = 0.16;       // Spring tension stiffness
@@ -312,7 +312,7 @@ export const BoldQuote: React.FC<BoldQuoteProps> = ({ isLoader = false, onEnter 
       const currentRadius = radius * finalRadiusFactor;
 
       const targetColorInterp = mouseRef.current.worldHovered ? 1.0 : 0.0;
-      colorInterpolation += (targetColorInterp - colorInterpolation) * 1;
+      colorInterpolation += (targetColorInterp - colorInterpolation) * 0.08;
 
       // Create a glowing dynamic interpolated color (interpolate from white to vivid teal-cyan)
       const r = Math.round(255 - colorInterpolation * (255 - 45));
@@ -439,7 +439,7 @@ export const BoldQuote: React.FC<BoldQuoteProps> = ({ isLoader = false, onEnter 
           ctx.stroke();
         }
 
-        // Draw pulsing, tiny glowing code vertices
+        // Draw vertices — NO shadowBlur for performance
         const pointSize = p1.sz > 0 ? 1.8 + (p1.sz / currentRadius) * 1.5 : 1.2;
         const vertexAlpha = p1.alpha * (p1.sz > 0 ? 0.85 : 0.4);
         ctx.fillStyle = `rgba(${globeColor}, ${vertexAlpha})`;
@@ -447,44 +447,36 @@ export const BoldQuote: React.FC<BoldQuoteProps> = ({ isLoader = false, onEnter 
         ctx.arc(p1.sx, p1.sy, pointSize, 0, Math.PI * 2);
         ctx.fill();
 
-        // Extra subtle starburst core on front-facing nodes
+        // Slightly larger dot on front-facing nodes for visual depth (no shadowBlur)
         if (p1.sz > currentRadius * 0.5 && idx % 3 === 0) {
-          const glowColor = mouseRef.current.worldHovered ? 'rgba(0, 245, 255, 0.45)' : 'rgba(255, 255, 255, 0.45)';
-          const glowShadowColor = mouseRef.current.worldHovered ? '#00f5ff' : '#ffffff';
+          const glowColor = mouseRef.current.worldHovered ? 'rgba(0, 245, 255, 0.3)' : 'rgba(255, 255, 255, 0.3)';
           ctx.fillStyle = glowColor;
-          ctx.shadowBlur = 8;
-          ctx.shadowColor = glowShadowColor;
           ctx.beginPath();
-          ctx.arc(p1.sx, p1.sy, pointSize * 1.8, 0, Math.PI * 2);
+          ctx.arc(p1.sx, p1.sy, pointSize * 1.6, 0, Math.PI * 2);
           ctx.fill();
-          ctx.shadowBlur = 0; // Restore default
         }
       });
 
-      // Update & render explosion spark particles
+      // Update & render explosion spark particles (no shadowBlur)
       const sparks = particlesRef.current;
       for (let i = sparks.length - 1; i >= 0; i--) {
         const p = sparks[i];
         p.x += p.vx;
         p.y += p.vy;
-        p.vx *= 0.94; // Atmospheric resistance
+        p.vx *= 0.94;
         p.vy *= 0.94;
-        p.alpha -= 0.018; // Fade out rate
+        p.alpha -= 0.025; // Slightly faster fade = fewer frames rendered
         if (p.alpha <= 0) {
           sparks.splice(i, 1);
           continue;
         }
-        ctx.fillStyle = p.color;
-        
-        ctx.shadowBlur = 12 * p.alpha;
-        ctx.shadowColor = p.color;
         ctx.globalAlpha = p.alpha;
+        ctx.fillStyle = p.color;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size * (0.5 + p.alpha * 0.5), 0, Math.PI * 2);
         ctx.fill();
       }
       ctx.globalAlpha = 1.0;
-      ctx.shadowBlur = 0;
 
       animationFrameId = requestAnimationFrame(render);
     };
@@ -569,8 +561,8 @@ export const BoldQuote: React.FC<BoldQuoteProps> = ({ isLoader = false, onEnter 
       const centerX = width * 0.5;
       const centerY = height * 0.5;
       
-      // Spawn 80 cybernetic sparks
-      for (let i = 0; i < 80; i++) {
+      // Spawn 30 sparks (reduced from 80 for performance)
+      for (let i = 0; i < 30; i++) {
         const angle = Math.random() * Math.PI * 2;
         const speed = 2.5 + Math.random() * 14;
         particlesRef.current.push({

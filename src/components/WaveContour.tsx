@@ -22,32 +22,31 @@ export const WaveContour: React.FC = () => {
       const dpr = window.devicePixelRatio || 1;
       canvas.width = Math.round(cssWidth * dpr);
       canvas.height = Math.round(cssHeight * dpr);
-      // Reset transform completely, then apply dpr scale once
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
     const draw = () => {
-      // Solid black background — covers everything behind it
       ctx.fillStyle = '#000';
       ctx.fillRect(0, 0, cssWidth, cssHeight);
 
       const cx = cssWidth * 0.5;
       const cy = cssHeight * 0.5;
 
-      // Scale rings to always fit within the canvas with a safe margin
       const minDim = Math.min(cssWidth, cssHeight);
-      const maxRadius = minDim * 0.46; // outermost ring uses 46% of smallest dimension
+      const maxRadius = minDim * 0.46;
       const numRings = 14;
       const ringStep = maxRadius / numRings;
-      const wobbleAmp = minDim * 0.04; // wobble proportional to size
+      const wobbleAmp = minDim * 0.04;
 
       time += 0.007;
+
+      // Reduced segments from 200→80 — rings look identical at this scale
+      const segments = 80;
 
       for (let i = 0; i < numRings; i++) {
         const baseR = ringStep * (i + 1);
         ctx.beginPath();
 
-        const segments = 200;
         for (let j = 0; j <= segments; j++) {
           const angle = (j / segments) * Math.PI * 2;
 
@@ -66,7 +65,6 @@ export const WaveContour: React.FC = () => {
 
         ctx.closePath();
 
-        // Inner rings slightly brighter, outer rings fade — all very dark
         const fade = 1 - (i / numRings) * 0.5;
         ctx.strokeStyle = `rgba(80, 80, 80, ${0.5 * fade})`;
         ctx.lineWidth = i < 3 ? 0.9 : 0.7;

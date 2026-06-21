@@ -22,7 +22,6 @@ export const InteractiveDotGrid: React.FC = () => {
       const dpr = window.devicePixelRatio || 1;
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
-      // Reset transform fully before applying DPR — prevents scale from compounding on each resize
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
@@ -43,18 +42,19 @@ export const InteractiveDotGrid: React.FC = () => {
     
     handleResize();
 
-    const gridSize = 30; // Matches background-size of previous bg-dot-grid
-    const baseOpacity = 0.06; // Elegant subtle base grid
-    const targetRadius = 130;  // Area of influence around cursor
+    // Increased grid size for fewer dots = much faster rendering
+    const gridSize = 40;
+    const baseOpacity = 0.06;
+    const targetRadius = 130;
+    const targetRadiusSq = targetRadius * targetRadius;
 
-    // Initialize position off-screen
     mouseRef.current.x = -1000;
     mouseRef.current.y = -1000;
 
     const draw = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Instant mouse coordinate tracking (no lag)
+      // Snap mouse position (no lerp = no lag, direct tracking)
       if (mouseRef.current.targetX === -1000) {
         mouseRef.current.x = -1000;
         mouseRef.current.y = -1000;
@@ -65,32 +65,47 @@ export const InteractiveDotGrid: React.FC = () => {
 
       const mX = mouseRef.current.x;
       const mY = mouseRef.current.y;
+      const hasMouse = mX !== -1000 && mY !== -1000;
 
       const halfGrid = gridSize / 2;
 
-      // Draw dot grid
+      // Draw base grid at uniform opacity in a single batch
+      ctx.fillStyle = `rgba(255, 255, 255, ${baseOpacity})`;
       for (let x = halfGrid; x < width; x += gridSize) {
         for (let y = halfGrid; y < height; y += gridSize) {
-          let opacity = baseOpacity;
-          let dotSize = 0.8; // standard subtle size
-
-          if (mX !== -1000 && mY !== -1000) {
+          // Skip dots near cursor — we'll draw them brighter separately
+          if (hasMouse) {
             const dx = x - mX;
             const dy = y - mY;
-            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dx * dx + dy * dy < targetRadiusSq) continue;
+          }
+          ctx.beginPath();
+          ctx.arc(x, y, 0.8, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
 
-            if (dist < targetRadius) {
-              const factor = 1 - dist / targetRadius; // 0 (edge) -> 1 (center)
-              const easeFactor = factor * factor; // easeIn transition for pristine fluid feel
-              opacity = baseOpacity + easeFactor * 0.44; // increase brightness smoothly
-              dotSize = 0.8 + easeFactor * 1.0; // grow dots smoothly near cursor
+      // Draw highlighted dots near cursor
+      if (hasMouse) {
+        for (let x = halfGrid; x < width; x += gridSize) {
+          for (let y = halfGrid; y < height; y += gridSize) {
+            const dx = x - mX;
+            const dy = y - mY;
+            const distSq = dx * dx + dy * dy;
+
+            if (distSq < targetRadiusSq) {
+              const dist = Math.sqrt(distSq);
+              const factor = 1 - dist / targetRadius;
+              const easeFactor = factor * factor;
+              const opacity = baseOpacity + easeFactor * 0.44;
+              const dotSize = 0.8 + easeFactor * 1.0;
+
+              ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+              ctx.beginPath();
+              ctx.arc(x, y, dotSize, 0, Math.PI * 2);
+              ctx.fill();
             }
           }
-
-          ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
-          ctx.beginPath();
-          ctx.arc(x, y, dotSize, 0, Math.PI * 2);
-          ctx.fill();
         }
       }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 interface TimelineBackgroundProps {
   activeDay: '17' | '18';
@@ -8,13 +8,13 @@ export const TimelineBackground: React.FC<TimelineBackgroundProps> = ({ activeDa
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Track kinetic energy of the time-warp transition
   const warpEnergyRef = useRef<number>(1.0);
   const targetWarpEnergyRef = useRef<number>(1.0);
+  const activeDayRef = useRef(activeDay);
 
   // Trigger warp animation on activeDay change
   useEffect(() => {
-    // Boost warps speed, then slowly decay back to base speed
+    activeDayRef.current = activeDay;
     warpEnergyRef.current = 5.0;
     targetWarpEnergyRef.current = 1.0;
   }, [activeDay]);
@@ -27,8 +27,8 @@ export const TimelineBackground: React.FC<TimelineBackgroundProps> = ({ activeDa
 
     let animId: number;
     let time = 0;
+    let isVisible = true;
 
-    // Responsive sizing
     const handleResize = () => {
       if (!canvas || !canvas.parentElement) return;
       canvas.width = canvas.parentElement.clientWidth || window.innerWidth;
@@ -37,8 +37,19 @@ export const TimelineBackground: React.FC<TimelineBackgroundProps> = ({ activeDa
     handleResize();
     window.addEventListener('resize', handleResize);
 
-    // Coordinate state of particle array
-    const particlesCount = 28;
+    // Use IntersectionObserver to pause animation when off-screen
+    const observer = new IntersectionObserver(
+      (entries) => {
+        isVisible = entries[0]?.isIntersecting ?? true;
+      },
+      { threshold: 0 }
+    );
+    if (canvas.parentElement) {
+      observer.observe(canvas.parentElement);
+    }
+
+    // Fewer particles — 16 instead of 28
+    const particlesCount = 16;
     const particles = Array.from({ length: particlesCount }).map(() => ({
       x: Math.random(),
       y: Math.random(),
@@ -50,17 +61,23 @@ export const TimelineBackground: React.FC<TimelineBackgroundProps> = ({ activeDa
 
     const render = () => {
       if (!ctx || !canvas) return;
+
+      // Skip rendering when off-screen
+      if (!isVisible) {
+        animId = requestAnimationFrame(render);
+        return;
+      }
       
       const width = canvas.width;
       const height = canvas.height;
+      const day = activeDayRef.current;
       ctx.clearRect(0, 0, width, height);
 
-      // Damp the warpEnergy towards target warp energy slowly
       warpEnergyRef.current += (targetWarpEnergyRef.current - warpEnergyRef.current) * 0.035;
       time += 0.4 * warpEnergyRef.current;
 
-      // Draw horizontal dynamic laser grids
-      const gridLines = 14;
+      // Draw horizontal grid lines — reduced from 14 to 8
+      const gridLines = 8;
       ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)';
       ctx.lineWidth = 1;
       
@@ -72,19 +89,21 @@ export const TimelineBackground: React.FC<TimelineBackgroundProps> = ({ activeDa
         ctx.stroke();
       }
 
-      // Draw subtle orbital concentric circles corresponding to temporal anchor points
+      // Orbital circles — reduced from 4 to 2
       const centerX = width * 0.15;
       const centerY = height * 0.5;
 
       ctx.strokeStyle = 'rgba(255, 255, 255, 0.012)';
       ctx.lineWidth = 1.5;
-      [120, 250, 420, 600].forEach((radius) => {
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius + Math.sin(time * 0.005) * 15, 0, Math.PI * 2);
-        ctx.stroke();
-      });
+      const sinOff = Math.sin(time * 0.005) * 15;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 200 + sinOff, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 450 + sinOff, 0, Math.PI * 2);
+      ctx.stroke();
 
-      // Draw ticking chronology timeline axis (an architectural ruler on the right margin)
+      // Timeline axis
       const xAxis = width - 40;
       ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
       ctx.lineWidth = 1.5;
@@ -93,7 +112,8 @@ export const TimelineBackground: React.FC<TimelineBackgroundProps> = ({ activeDa
       ctx.lineTo(xAxis, height);
       ctx.stroke();
 
-      const tickSpacing = 35;
+      // Ticks — increased spacing from 35→60 for fewer ticks
+      const tickSpacing = 60;
       const totalTicks = Math.ceil(height / tickSpacing);
       ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
       ctx.font = '8px "JetBrains Mono", monospace';
@@ -101,73 +121,53 @@ export const TimelineBackground: React.FC<TimelineBackgroundProps> = ({ activeDa
       for (let j = 0; j < totalTicks; j++) {
         const y = (j * tickSpacing + time) % height;
         
-        ctx.beginPath();
-        // Dynamic tick length based on mathematical index remainder
         const isMajor = j % 5 === 0;
         const tickLength = isMajor ? 12 : 5;
+        ctx.beginPath();
         ctx.moveTo(xAxis, y);
         ctx.lineTo(xAxis - tickLength, y);
         ctx.strokeStyle = isMajor ? 'rgba(255, 255, 255, 0.12)' : 'rgba(255, 255, 255, 0.04)';
         ctx.stroke();
 
-        // Print precise coordinate markers alongside major ticker lines
         if (isMajor) {
           ctx.fillText(`T_${(y / 100).toFixed(2)}`, xAxis - 52, y + 3);
         }
       }
 
-      // Render flowing energy coordinates (horizontal sine stream)
+      // Sine wave — reduced points from 100→50
       ctx.beginPath();
-      ctx.strokeStyle = activeDay === '17' 
+      ctx.strokeStyle = day === '17' 
         ? 'rgba(255, 255, 255, 0.04)' 
         : 'rgba(255, 255, 255, 0.08)';
       ctx.lineWidth = 1.5;
       
-      const wavePointsCount = 100;
+      const wavePointsCount = 50;
       for (let x = 0; x < wavePointsCount; x++) {
         const xPos = (width / wavePointsCount) * x;
-        const sineMultiplier = activeDay === '17' ? 1.0 : 1.6;
+        const sineMultiplier = day === '17' ? 1.0 : 1.6;
         const yPos = (height * 0.5) + Math.sin(x * 0.15 + (time * 0.01)) * 30 * sineMultiplier * Math.cos(x * 0.015);
         if (x === 0) ctx.moveTo(xPos, yPos);
         else ctx.lineTo(xPos, yPos);
       }
       ctx.stroke();
 
-      // Flowing quantum particles
-      particles.forEach((p) => {
-        // Move y pos based on activeDay direction and warp energy
-        const directionMultiplier = activeDay === '17' ? 1 : -1;
+      // Flowing particles
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        const directionMultiplier = day === '17' ? 1 : -1;
         p.y += p.speed * 0.001 * warpEnergyRef.current * directionMultiplier;
         
-        // Wrap around loop bounds perfectly
         if (p.y > 1) p.y = 0;
         if (p.y < 0) p.y = 1;
 
         const pX = p.x * width + Math.sin(time * p.frequency) * p.amplitude;
         const pY = p.y * height;
 
-        // Faded, hyper-minimal high-contrast dot
-        ctx.fillStyle = activeDay === '17' ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.12)';
+        ctx.fillStyle = day === '17' ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.12)';
         ctx.beginPath();
         ctx.arc(pX, pY, p.size, 0, Math.PI * 2);
         ctx.fill();
-
-        // Connect particles using faint neon bridges if they are in close vertical range
-        if (warpEnergyRef.current > 1.2) {
-          ctx.beginPath();
-          ctx.strokeStyle = `rgba(255, 255, 255, ${Math.min(0.04, 0.01 * warpEnergyRef.current)})`;
-          ctx.lineWidth = 0.5;
-          ctx.moveTo(pX, pY);
-          ctx.lineTo(centerX, centerY);
-          ctx.stroke();
-        }
-      });
-
-      // Digital matrix-like background identifiers
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.02)';
-      ctx.font = '10px "JetBrains Mono", monospace';
-      ctx.fillText(`SYS.SEQUENCE_ID: ${activeDay === '17' ? '0XDF8097_1' : '0XDF8097_2'}`, 30, height - 30);
-      ctx.fillText(`WARP_FACTOR: ${warpEnergyRef.current.toFixed(2)}x`, 30, height - 15);
+      }
 
       animId = requestAnimationFrame(render);
     };
@@ -176,9 +176,10 @@ export const TimelineBackground: React.FC<TimelineBackgroundProps> = ({ activeDa
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      observer.disconnect();
       cancelAnimationFrame(animId);
     };
-  }, [activeDay]);
+  }, []);
 
   return (
     <div 

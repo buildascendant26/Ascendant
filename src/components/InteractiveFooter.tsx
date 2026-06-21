@@ -62,35 +62,13 @@ export const InteractiveFooter: React.FC<InteractiveFooterProps> = ({ onSmoothSc
           <div className="flex items-center justify-center text-center px-4">
             <motion.p 
               className="text-[9px] md:text-[10px] text-neutral-500 font-mono leading-relaxed max-w-sm uppercase tracking-widest"
-              initial="hidden"
-              whileInView="visible"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              variants={{
-                hidden: { opacity: 1 },
-                visible: {
-                  opacity: 1,
-                  transition: { staggerChildren: 0.02 }
-                }
-              }}
+              transition={{ duration: 0.8 }}
             >
-              {`"Anakin, You were the chosen one! It was said that you would destroy the Sith, not join them! Bring balance to the Force, not leave it in darkness!"`.split("").map((char, index) => (
-                <motion.span
-                  key={index}
-                  variants={{
-                    hidden: { opacity: 0 },
-                    visible: { opacity: 1 }
-                  }}
-                >
-                  {char}
-                </motion.span>
-              ))}
-              <motion.span
-                className="inline-block"
-                animate={{ opacity: [1, 0] }}
-                transition={{ duration: 0.53, repeat: Infinity, repeatType: "reverse", ease: "steps(1)" }}
-              >
-                _
-              </motion.span>
+              "Anakin, You were the chosen one! It was said that you would destroy the Sith, not join them! Bring balance to the Force, not leave it in darkness!"
+              <span className="inline-block animate-pulse">_</span>
             </motion.p>
           </div>
 

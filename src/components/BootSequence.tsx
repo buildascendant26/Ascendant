@@ -97,6 +97,13 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
     }
   };
 
+  // Mobile: tap anywhere to continue when prompt phase is active
+  const handleTap = () => {
+    if (phase === "prompt") {
+      onComplete();
+    }
+  };
+
   const showCursor = phase === "cursor" || phase === "typing";
   const typedCommand = COMMAND.slice(0, typedChars);
 
@@ -105,8 +112,10 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
       ref={containerRef}
       tabIndex={0}
       onKeyDown={handleKeyDown}
+      onClick={handleTap}
+      onTouchEnd={handleTap}
       className="fixed inset-0 bg-black flex items-center justify-center outline-none"
-      style={{ fontFamily: "var(--font-mono), 'JetBrains Mono', 'Courier New', monospace", cursor: "none" }}
+      style={{ fontFamily: "var(--font-mono), 'JetBrains Mono', 'Courier New', monospace", touchAction: "manipulation" }}
       aria-label="Ascendant boot sequence"
     >
       <div
@@ -123,9 +132,9 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
           willChange: "opacity, transform",
         }}
       >
-        <div style={{ width: "100%", maxWidth: 560, padding: "0 2rem" }}>
+        <div style={{ width: "100%", maxWidth: 560, padding: "0 1.25rem" }}>
           {(phase === "cursor" || phase === "typing" || phase === "booting" || phase === "ready") && (
-            <div style={{ fontSize: 13, color: "#ffffff", marginBottom: 20, display: "flex", alignItems: "center" }}>
+            <div style={{ fontSize: 12, color: "#ffffff", marginBottom: 20, display: "flex", alignItems: "center", wordBreak: "break-all" }}>
               <span>{typedCommand}</span>
               {showCursor && (
                 <span className="boot-cursor" style={{ color: "#ffffff", marginLeft: 2, animation: "blinkCursor 0.8s step-end infinite" }}>█</span>
@@ -224,7 +233,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
             animation: promptOpacity === 1 ? "pulsePrompt 2.5s ease-in-out infinite" : "none",
           }}
         >
-          Press ENTER to continue
+          Press ENTER or TAP to continue
         </div>
       </div>
 

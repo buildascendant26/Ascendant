@@ -7,7 +7,6 @@ interface Particle {
   speedX: number;
   speedY: number;
   opacity: number;
-  originalOpacity: number;
   wobbleSpeed: number;
   wobbleValue: number;
 }
@@ -24,33 +23,35 @@ export const FloatingParticles: React.FC = () => {
 
     let animationId: number;
     const particles: Particle[] = [];
-    const numParticles = 40; // Kept low and sparse for elegant high-fidelity understatement
+    // Reduced from 40 to 20 — these are tiny dust specks, fewer is still elegant
+    const numParticles = 20;
+    let cssWidth = 0;
+    let cssHeight = 0;
 
     const handleResize = () => {
       const container = canvas.parentElement;
-      canvas.width = (container?.clientWidth || window.innerWidth) * window.devicePixelRatio;
-      canvas.height = (container?.clientHeight || window.innerHeight) * window.devicePixelRatio;
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      cssWidth = container?.clientWidth || window.innerWidth;
+      cssHeight = container?.clientHeight || window.innerHeight;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.round(cssWidth * dpr);
+      canvas.height = Math.round(cssHeight * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
     window.addEventListener('resize', handleResize);
     handleResize();
 
-    const w = canvas.width / window.devicePixelRatio;
-    const h = canvas.height / window.devicePixelRatio;
-
     // Initialize particles
     for (let i = 0; i < numParticles; i++) {
-      const size = Math.random() * 1.5 + 0.5; // Very tiny dust specks
-      const opacity = Math.random() * 0.18 + 0.04; // Extremely subtle
+      const size = Math.random() * 1.5 + 0.5;
+      const opacity = Math.random() * 0.18 + 0.04;
       particles.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
+        x: Math.random() * cssWidth,
+        y: Math.random() * cssHeight,
         size,
-        speedX: (Math.random() - 0.5) * 0.08, // Slow, near-static horizontal drift
-        speedY: -(Math.random() * 0.15 + 0.05), // Quietly floating upwards
+        speedX: (Math.random() - 0.5) * 0.08,
+        speedY: -(Math.random() * 0.15 + 0.05),
         opacity,
-        originalOpacity: opacity,
         wobbleSpeed: Math.random() * 0.01 + 0.002,
         wobbleValue: Math.random() * Math.PI * 2,
       });
@@ -58,33 +59,29 @@ export const FloatingParticles: React.FC = () => {
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const width = canvas.width / window.devicePixelRatio;
-      const height = canvas.height / window.devicePixelRatio;
 
-      particles.forEach((p) => {
-        // Update position
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
         p.y += p.speedY;
         p.wobbleValue += p.wobbleSpeed;
-        p.x += p.speedX + Math.sin(p.wobbleValue) * 0.06; // Elegant sway
+        p.x += p.speedX + Math.sin(p.wobbleValue) * 0.06;
 
-        // Boundary wrap loops
         if (p.y < -10) {
-          p.y = height + 10;
-          p.x = Math.random() * width;
+          p.y = cssHeight + 10;
+          p.x = Math.random() * cssWidth;
         }
         if (p.x < -10) {
-          p.x = width + 10;
-        } else if (p.x > width + 10) {
+          p.x = cssWidth + 10;
+        } else if (p.x > cssWidth + 10) {
           p.x = -10;
         }
 
-        // Render soft dust particles with a radial blur look
+        const alpha = p.opacity * (1 + Math.sin(p.wobbleValue) * 0.35);
+        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        
-        ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity * (1 + Math.sin(p.wobbleValue) * 0.35)})`;
         ctx.fill();
-      });
+      }
 
       animationId = requestAnimationFrame(draw);
     };

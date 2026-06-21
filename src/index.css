@@ -16,12 +16,22 @@
     font-family: var(--font-sans);
     overflow-x: hidden;
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    touch-action: manipulation;
+    /* Safe area padding for notched phones */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
   }
 
-  /* Completely hide standard browser cursor globally to prevent co-visibility */
+  /* Completely hide standard browser cursor globally to prevent co-visibility
   *, html, body, a, button, select, input, textarea, [role="button"], .cursor-pointer {
     cursor: none !important;
   }
+  */
 
   /* Custom thin scrollbar */
   ::-webkit-scrollbar {

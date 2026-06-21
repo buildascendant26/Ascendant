@@ -83,7 +83,7 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans overflow-hidden md:cursor-none">
+    <div className="relative min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans overflow-hidden">
       {/* Dynamic interactive video loading overlay */}
       <AnimatePresence>
         {isLoading && (
@@ -102,8 +102,9 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* High-fidelity custom sensor reticle cursor (only after video intro) */}
+      {/* High-fidelity custom sensor reticle cursor (only after video intro)
       {!isLoading && <CustomCursor />}
+      */}
 
       {/* Persistant Starfield background across all page scroll steps */}
       <Starfield />

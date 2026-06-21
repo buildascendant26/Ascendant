@@ -18,7 +18,15 @@ export const VideoLoader: React.FC<VideoLoaderProps> = ({ onComplete }) => {
 
   const handleBootComplete = () => {
     setPhase("video");
-    videoRef.current?.play().catch(() => {});
+    const video = videoRef.current;
+    if (!video) {
+      onComplete();
+      return;
+    }
+    // Attempt to play; if blocked (mobile autoplay policy), skip video entirely
+    video.play().catch(() => {
+      onComplete();
+    });
   };
 
   return (
@@ -31,10 +39,23 @@ export const VideoLoader: React.FC<VideoLoaderProps> = ({ onComplete }) => {
         src="/final.mp4"
         muted
         playsInline
+        // @ts-ignore — webkit vendor attribute for iOS inline playback
+        webkit-playsinline="true"
         disablePictureInPicture
         disableRemotePlayback
         preload="auto"
         onEnded={onComplete}
+        // On mobile, if video errors or stalls, auto-skip to main page
+        onError={onComplete}
+        onStalled={() => {
+          // Give it 3 seconds to recover, then skip
+          setTimeout(() => {
+            const video = videoRef.current;
+            if (video && video.paused) {
+              onComplete();
+            }
+          }, 3000);
+        }}
         className={`w-full h-full object-cover ${phase === "boot" ? "hidden" : ""}`}
         style={{ willChange: "transform" }}
       />
