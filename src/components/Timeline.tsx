@@ -193,7 +193,7 @@ export const Timeline: React.FC = () => {
                   <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 flex-1">
                     {/* Time anchor */}
                     <div className="font-mono text-xs text-neutral-400 font-medium tracking-wider min-w-[100px]">
-                      {slot.time}
+                      <ScrambleText as="span" text={slot.time} trigger={activeDay} />
                     </div>
                     {/* Title and subtitle */}
                     <div>
