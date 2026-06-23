@@ -259,7 +259,7 @@ export const RegistrationPage: React.FC<RegistrationPageProps> = ({ onClose }) =
 
     try {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbw8bdaXZ_nYve69txzTwXZEuDv3sqRvIa8MwAAs4MSE-g5uDrNNN6CyuUOgL5V0fCf2/exec",
+        "https://script.google.com/macros/s/AKfycbxA9iAR3LvwSP8VKd_qCmFLNSt74Vc3jCbISQctABHw1TdpTEicRDR1HPVZml65_Mht/exec",
         {
           method: "POST",
           headers: {
@@ -392,7 +392,7 @@ export const RegistrationPage: React.FC<RegistrationPageProps> = ({ onClose }) =
       setIsSubmitting(true);
       setErrorMsg("");
       try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbw8bdaXZ_nYve69txzTwXZEuDv3sqRvIa8MwAAs4MSE-g5uDrNNN6CyuUOgL5V0fCf2/exec", {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbxA9iAR3LvwSP8VKd_qCmFLNSt74Vc3jCbISQctABHw1TdpTEicRDR1HPVZml65_Mht/exec", {
           method: "POST",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify({ action: "sendOtp", email: val, otp: otp })

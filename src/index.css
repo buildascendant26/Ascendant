@@ -1,107 +1,128 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap');
-@import "tailwindcss";
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap');
+  @import "tailwindcss";
 
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", sans-serif;
-  --font-bebas: "Bebas Neue", sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-}
-
-/* Custom Base Extensions */
-@layer base {
-  html, body {
-    background-color: #000000;
-    color: #ffffff;
-    font-family: var(--font-sans);
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    -webkit-tap-highlight-color: transparent;
-    -webkit-text-size-adjust: 100%;
-    touch-action: manipulation;
-    /* Safe area padding for notched phones */
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
+  @theme {
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Space Grotesk", sans-serif;
+    --font-bebas: "Bebas Neue", sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   }
 
-  /* Completely hide standard browser cursor globally to prevent co-visibility
+  /* Custom Base Extensions */
+  @layer base {
+
+    html,
+    body {
+      background-color: #000000;
+      color: #ffffff;
+      font-family: var(--font-sans);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-text-size-adjust: 100%;
+      touch-action: ;
+      /* Safe area padding for notched phones */
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+    }
+
+    /* Completely hide standard browser cursor globally to prevent co-visibility
   *, html, body, a, button, select, input, textarea, [role="button"], .cursor-pointer {
     cursor: none !important;
   }
   */
 
-  /* Custom thin scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    /* Custom thin scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #000000;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #222222;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #444444;
+    }
   }
-  ::-webkit-scrollbar-track {
-    background: #000000;
+
+  /* Starfield Radial Dot Grid CSS Pattern */
+  .bg-dot-grid {
+    background-size: 30px 30px;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-color: #000000;
   }
-  ::-webkit-scrollbar-thumb {
-    background: #222222;
-    border-radius: 3px;
+
+  /* Custom Animations */
+  @keyframes marquee {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+      transform: translate3d(-50%, 0, 0);
+    }
   }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #444444;
+
+  .animate-marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 25s linear infinite;
   }
-}
 
-/* Starfield Radial Dot Grid CSS Pattern */
-.bg-dot-grid {
-  background-size: 30px 30px;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
-  background-color: #000000;
-}
-
-/* Custom Animations */
-@keyframes marquee {
-  0% {
-    transform: translate3d(0, 0, 0);
+  .animate-marquee-reverse {
+    display: flex;
+    width: max-content;
+    animation: marquee 30s linear infinite reverse;
   }
-  100% {
-    transform: translate3d(-50%, 0, 0);
+
+  @keyframes pulse-slow {
+
+    0%,
+    100% {
+      opacity: 0.3;
+    }
+
+    50% {
+      opacity: 0.9;
+    }
   }
-}
 
-.animate-marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee 25s linear infinite;
-}
+  .animate-pulse-slow {
+    animation: pulse-slow 3s ease-in-out infinite;
+  }
 
-.animate-marquee-reverse {
-  display: flex;
-  width: max-content;
-  animation: marquee 30s linear infinite reverse;
-}
+  @keyframes bounce-slow {
 
-@keyframes pulse-slow {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.9; }
-}
+    0%,
+    100% {
+      transform: translateY(0);
+    }
 
-.animate-pulse-slow {
-  animation: pulse-slow 3s ease-in-out infinite;
-}
+    50% {
+      transform: translateY(8px);
+    }
+  }
 
-@keyframes bounce-slow {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(8px); }
-}
+  .animate-bounce-slow {
+    animation: bounce-slow 2.5s ease-in-out infinite;
+  }
 
-.animate-bounce-slow {
-  animation: bounce-slow 2.5s ease-in-out infinite;
-}
+  /* Subtle glow outline */
+  .glow-on-hover {
+    transition: all 0.5s ease;
+  }
 
-/* Subtle glow outline */
-.glow-on-hover {
-  transition: all 0.5s ease;
-}
-.glow-on-hover:hover {
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.3);
-}
+  .glow-on-hover:hover {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
