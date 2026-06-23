@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const CHARS = "!@#$%^&*()_+-=[]{}|;:,.<>?/~";
 
@@ -11,14 +11,8 @@ interface ScrambleTextProps {
 
 export default function ScrambleText({ text, trigger, as: Tag = "span", className }: ScrambleTextProps) {
   const [displayText, setDisplayText] = useState(text);
-  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-
     let frame = 0;
     const totalFrames = 20;
     const targetChars = text.split("");
@@ -45,7 +39,7 @@ export default function ScrambleText({ text, trigger, as: Tag = "span", classNam
     }, 30);
 
     return () => clearInterval(interval);
-  }, [trigger]);
+  }, [trigger, text]);
 
   return <Tag className={className}>{displayText}</Tag>;
 }
