@@ -179,7 +179,7 @@ export const Timeline: React.FC = () => {
 
             return (
               <div
-                key={slot.id}
+                key={`${slot.id}-${activeDay}`}
                 className={`border rounded-xl transition-all duration-300 overflow-hidden bg-neutral-950/70 border-neutral-900 hover:border-neutral-800 ${
                   isExpanded ? 'border-neutral-800 bg-neutral-950' : ''
                 }`}
