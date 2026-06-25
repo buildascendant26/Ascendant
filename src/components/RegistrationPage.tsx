@@ -503,7 +503,7 @@ export const RegistrationPage: React.FC<RegistrationPageProps> = ({ onClose }) =
 
   return (
     <div
-      className="fixed inset-0 w-screen h-screen z-50 bg-black flex items-center justify-center select-none overflow-hidden"
+      className="fixed inset-0 w-screen h-screen h-[100dvh] z-50 bg-black flex items-center justify-center select-none overflow-hidden"
       style={{
         opacity: visible ? 1 : 0,
         transition: "opacity 0.35s ease",
@@ -516,7 +516,7 @@ export const RegistrationPage: React.FC<RegistrationPageProps> = ({ onClose }) =
           className="flex flex-col relative z-10 w-full"
           style={{
             maxWidth: 900,
-            height: "82vh",
+            height: "82dvh",
             maxHeight: 700,
             border: "1px solid #2a2a2a",
             borderRadius: 8,
@@ -692,16 +692,36 @@ export const RegistrationPage: React.FC<RegistrationPageProps> = ({ onClose }) =
               </div>
             )}
 
-            {/* Hidden input */}
+            {/* Visually hidden input — drives the mobile on-screen keyboard.
+                Kept within the viewport (not at -9999) so iOS doesn't jump/scroll
+                on focus; pointer-events:none so it never blocks taps. */}
             <input
               ref={inputRef}
-              type="text"
+              type={field === "contact_email" ? "email" : "text"}
+              inputMode={
+                field === "team_count" || field === "contact_phone" || field === "email_otp"
+                  ? "numeric"
+                  : field === "contact_email"
+                  ? "email"
+                  : "text"
+              }
+              enterKeyHint={field === "confirm" ? "send" : "next"}
+              autoCapitalize={
+                field === "member_names" || field === "school" || field === "team_name"
+                  ? "words"
+                  : "none"
+              }
+              autoCorrect="off"
+              autoComplete="off"
+              spellCheck={false}
               value={input}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
               disabled={isSubmitting}
-              className="opacity-0 absolute"
-              style={{ left: -9999, top: -9999, width: 1, height: 1 }}
+              className="absolute opacity-0 pointer-events-none"
+              style={{ left: 0, bottom: 0, width: 1, height: 1, border: 0, padding: 0, fontSize: 16, background: "transparent" }}
+              aria-hidden="true"
+              tabIndex={-1}
               autoFocus
             />
 

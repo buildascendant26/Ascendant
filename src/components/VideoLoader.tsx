@@ -50,7 +50,7 @@ export const VideoLoader: React.FC<VideoLoaderProps> = ({ onComplete }) => {
   };
 
   return (
-    <div className="fixed inset-0 w-screen h-screen bg-black z-[100]">
+    <div className="fixed inset-0 w-screen h-screen h-[100dvh] bg-black z-[100]">
       {phase === "boot" && (
         <BootSequence onComplete={handleBootComplete} />
       )}

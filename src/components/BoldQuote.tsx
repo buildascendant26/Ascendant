@@ -190,42 +190,65 @@ export const BoldQuote: React.FC<BoldQuoteProps> = ({ isLoader = false, onEnter 
       }
     };
 
-    // Responsive Touch Support for Fluid Mobile Dragging
+    // Responsive Touch Support for Fluid Mobile Dragging.
+    // The gesture axis is locked on the first move: horizontal swipes spin the
+    // globe (and suppress scroll), while vertical swipes are left alone so the
+    // page scrolls normally and the user is never trapped in this section.
+    let touchAxis: 'none' | 'h' | 'v' = 'none';
+    let touchOriginX = 0;
+    let touchOriginY = 0;
+
     const handleTouchStart = (e: TouchEvent) => {
       if (e.touches.length === 1) {
-        isDragging = true;
         startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
+        touchOriginX = startX;
+        touchOriginY = startY;
+        touchAxis = 'none';
         mouseRef.current.hoverActive = true;
       }
     };
 
     const handleTouchMove = (e: TouchEvent) => {
       if (!container || e.touches.length !== 1) return;
-      const rect = container.getBoundingClientRect();
-      const x = e.touches[0].clientX - rect.left;
-      const y = e.touches[0].clientY - rect.top;
+      const tx = e.touches[0].clientX;
+      const ty = e.touches[0].clientY;
 
+      // Lock the dominant axis once movement clears a small threshold.
+      if (touchAxis === 'none') {
+        const totalDx = Math.abs(tx - touchOriginX);
+        const totalDy = Math.abs(ty - touchOriginY);
+        if (totalDx > 8 || totalDy > 8) {
+          touchAxis = totalDx > totalDy ? 'h' : 'v';
+          if (touchAxis === 'h') isDragging = true;
+        }
+      }
+
+      // Vertical (or undetermined) gesture: let the page scroll, don't rotate.
+      if (touchAxis !== 'h') return;
+
+      const rect = container.getBoundingClientRect();
+      const x = tx - rect.left;
+      const y = ty - rect.top;
       mouseRef.current.targetX = (x / width) * 2 - 1;
       mouseRef.current.targetY = (y / height) * 2 - 1;
 
-      if (isDragging) {
-        const deltaX = e.touches[0].clientX - startX;
-        const deltaY = e.touches[0].clientY - startY;
-        targetDragX += deltaX * 0.01;
-        targetDragY += deltaY * 0.01;
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-        
-        // Prevent default screen scrolling while dragging the globe
-        if (e.cancelable) {
-          e.preventDefault();
-        }
+      const deltaX = tx - startX;
+      const deltaY = ty - startY;
+      targetDragX += deltaX * 0.01;
+      targetDragY += deltaY * 0.01;
+      startX = tx;
+      startY = ty;
+
+      // Only suppress native scrolling for an intentional horizontal spin.
+      if (e.cancelable) {
+        e.preventDefault();
       }
     };
 
     const handleTouchEnd = () => {
       isDragging = false;
+      touchAxis = 'none';
       mouseRef.current.hoverActive = false;
     };
 

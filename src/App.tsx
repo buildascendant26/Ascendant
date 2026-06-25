@@ -86,7 +86,7 @@ export default function App() {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, filter: "blur(16px)", scale: 1.03 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 w-screen h-screen z-[100] bg-black"
+            className="fixed inset-0 w-screen h-screen min-h-[100dvh] z-[100] bg-black"
           >
             <VideoLoader onComplete={() => {
               setIsLoading(false);
@@ -116,7 +116,7 @@ export default function App() {
       {/* Core Redesigned Hero Landing View (Height 100vh - exact screenshot style) */}
       <header
         id="home"
-        className="relative w-full min-h-screen flex flex-col justify-between p-6 md:p-12 z-20"
+        className="relative w-full min-h-screen min-h-[100dvh] flex flex-col justify-between p-6 md:p-12 z-20"
       >
         {/* Subtle, slowly drifting floating dust particle effect */}
         {!isLoading && <FloatingParticles />}
