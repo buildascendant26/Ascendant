@@ -112,6 +112,18 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
     }
   };
 
+  // Press Enter to continue (desktop) when prompt phase is active
+  useEffect(() => {
+    if (phase !== "prompt") return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        onComplete();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [phase, onComplete]);
+
   const showCursor = phase === "cursor" || phase === "typing";
   const typedCommand = COMMAND.slice(0, typedChars);
 
@@ -246,7 +258,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
               animation: promptOpacity === 1 ? "pulsePrompt 2.5s ease-in-out infinite" : "none",
             }}
           >
-            {isMobile ? "TAP TO CONTINUE" : "CLICK ANYWHERE to continue"}
+            {isMobile ? "CLICK TO ENTER" : "PRESS ENTER"}
           </div>
         </div>
       </div>
