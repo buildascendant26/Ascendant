@@ -96,7 +96,7 @@ export const Manifesto: React.FC = () => {
   const activePhase = phases.find(p => p.id === activePhaseId) || phases[0];
 
   return (
-    <section id="vision" className="min-h-screen py-24 md:py-36 px-6 md:px-16 w-full flex flex-col justify-center relative border-b border-neutral-900 bg-black overflow-hidden">
+    <section id="vision" className="min-h-screen py-24 md:py-36 px-6 md:px-16 w-full flex flex-col justify-center relative border-b border-neutral-900 bg-black/50 overflow-hidden">
       {/* Background radial soft light to build an immense luxurious depth */}
       <div className="absolute top-1/4 left-1/3 w-[40vw] h-[40vw] rounded-full bg-neutral-900/40 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-[35vw] h-[35vw] rounded-full bg-neutral-900/30 blur-[150px] pointer-events-none" />

@@ -11,6 +11,22 @@
   /* Custom Base Extensions */
   @layer base {
 
+    html {
+      /* Gently focus the nearest section heading as you scroll. `proximity`
+         (not `mandatory`) so tall sections / the footer never trap the scroll. */
+      scroll-snap-type: y proximity;
+      scroll-padding-top: 0px;
+    }
+
+    /* Each major section becomes a snap target aligned to the top of the view. */
+    #home,
+    #vision,
+    #program,
+    #summit-quote {
+      scroll-snap-align: start;
+      scroll-snap-stop: normal;
+    }
+
     html,
     body {
       background-color: #000000;
@@ -125,4 +141,28 @@
   .glow-on-hover:hover {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .terminal-crt-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at center, transparent 48%, rgba(0, 0, 0, 0.48) 100%),
+      repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.05) 0,
+        rgba(255, 255, 255, 0.05) 1px,
+        transparent 1px,
+        transparent 4px
+      );
+    mix-blend-mode: screen;
+  }
+
+  .terminal-glitch-active {
+    text-shadow:
+      0 0 8px rgba(215, 255, 244, 0.35),
+      1px 0 rgba(0, 255, 170, 0.28),
+      -1px 0 rgba(255, 255, 255, 0.18);
   }

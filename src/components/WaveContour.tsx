@@ -31,8 +31,9 @@ export const WaveContour: React.FC = () => {
         return;
       }
 
-      ctx.fillStyle = '#000';
-      ctx.fillRect(0, 0, cssWidth, cssHeight);
+      // Transparent clear (not a solid black fill) so the global swirl / video
+      // background shows through the contour mesh instead of being covered.
+      ctx.clearRect(0, 0, cssWidth, cssHeight);
 
       const cx = cssWidth * 0.5;
       const cy = cssHeight * 0.5;

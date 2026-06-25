@@ -3,15 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Starfield } from "./components/Starfield";
-import { CustomCursor } from "./components/CustomCursor";
 import { MenuDrawer } from "./components/MenuDrawer";
 import { Manifesto } from "./components/Manifesto";
 import { Timeline } from "./components/Timeline";
@@ -22,10 +15,11 @@ import { FloatingParticles } from "./components/FloatingParticles";
 import { InteractiveDotGrid } from "./components/InteractiveDotGrid";
 import { InteractiveFooter } from "./components/InteractiveFooter";
 import { RegistrationPage } from "./components/RegistrationPage";
-import { AscendantSymbol } from "./components/AscendantSymbol";
 import CountdownTimer from "./components/CountdownTimer";
 import ascendantLogo from "./components/ascendant_logo.png";
-import { Calendar, Compass, ShieldCheck, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
+import ScrollBackground from "./components/ScrollBackground";
+import { TerminalGlitchOverlay } from "./components/TerminalGlitchOverlay";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -61,9 +55,7 @@ export default function App() {
     };
 
     const handleScroll = () => {
-      if (rafId === null) {
-        rafId = requestAnimationFrame(update);
-      }
+      if (rafId === null) rafId = requestAnimationFrame(update);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -81,7 +73,11 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans overflow-hidden">
+    <div className="relative min-h-screen text-white selection:bg-white selection:text-black font-sans overflow-hidden">
+      {/* Persistent scroll-driven image-sequence background — global layer
+          behind everything (zIndex -1), mapping scroll progress to 192 frames. */}
+      <ScrollBackground />
+
       {/* Dynamic interactive video loading overlay */}
       <AnimatePresence>
         {isLoading && (
@@ -99,15 +95,15 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* High-fidelity custom sensor reticle cursor (only after video intro)
-      {!isLoading && <CustomCursor />}
-      */}
-
-      {/* Persistant Starfield background across all page scroll steps */}
-      {!isLoading && <Starfield />}
+      {/* Background is the scroll-driven WebP frame sequence (ScrollBackground). */}
 
       {/* Dynamic interactive dot grid that responds elegantly to the cursor */}
-      {!isLoading && <InteractiveDotGrid />}
+      <div className="relative z-[14] pointer-events-none">
+        {!isLoading && <InteractiveDotGrid />}
+      </div>
+
+      {/* DOM overlay text scramble triggered as each depth section enters view */}
+      {!isLoading && <TerminalGlitchOverlay />}
 
       {/* Sleek top screen progressive scroll indicator — scaleX is GPU composited */}
       <div
@@ -330,6 +326,9 @@ export default function App() {
           <RegistrationPage onClose={() => setIsRegistering(false)} />
         )}
       </AnimatePresence>
+
+      {/* CRT scanline + vignette layer: above visual layers, interaction-safe */}
+      <div className="terminal-crt-overlay" aria-hidden="true" />
     </div>
   );
 }

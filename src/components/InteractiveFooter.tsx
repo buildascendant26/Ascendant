@@ -22,7 +22,7 @@ export const InteractiveFooter: React.FC<InteractiveFooterProps> = ({ onSmoothSc
   }, []);
 
   return (
-    <footer className="relative z-30 bg-black pt-24 pb-12 px-6 md:px-12 w-full select-none overflow-hidden text-white">
+    <footer className="relative z-30 bg-black/50 pt-24 pb-12 px-6 md:px-12 w-full select-none overflow-hidden text-white">
       
       {/* Bold horizontal top border for a strong structural presence */}
       <div className="absolute top-0 left-0 w-full h-[2px] bg-white opacity-100" />

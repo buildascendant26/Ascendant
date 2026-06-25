@@ -184,7 +184,7 @@ export const TimelineBackground: React.FC<TimelineBackgroundProps> = ({ activeDa
   return (
     <div 
       ref={containerRef}
-      className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-0 bg-[radial-gradient(circle_at_40%_50%,rgba(20,20,20,0.1)_0%,rgba(0,0,0,0.8)_85%)]"
+      className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-0 bg-[radial-gradient(circle_at_40%_50%,rgba(0,0,0,0)_0%,rgba(0,0,0,0.35)_90%)]"
     >
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
     </div>

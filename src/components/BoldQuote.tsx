@@ -593,7 +593,7 @@ export const BoldQuote: React.FC<BoldQuoteProps> = ({ isLoader = false, onEnter 
       ref={containerRef}
       className={isLoader 
         ? "fixed inset-0 w-screen h-screen z-[100] flex flex-col justify-center px-6 sm:px-12 md:px-24 lg:px-32 bg-black overflow-hidden select-none"
-        : "min-h-screen py-24 md:py-36 px-6 sm:px-12 md:px-24 lg:px-32 w-full flex flex-col justify-center relative border-b border-neutral-900 bg-black overflow-hidden select-none"
+        : "min-h-screen py-24 md:py-36 px-6 sm:px-12 md:px-24 lg:px-32 w-full flex flex-col justify-center relative border-b border-neutral-900 bg-black/50 overflow-hidden select-none"
       }
     >
       {/* Background Interactive 3D Wireframe World/Globe */}

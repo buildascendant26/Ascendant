@@ -131,7 +131,7 @@ export const Timeline: React.FC = () => {
   };
 
   return (
-    <section id="program" className="min-h-[70vh] py-12 md:py-16 px-4 md:px-8 w-full border-b border-neutral-900 bg-black relative overflow-hidden">
+    <section id="program" className="min-h-[70vh] py-12 md:py-16 px-4 md:px-8 w-full border-b border-neutral-900 bg-black/50 relative overflow-hidden">
       <TimelineBackground activeDay={activeDay} />
       <div className="max-w-2xl mx-auto space-y-8 relative z-10">
         
