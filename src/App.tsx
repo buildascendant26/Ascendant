@@ -18,7 +18,7 @@ import { RegistrationPage } from "./components/RegistrationPage";
 import CountdownTimer from "./components/CountdownTimer";
 import ascendantLogo from "./components/ascendant_logo.png";
 import { MapPin } from "lucide-react";
-import ScrollBackground from "./components/ScrollBackground";
+import ShaderBackground from "./components/ShaderBackground";
 import { TerminalGlitchOverlay } from "./components/TerminalGlitchOverlay";
 
 export default function App() {
@@ -76,7 +76,7 @@ export default function App() {
     <div className="relative min-h-screen text-white selection:bg-white selection:text-black font-sans overflow-hidden">
       {/* Persistent scroll-driven image-sequence background — global layer
           behind everything (zIndex -1), mapping scroll progress to 192 frames. */}
-      <ScrollBackground />
+      <ShaderBackground />
 
       {/* Dynamic interactive video loading overlay */}
       <AnimatePresence>
@@ -95,7 +95,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* Background is the scroll-driven WebP frame sequence (ScrollBackground). */}
+      {/* Background is the procedural WebGL spiral galaxy (ShaderBackground). */}
 
       {/* Dynamic interactive dot grid that responds elegantly to the cursor */}
       <div className="relative z-[14] pointer-events-none">
