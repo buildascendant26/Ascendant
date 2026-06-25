@@ -28,7 +28,7 @@ export default function App() {
   // Ref for direct DOM updates — avoids React re-renders on every scroll tick
   const progressBarRef = React.useRef<HTMLDivElement>(null);
 
-  // Lock scrolling during the interactive calibration loading phase or registration flow
+  // Lock scrolling during the interactive calibration loading phase or registration flow shlok is ccool boy
   useEffect(() => {
     if (isLoading || isRegistering) {
       document.body.style.overflow = "hidden";
