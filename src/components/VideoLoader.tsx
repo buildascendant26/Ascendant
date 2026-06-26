@@ -51,7 +51,9 @@ export const VideoLoader: React.FC<VideoLoaderProps> = ({ onComplete }) => {
 
   return (
     <div className="fixed inset-0 w-screen h-screen h-[100dvh] bg-black z-[100]">
+      <style>{`@media (max-width: 767px) { #loader-video { object-fit: contain; } }`}</style>
       <video
+        id="loader-video"
         ref={videoRef}
         muted
         playsInline
@@ -65,9 +67,9 @@ export const VideoLoader: React.FC<VideoLoaderProps> = ({ onComplete }) => {
         onError={safeComplete}
         onStalled={safeComplete}
         className={`absolute inset-0 w-full h-full object-cover ${phase === "boot" ? "opacity-0" : "opacity-100"} transition-opacity duration-700`}
+        style={{ willChange: "transform" }}
       >
         <source src="/final.webm" type="video/webm" />
-        <source src="/final.mp4" type="video/mp4" />
       </video>
       {phase === "boot" && (
         <div className="absolute inset-0 z-10">

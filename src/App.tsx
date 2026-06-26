@@ -20,6 +20,7 @@ import ascendantLogo from "./components/ascendant_logo.png";
 import { MapPin } from "lucide-react";
 import ParticleSphereBackground from "./components/ParticleSphereBackground";
 import { TerminalGlitchOverlay } from "./components/TerminalGlitchOverlay";
+import { AscendantSymbol } from "./components/AscendantSymbol";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -219,14 +220,9 @@ export default function App() {
                 Decode. Build. Pitch.
               </p>
 
-              {/* Slanted oval badge containing a thin elegant 4-pointed star matching screenshot */}
-              <div className="inline-flex items-center justify-center border border-white/30 rounded-full w-12 h-10 bg-neutral-950 -rotate-12 hover:rotate-0 hover:border-white/60 transition-transform duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.8)] shrink-0 self-center">
-                <svg
-                  viewBox="0 0 24 24"
-                  className="w-5 h-5 text-white fill-white animate-pulse"
-                >
-                  <path d="M12 2C12.5 7.5 16.5 11.5 22 12C16.5 12.5 12.5 16.5 12 22C11.5 16.5 7.5 12.5 2 12C7.5 11.5 11.5 7.5 12 2Z" />
-                </svg>
+              {/* Slanted oval badge containing the Ascendant symbol */}
+              <div className="inline-flex items-center justify-center border border-white/30 rounded-full w-12 h-10 bg-neutral-950 -rotate-12 hover:rotate-0 hover:border-white/60 transition-transform duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.8)] shrink-0 self-center p-1.5">
+                <AscendantSymbol className="w-full h-full text-white" strokeWidth={1.5} />
               </div>
             </motion.div>
 
