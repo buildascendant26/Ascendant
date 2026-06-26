@@ -258,7 +258,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
               animation: promptOpacity === 1 ? "pulsePrompt 2.5s ease-in-out infinite" : "none",
             }}
           >
-            {isMobile ? "CLICK TO ENTER" : "PRESS ENTER"}
+            {isMobile ? "CLICK TO ENTER" : "CLICK ENTER"}
           </div>
         </div>
       </div>

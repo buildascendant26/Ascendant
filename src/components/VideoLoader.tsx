@@ -51,12 +51,8 @@ export const VideoLoader: React.FC<VideoLoaderProps> = ({ onComplete }) => {
 
   return (
     <div className="fixed inset-0 w-screen h-screen h-[100dvh] bg-black z-[100]">
-      {phase === "boot" && (
-        <BootSequence onComplete={handleBootComplete} />
-      )}
       <video
         ref={videoRef}
-        src="/final.mp4"
         muted
         playsInline
         // @ts-ignore — webkit vendor attribute for iOS inline playback
@@ -68,9 +64,22 @@ export const VideoLoader: React.FC<VideoLoaderProps> = ({ onComplete }) => {
         // On mobile, if video errors or stalls, auto-skip to main page
         onError={safeComplete}
         onStalled={safeComplete}
-        className={`w-full h-full object-cover ${phase === "boot" ? "hidden" : ""}`}
-        style={{ willChange: "transform" }}
-      />
+        className={`absolute inset-0 w-full h-full object-cover ${phase === "boot" ? "opacity-0" : "opacity-100"} transition-opacity duration-700`}
+      >
+        <source src="/final.webm" type="video/webm" />
+        <source src="/final.mp4" type="video/mp4" />
+      </video>
+      {phase === "boot" && (
+        <div className="absolute inset-0 z-10">
+          <BootSequence onComplete={handleBootComplete} />
+        </div>
+      )}
+      <button
+        onClick={safeComplete}
+        className="fixed bottom-6 right-6 z-20 text-[11px] font-mono tracking-[0.15em] text-neutral-600 hover:text-neutral-300 transition-colors duration-300 uppercase cursor-pointer"
+      >
+        Skip loading →
+      </button>
     </div>
   );
 };

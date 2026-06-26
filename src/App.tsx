@@ -116,7 +116,7 @@ export default function App() {
       {/* Core Redesigned Hero Landing View (Height 100vh - exact screenshot style) */}
       <header
         id="home"
-        className="relative w-full min-h-screen min-h-[100dvh] flex flex-col justify-between p-6 md:p-12 z-20"
+        className="relative w-full min-h-screen min-h-[100dvh] flex flex-col justify-between pt-2 md:pt-4 px-6 md:px-12 pb-6 md:pb-12 z-20"
       >
         {/* Subtle, slowly drifting floating dust particle effect */}
         {!isLoading && <FloatingParticles />}
@@ -124,15 +124,15 @@ export default function App() {
         {/* Top Header Row */}
         <div className="w-full flex justify-between items-center relative z-30">
           {/* Header left: DPS Logo */}
-          <div className="flex flex-col items-center justify-center gap-1 mt-2">
-            <div className="h-10 sm:h-16 md:h-24 flex items-center justify-center">
+          <div className="flex flex-col items-start justify-center gap-0.5 mt-2">
+            <div className="h-10 sm:h-12 md:h-16 flex items-center justify-start">
               <img
                 src="/dps_logo.png"
                 alt="Delhi Public School Bangalore East"
                 className="h-full object-contain"
               />
             </div>
-            <p className="font-mono text-[10px] md:text-xs text-neutral-400 tracking-[0.25em] uppercase text-center w-full">
+            <p className="font-mono text-[9px] md:text-[10px] text-neutral-400 tracking-[0.25em] uppercase text-left w-full ml-3">
               presents,
             </p>
           </div>
@@ -165,9 +165,9 @@ export default function App() {
         </div>
 
         {/* Centerpiece Core Grid matching screenshot */}
-        <div className="w-full flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative py-6 md:py-12 z-10">
+        <div className="w-full flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center relative py-2 md:py-6 z-10">
           {/* Left Column for Typographic Hierarchy (Text, Subtitle, CTA) */}
-          <div className="lg:col-span-7 flex flex-col justify-center items-start text-left order-2 lg:order-1 mt-4 lg:mt-0 relative">
+          <div className="lg:col-span-7 flex flex-col justify-center items-start text-left order-2 lg:order-1 mt-4 lg:mt-4 relative">
             {/* Date relocated above the Hero Heading */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -215,8 +215,8 @@ export default function App() {
               }}
               className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-2 md:mt-1"
             >
-              <p className="font-sans text-lg sm:text-xl md:text-2xl lg:text-[2rem] text-neutral-200 font-light tracking-wide leading-normal">
-                Where ideas become reality
+              <p className="font-mono text-base sm:text-lg md:text-xl lg:text-[1.5rem] text-neutral-200 font-semibold tracking-wide leading-normal">
+                Decode. Build. Pitch.
               </p>
 
               {/* Slanted oval badge containing a thin elegant 4-pointed star matching screenshot */}
@@ -243,7 +243,7 @@ export default function App() {
             >
               <button
                 onClick={() => setIsRegistering(true)}
-                className="group relative flex items-center justify-center gap-4 px-8 py-3.5 bg-neutral-900/60 border border-white/10 hover:border-white/40 text-white rounded-xl transition-all duration-300 cursor-pointer text-xs md:text-sm font-semibold tracking-[0.25em] uppercase hover:bg-white hover:text-black hover:scale-[1.02] active:scale-[0.98] shadow-[0_8px_30px_rgba(0,0,0,0.5)] overflow-hidden"
+                className="group relative flex items-center justify-center gap-4 pl-5 pr-8 py-3.5 bg-neutral-900/60 border border-white/10 hover:border-white/40 text-white rounded-xl transition-all duration-300 cursor-pointer text-xs md:text-sm font-semibold tracking-[0.25em] uppercase hover:bg-white hover:text-black hover:scale-[1.02] active:scale-[0.98] shadow-[0_8px_30px_rgba(0,0,0,0.5)] overflow-hidden"
               >
                 <span>REGISTER NOW</span>
                 <span className="text-sm transition-transform duration-300 group-hover:translate-x-1.5">
@@ -285,16 +285,7 @@ export default function App() {
             </p>
           </div>
 
-          {/* Bottom right indicator */}
-          <button
-            id="hero-scroll-btn"
-            onClick={() => handleSmoothScroll("vision")}
-            className="flex items-center gap-2.5 text-neutral-400 hover:text-white font-sans text-xs md:text-sm tracking-wide transition-colors duration-300 cursor-pointer outline-none select-none pb-1"
-          >
-            <span className="animate-bounce-slow font-bold text-sm">↓</span>
-            <span className="w-2.5 h-2.5 bg-white rounded-full inline-block shrink-0 animate-pulse" />
-            <span>Scroll to reveal details</span>
-          </button>
+          {/* Bottom right indicator - removed */}
         </div>
       </header>
 
