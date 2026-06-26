@@ -149,9 +149,9 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
           willChange: "opacity, transform",
         }}
       >
-        <div style={{ width: "100%", maxWidth: 560, padding: "0 1.25rem" }}>
+        <div style={{ width: "100%", maxWidth: isMobile ? 560 : 600, padding: "0 1.25rem" }}>
           {(phase === "cursor" || phase === "typing" || phase === "booting" || phase === "ready") && (
-            <div style={{ fontSize: isMobile ? 11 : 12, color: "#ffffff", marginBottom: 20, display: "flex", alignItems: "center", wordBreak: "break-all" }}>
+            <div style={{ fontSize: isMobile ? 11 : 14, color: "#ffffff", marginBottom: 20, display: "flex", alignItems: "center", wordBreak: "break-all" }}>
               <span>{typedCommand}</span>
               {showCursor && (
                 <span className="boot-cursor" style={{ color: "#ffffff", marginLeft: 2, animation: "blinkCursor 0.8s step-end infinite" }}>█</span>
@@ -167,7 +167,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
                 <div
                   key={i}
                   style={{
-                    fontSize: 13,
+                    fontSize: isMobile ? 13 : 14,
                     color: "#ffffff",
                     animation: "fadeInLine 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards",
                     transformOrigin: "left center",
@@ -190,7 +190,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
             <div
               style={{
                 marginTop: 20,
-                fontSize: 13,
+                fontSize: isMobile ? 13 : 14,
                 color: "#ffffff",
                 animation: "slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards",
               }}
@@ -255,7 +255,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
         >
           <div
             style={{
-              fontSize: 11,
+              fontSize: isMobile ? 11 : 14,
               letterSpacing: "0.2em",
               color: "#666666",
               textTransform: "uppercase",
