@@ -122,24 +122,24 @@ export default function App() {
         {/* Subtle, slowly drifting floating dust particle effect */}
         {!isLoading && <FloatingParticles />}
 
-        {/* Top Header Row */}
-        <div className="w-full flex justify-between items-center relative z-30">
-          {/* Header left: DPS Logo */}
-          <div className="flex flex-col items-start justify-center gap-0.5 mt-2">
-            <div className="h-10 sm:h-12 md:h-16 flex items-center justify-start">
-              <img
-                src="/dps_logo.png"
-                alt="Delhi Public School Bangalore East"
-                className="h-full object-contain"
-              />
+        {/* Top Header Row — 3-column grid guarantees Ascendant logo stays dead center */}
+        <div className="w-full grid grid-cols-[1fr_auto_1fr] items-center relative z-30">
+          <div className="flex items-start justify-start">
+            <div className="flex flex-col items-start justify-center gap-0.5">
+              <div className="h-10 sm:h-12 md:h-16 flex items-center justify-start">
+                <img
+                  src="/dps_logo.png"
+                  alt="Delhi Public School Bangalore East"
+                  className="h-full object-contain"
+                />
+              </div>
+              <p className="font-mono text-[9px] md:text-[10px] text-neutral-400 tracking-[0.25em] uppercase text-left w-full ml-3">
+                presents,
+              </p>
             </div>
-            <p className="font-mono text-[9px] md:text-[10px] text-neutral-400 tracking-[0.25em] uppercase text-left w-full ml-3">
-              presents,
-            </p>
           </div>
 
-          {/* Centered Ascendant Logo in the exact middle between date and hamburger */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none">
+          <div className="flex items-center justify-center pointer-events-none">
             <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
               <img
                 src={ascendantLogo}
@@ -150,14 +150,12 @@ export default function App() {
             </div>
           </div>
 
-          {/* Header right active components: Minimal burger menu icon */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center justify-end">
             <button
               id="menu-open-toggle-btn"
               onClick={() => setIsMenuOpen(true)}
               className="group flex flex-col gap-1.5 justify-center items-end p-2 transition-all duration-300 cursor-pointer"
             >
-              {/* Three clean white lines of equal length */}
               <span className="w-6 h-[2px] bg-white group-hover:opacity-80 rounded-full transition-all duration-300 shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
               <span className="w-6 h-[2px] bg-white group-hover:opacity-80 rounded-full transition-all duration-300 shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
               <span className="w-6 h-[2px] bg-white group-hover:opacity-80 rounded-full transition-all duration-300 shadow-[0_0_8px_rgba(255,255,255,0.3)]" />

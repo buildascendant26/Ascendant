@@ -67,7 +67,7 @@ export const VideoLoader: React.FC<VideoLoaderProps> = ({ onComplete }) => {
         onError={safeComplete}
         onStalled={safeComplete}
         className={`absolute inset-0 w-full h-full object-cover ${phase === "boot" ? "opacity-0" : "opacity-100"} transition-opacity duration-700`}
-        style={{ willChange: "transform" }}
+        style={{ willChange: "transform", backgroundColor: "#0e0e0e" }}
       >
         <source src="/final.webm" type="video/webm" />
       </video>

@@ -218,23 +218,27 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
       >
         <div
           style={{
-            fontSize: 26,
+            fontSize: isMobile ? 18 : 26,
             fontWeight: 700,
-            letterSpacing: "0.3em",
+            letterSpacing: isMobile ? "0.15em" : "0.3em",
             color: "#ffffff",
             textTransform: "uppercase",
             marginBottom: 12,
+            textAlign: "center",
+            whiteSpace: "nowrap",
           }}
         >
           ASCENDANT 2026
         </div>
         <div
           style={{
-            fontSize: 12,
-            letterSpacing: "0.2em",
+            fontSize: isMobile ? 10 : 12,
+            letterSpacing: isMobile ? "0.1em" : "0.2em",
             color: "#555555",
             textTransform: "uppercase",
-            marginBottom: 48,
+            marginBottom: isMobile ? 32 : 48,
+            textAlign: "center",
+            whiteSpace: "nowrap",
           }}
         >
           The Future Boots Here.
