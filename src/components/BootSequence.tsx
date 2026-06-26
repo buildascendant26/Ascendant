@@ -151,7 +151,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
       >
         <div style={{ width: "100%", maxWidth: 560, padding: "0 1.25rem" }}>
           {(phase === "cursor" || phase === "typing" || phase === "booting" || phase === "ready") && (
-            <div style={{ fontSize: 12, color: "#ffffff", marginBottom: 20, display: "flex", alignItems: "center", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
+            <div style={{ fontSize: isMobile ? 11 : 12, color: "#ffffff", marginBottom: 20, display: "flex", alignItems: "center", wordBreak: "break-all" }}>
               <span>{typedCommand}</span>
               {showCursor && (
                 <span className="boot-cursor" style={{ color: "#ffffff", marginLeft: 2, animation: "blinkCursor 0.8s step-end infinite" }}>█</span>

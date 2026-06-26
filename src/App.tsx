@@ -124,20 +124,20 @@ export default function App() {
 
         {/* Top Header Row — 3-column grid guarantees Ascendant logo stays dead center */}
         <div className="w-full grid grid-cols-[1fr_auto_1fr] items-center relative z-30">
-          <div className="flex items-start justify-start">
-            <div className="flex flex-col items-start justify-center gap-0.5">
-              <div className="h-10 sm:h-12 md:h-16 flex items-center justify-start">
-                <img
-                  src="/dps_logo.png"
-                  alt="Delhi Public School Bangalore East"
-                  className="h-full object-contain"
-                />
+            <div className="flex items-start justify-start">
+              <div className="flex flex-col items-start justify-center gap-0.5 mt-2 sm:mt-0 -ml-1 sm:ml-0">
+                <div className="h-10 sm:h-12 md:h-16 flex items-center justify-start">
+                  <img
+                    src="/dps_logo.png"
+                    alt="Delhi Public School Bangalore East"
+                    className="h-full object-contain"
+                  />
+                </div>
+                <p className="font-mono text-[9px] md:text-[10px] text-neutral-400 tracking-[0.25em] uppercase text-left w-full ml-3">
+                  presents,
+                </p>
               </div>
-              <p className="font-mono text-[9px] md:text-[10px] text-neutral-400 tracking-[0.25em] uppercase text-left w-full ml-3">
-                presents,
-              </p>
             </div>
-          </div>
 
           <div className="flex items-center justify-center pointer-events-none">
             <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
