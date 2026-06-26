@@ -126,7 +126,7 @@ export default function App() {
         <div className="w-full grid grid-cols-[1fr_auto_1fr] items-center relative z-30">
             <div className="flex items-start justify-start">
               <div className="flex flex-col items-start justify-center gap-0.5 mt-2 sm:mt-0 -ml-3 sm:ml-0">
-                <div className="h-12 sm:h-14 md:h-16 flex items-center justify-start">
+                <div className="h-10 sm:h-12 md:h-16 flex items-center justify-start">
                   <img
                     src="/dps_logo.png"
                     alt="Delhi Public School Bangalore East"
@@ -212,14 +212,14 @@ export default function App() {
                 ease: [0.16, 1, 0.3, 1],
                 delay: 0.45,
               }}
-              className="flex items-center gap-x-4 mt-2 md:mt-1"
+              className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-2 md:mt-1"
             >
-              <p className="font-mono text-sm sm:text-lg md:text-xl lg:text-[1.5rem] text-neutral-200 font-semibold tracking-wide leading-normal whitespace-nowrap">
+              <p className="font-mono text-base sm:text-lg md:text-xl lg:text-[1.5rem] text-neutral-200 font-semibold tracking-wide leading-normal">
                 Decode. Build. Pitch.
               </p>
 
               {/* Slanted oval badge containing the Ascendant symbol */}
-              <div className="inline-flex items-center justify-center border border-white/30 rounded-full w-8 h-7 sm:w-12 sm:h-10 bg-neutral-950 -rotate-12 hover:rotate-0 hover:border-white/60 transition-transform duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.8)] shrink-0 self-center p-1 sm:p-1.5">
+              <div className="inline-flex items-center justify-center border border-white/30 rounded-full w-12 h-10 bg-neutral-950 -rotate-12 hover:rotate-0 hover:border-white/60 transition-transform duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.8)] shrink-0 self-center p-1.5">
                 <AscendantSymbol className="w-full h-full text-white" strokeWidth={1.5} />
               </div>
             </motion.div>
