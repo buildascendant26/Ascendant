@@ -149,9 +149,9 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
           willChange: "opacity, transform",
         }}
       >
-        <div style={{ width: "100%", maxWidth: isMobile ? 560 : 600, padding: "0 1.25rem" }}>
+        <div style={{ width: "100%", maxWidth: isMobile ? 560 : 720, padding: "0 1.25rem" }}>
           {(phase === "cursor" || phase === "typing" || phase === "booting" || phase === "ready") && (
-            <div style={{ fontSize: isMobile ? 11 : 14, color: "#ffffff", marginBottom: 20, display: "flex", alignItems: "center", wordBreak: "break-all" }}>
+            <div style={{ fontSize: isMobile ? 11 : 16, color: "#ffffff", marginBottom: 20, display: "flex", alignItems: "center", wordBreak: "break-all" }}>
               <span>{typedCommand}</span>
               {showCursor && (
                 <span className="boot-cursor" style={{ color: "#ffffff", marginLeft: 2, animation: "blinkCursor 0.8s step-end infinite" }}>█</span>
@@ -159,7 +159,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
             </div>
           )}
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? 4 : 6 }}>
             {BOOT_LOG.slice(0, visibleLines).map((line, i) => {
               const isOk = line.startsWith("[ OK ]");
               const rest = isOk ? line.slice(6) : line;
@@ -167,7 +167,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
                 <div
                   key={i}
                   style={{
-                    fontSize: isMobile ? 13 : 14,
+                    fontSize: isMobile ? 13 : 16,
                     color: "#ffffff",
                     animation: "fadeInLine 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards",
                     transformOrigin: "left center",
@@ -190,7 +190,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
             <div
               style={{
                 marginTop: 20,
-                fontSize: isMobile ? 13 : 14,
+                fontSize: isMobile ? 13 : 16,
                 color: "#ffffff",
                 animation: "slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards",
               }}
@@ -255,9 +255,9 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
         >
           <div
             style={{
-              fontSize: isMobile ? 11 : 14,
-              letterSpacing: "0.2em",
-              color: "#666666",
+              fontSize: isMobile ? 11 : 16,
+              letterSpacing: "0.25em",
+              color: "#888888",
               textTransform: "uppercase",
               animation: promptOpacity === 1 ? "pulsePrompt 2.5s ease-in-out infinite" : "none",
             }}
