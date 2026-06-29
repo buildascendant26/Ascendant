@@ -147,7 +147,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
       >
         <div style={{ width: "fit-content", maxWidth: "90vw", padding: "0 1.25rem" }}>
           {(phase === "cursor" || phase === "typing" || phase === "booting" || phase === "ready") && (
-            <div style={{ fontSize: isMobile ? 12 : 18, color: "#ffffff", marginBottom: 20, display: "flex", alignItems: "center", wordBreak: "break-all" }}>
+            <div style={{ fontSize: isMobile ? 11 : 16, color: "#ffffff", marginBottom: 20, display: "flex", alignItems: "center", wordBreak: "break-all" }}>
               <span>{typedCommand}</span>
               {showCursor && (
                 <span className="boot-cursor" style={{ color: "#ffffff", marginLeft: 2, animation: "blinkCursor 0.8s step-end infinite" }}>█</span>
@@ -163,7 +163,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
                 <div
                   key={i}
                   style={{
-                    fontSize: isMobile ? 14 : 18,
+                    fontSize: isMobile ? 13 : 16,
                     color: "#ffffff",
                     animation: "fadeInLine 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards",
                     transformOrigin: "left center",
@@ -186,7 +186,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
             <div
               style={{
                 marginTop: 20,
-                fontSize: isMobile ? 14 : 18,
+                fontSize: isMobile ? 13 : 16,
                 color: "#ffffff",
                 animation: "slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards",
               }}
@@ -214,7 +214,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
       >
         <div
           style={{
-            fontSize: isMobile ? 20 : 36,
+            fontSize: isMobile ? 18 : 26,
             fontWeight: 700,
             letterSpacing: isMobile ? "0.15em" : "0.3em",
             color: "#ffffff",
@@ -228,7 +228,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
         </div>
         <div
           style={{
-            fontSize: isMobile ? 12 : 16,
+            fontSize: isMobile ? 10 : 12,
             letterSpacing: isMobile ? "0.1em" : "0.2em",
             color: "#555555",
             textTransform: "uppercase",
