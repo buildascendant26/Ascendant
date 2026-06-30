@@ -110,21 +110,15 @@ export const RegistrationPage: React.FC = () => {
     setIsSubmitting(true);
     setErrorMsg("");
 
-    // Fire GAS in background (fire-and-forget)
-    try {
-      fetch("https://script.google.com/macros/s/AKfycbw1MqS_a-ckm8BZ1ELmqB7p0cZeR7_0zNbG_oKFInPnq_d9leUxkS2eJVKkcbouzSNS/exec", {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "text/plain",
-        },
-        body: JSON.stringify({ action: "sendBrochure", email: val }),
-      }).catch((e) => console.error("GAS fetch failed:", e));
-    } catch (e) {
-      console.error("GAS call failed:", e);
-    }
+    // Fire GAS in background (fire-and-forget) — email arrives in ~10s
+    fetch("https://script.google.com/macros/s/AKfycbw1MqS_a-ckm8BZ1ELmqB7p0cZeR7_0zNbG_oKFInPnq_d9leUxkS2eJVKkcbouzSNS/exec", {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({ action: "sendBrochure", email: val }),
+    }).catch((e) => console.error("GAS fetch failed:", e));
 
-    // Simulated 1.5s loading so user sees progress
+    // 1.5s simulated progress
     const start = performance.now();
     const interval = setInterval(() => {
       const elapsed = performance.now() - start;
@@ -340,6 +334,9 @@ export const RegistrationPage: React.FC = () => {
                 </div>
                 <div style={{ color: "#888" }}>
                   Check your inbox (and spam folder) for the Ascendant 2026 brochure.
+                </div>
+                <div className="mt-1 text-[11px] md:text-[12px]" style={{ lineHeight: 1.5, color: "#666" }}>
+                  The brochure will arrive in your inbox momentarily.
                 </div>
                 <div className="mt-6" style={{ color: "#666" }}>
                   Press <span style={{ color: "#888" }}>Ctrl+D</span> or click below to return
