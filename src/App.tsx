@@ -5,6 +5,7 @@
 
 import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { useNavigate } from "react-router-dom";
 import { MenuDrawer } from "./components/MenuDrawer";
 import { Manifesto } from "./components/Manifesto";
 import { Timeline } from "./components/Timeline";
@@ -14,7 +15,6 @@ import { WaveContour } from "./components/WaveContour";
 import { FloatingParticles } from "./components/FloatingParticles";
 import { InteractiveDotGrid } from "./components/InteractiveDotGrid";
 import { InteractiveFooter } from "./components/InteractiveFooter";
-import { RegistrationPage } from "./components/RegistrationPage";
 import CountdownTimer from "./components/CountdownTimer";
 import ascendantLogo from "./components/ascendant_logo.png";
 import { MapPin } from "lucide-react";
@@ -23,23 +23,21 @@ import { TerminalGlitchOverlay } from "./components/TerminalGlitchOverlay";
 import { AscendantSymbol } from "./components/AscendantSymbol";
 
 export default function App() {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isRegistering, setIsRegistering] = useState<boolean>(false);
   // Ref for direct DOM updates — avoids React re-renders on every scroll tick
   const progressBarRef = React.useRef<HTMLDivElement>(null);
 
-  // Lock scrolling during the interactive calibration loading phase or registration flow shlok is ccool boy
+  // Hide scrollbar during loading
   useEffect(() => {
-    if (isLoading || isRegistering) {
+    if (isLoading) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
     }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isLoading, isRegistering]);
+    return () => { document.body.style.overflow = ""; };
+  }, [isLoading]);
 
   // Fluid scroll progress bar — RAF + direct DOM + GPU-accelerated transform
   useEffect(() => {
@@ -236,7 +234,7 @@ export default function App() {
               className="mt-8 md:mt-10"
             >
               <button
-                onClick={() => setIsRegistering(true)}
+                onClick={() => navigate("/register")}
                 className="group relative flex items-center justify-center gap-4 pl-5 pr-8 py-3.5 bg-neutral-900/60 border border-white/10 hover:border-white/40 text-white rounded-xl transition-all duration-300 cursor-pointer text-xs md:text-sm font-semibold tracking-[0.25em] uppercase hover:bg-white hover:text-black hover:scale-[1.02] active:scale-[0.98] shadow-[0_8px_30px_rgba(0,0,0,0.5)] overflow-hidden"
               >
                 <span>REGISTER NOW</span>
@@ -304,13 +302,6 @@ export default function App() {
         onClose={() => setIsMenuOpen(false)}
         onNavigate={handleSmoothScroll}
       />
-
-      {/* Terminal registration overlay with smooth entry / exit */}
-      <AnimatePresence>
-        {isRegistering && (
-          <RegistrationPage onClose={() => setIsRegistering(false)} />
-        )}
-      </AnimatePresence>
 
       {/* CRT scanline + vignette layer: above visual layers, interaction-safe */}
       <div className="terminal-crt-overlay" aria-hidden="true" />

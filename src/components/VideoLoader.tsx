@@ -32,10 +32,10 @@ export const VideoLoader: React.FC<VideoLoaderProps> = ({ onComplete }) => {
     setPhase("video");
     const video = videoRef.current;
     
-    // Safety timeout: transition to main page after 5 seconds maximum
+    // Safety timeout: transition to main page after 3 seconds maximum
     timeoutRef.current = setTimeout(() => {
       safeComplete();
-    }, 5000);
+    }, 3000);
 
     if (!video) {
       safeComplete();
