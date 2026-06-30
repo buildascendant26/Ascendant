@@ -124,10 +124,9 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ isOpen, onClose, onNavig
             </div>
             <div>
               <p className="text-neutral-400 font-medium uppercase tracking-wider mb-1">Transmission</p>
-              <div className="flex gap-4 mt-1">
-                <a href="#discord" className="hover:text-white transition-colors">Discord</a>
-                <a href="#instagram" className="hover:text-white transition-colors">Instagram</a>
-                <a href="#spotify" className="hover:text-white transition-colors">Spotify Channel</a>
+              <div className="flex flex-col gap-1 mt-1">
+                <a href="tel:7259327937" className="hover:text-white transition-colors">7259327937</a>
+                <a href="mailto:support@ascendant2026.tech" className="hover:text-white transition-colors">support@ascendant2026.tech</a>
               </div>
             </div>
           </div>
