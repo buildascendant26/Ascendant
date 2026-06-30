@@ -30,23 +30,23 @@ export const Timeline: React.FC = () => {
     {
       id: 'slot-2',
       date: '17',
-      time: '08:30 - 09:00',
+      time: '08:30 - 09:30',
       title: 'Breakfast',
       subtitle: 'Morning fueling & networking',
       description: 'Enjoy a normal hot breakfast to kickstart your day. Network with other participants, meet potential partners, and prepare your mindset before the sessions kick off.',
       venue: 'Dining Hall',
-      duration: '30 min',
+      duration: '60 min',
       category: 'experience'
     },
     {
       id: 'slot-3',
       date: '17',
-      time: '09:00 - 10:00',
+      time: '09:30 - 10:00',
       title: 'Opening Ceremony',
       subtitle: 'Introduction & rules overview',
       description: 'An exciting welcome session! Meet the organizing team, sponsors, and esteemed judges. We will cover the competition structure, evaluation criteria, and reveal key guidelines to guide your project.',
       venue: 'Main Stage',
-      duration: '60 min',
+      duration: '30 min',
       category: 'keynote'
     },
     {
@@ -98,23 +98,34 @@ export const Timeline: React.FC = () => {
     {
       id: 'slot-8',
       date: '18',
-      time: '10:00 - 17:00',
+      time: '10:00 - 15:00',
       title: 'Pitch & Judge',
       subtitle: 'Project demonstrations & panel screening',
       description: 'The grand showcase. Present your fully functional projects live on stage to our panel of judges. Step-by-step, demonstrate your core features, explain your design choices, and address jury questions.',
       venue: 'Main Stage',
-      duration: '420 min',
+      duration: '300 min',
       category: 'keynote'
+    },
+    {
+      id: 'slot-break',
+      date: '18',
+      time: '15:00 - 16:00',
+      title: 'Break',
+      subtitle: 'Afternoon rest',
+      description: 'Take a break before the final ceremony. Network and relax after presenting your projects.',
+      venue: 'Dining Hall',
+      duration: '60 min',
+      category: 'experience'
     },
     {
       id: 'slot-9',
       date: '18',
-      time: '17:00 - 17:30',
+      time: '16:00 - 17:30',
       title: 'Closing Ceremony & Prizes',
       subtitle: 'Winning announcements & prize distribution',
       description: 'Celebrate the breakthroughs of all participants. We\'ll recap the hackathon highlights, announce the winning builds, distribute custom trophies and prizes, and celebrate the conclusion of the event.',
       venue: 'Main Stage',
-      duration: '30 min',
+      duration: '90 min',
       category: 'keynote'
     },
   ];
