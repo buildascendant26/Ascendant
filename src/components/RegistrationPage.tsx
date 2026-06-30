@@ -110,11 +110,10 @@ export const RegistrationPage: React.FC = () => {
     const timeout = setTimeout(() => controller.abort(), 25000);
 
     try {
-      await fetch(
+      const response = await fetch(
         "https://script.google.com/macros/s/AKfycbxEX1I_f7cVtcnNP0wZqWEx8IEuql2bLgXv_S0dq8vovJxfVtyOjNvGkVOdhsJVSPoa/exec",
         {
           method: "POST",
-          mode: "no-cors",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify({ action: "sendBrochure", email: val }),
           signal: controller.signal,
@@ -122,13 +121,30 @@ export const RegistrationPage: React.FC = () => {
       );
 
       clearTimeout(timeout);
-      setSubmitted(true);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data && data.success === true) {
+        setSubmitted(true);
+      } else {
+        const errorText = data && data.message ? data.message : "Failed to send brochure. Please try again.";
+        setErrorMsg(errorText);
+        setShakeKey((k) => k + 1);
+        setTimeout(() => setErrorMsg(""), 5000);
+      }
     } catch (error: any) {
       clearTimeout(timeout);
       console.error("Submission error:", error);
-      const msg = error.name === "AbortError"
-        ? "Request timed out. Please try again."
-        : "Network connection failed. Please check your internet connection and try again.";
+      let msg;
+      if (error.name === "AbortError") {
+        msg = "Request timed out. Please try again.";
+      } else {
+        msg = "Network connection failed. Please check your internet connection and try again.";
+      }
       setErrorMsg(msg);
       setShakeKey((k) => k + 1);
       setTimeout(() => setErrorMsg(""), 5000);
