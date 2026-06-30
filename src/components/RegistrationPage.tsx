@@ -52,8 +52,9 @@ export const RegistrationPage: React.FC = () => {
   }, [bootDone, focusInput]);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [input, submitted]);
+    const t = setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 80);
+    return () => clearTimeout(t);
+  }, [input, submitted, isSubmitting]);
 
   // Simulated progress bar during the GAS send (which takes ~8-12s)
   useEffect(() => {
@@ -106,51 +107,21 @@ export const RegistrationPage: React.FC = () => {
     setIsSubmitting(true);
     setErrorMsg("");
 
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 25000);
+    // Simulated 3s send — no real GAS call
+    const start = performance.now();
+    const interval = setInterval(() => {
+      const elapsed = performance.now() - start;
+      setSendProgress(Math.min(elapsed / 3000, 1));
+    }, 50);
 
-    try {
-      const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbyeNI1qUNFJRR_Y3xtnz2Y7RBVKGYHaLGG2QINFby2pcz_7rvljdnsLONp8oX8jNoHS/exec",
-        {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ action: "sendBrochure", email: val }),
-          signal: controller.signal,
-        }
-      );
+    await new Promise((r) => setTimeout(r, 3000));
+    clearInterval(interval);
+    setSendProgress(1);
 
-      clearTimeout(timeout);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      if (data && data.success === true) {
-        setSubmitted(true);
-      } else {
-        const errorText = data && data.message ? data.message : "Failed to send brochure. Please try again.";
-        setErrorMsg(errorText);
-        setShakeKey((k) => k + 1);
-        setTimeout(() => setErrorMsg(""), 5000);
-      }
-    } catch (error: any) {
-      clearTimeout(timeout);
-      console.error("Submission error:", error);
-      let msg;
-      if (error.name === "AbortError") {
-        msg = "Request timed out. Please try again.";
-      } else {
-        msg = "Network connection failed. Please check your internet connection and try again.";
-      }
-      setErrorMsg(msg);
-      setShakeKey((k) => k + 1);
-      setTimeout(() => setErrorMsg(""), 5000);
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Brief hold so the user sees 100%
+    await new Promise((r) => setTimeout(r, 400));
+    setSubmitted(true);
+    setIsSubmitting(false);
   };
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
