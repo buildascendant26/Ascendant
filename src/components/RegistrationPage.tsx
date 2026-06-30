@@ -78,7 +78,7 @@ export const RegistrationPage: React.FC = () => {
 
     try {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbwY3tp6KS4fd8AEKqEoXRjyNenx-4pOIjbBJ7UovnJVZGgps3zUHqY2AVLAXrCpdDTh/exec",
+        "https://script.google.com/macros/s/AKfycbxEX1I_f7cVtcnNP0wZqWEx8IEuql2bLgXv_S0dq8vovJxfVtyOjNvGkVOdhsJVSPoa/exec",
         {
           method: "POST",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
