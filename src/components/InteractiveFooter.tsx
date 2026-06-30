@@ -48,7 +48,7 @@ export const InteractiveFooter: React.FC<InteractiveFooterProps> = ({ onSmoothSc
         </div>
 
         {/* Sparse yet highly high-contrast 3-column configuration */}
-        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4 border-t border-neutral-800 pt-10 mt-4 text-[10px] font-mono tracking-widest text-neutral-400">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-4 border-t border-neutral-800 pt-10 mt-4 text-[10px] font-mono tracking-widest text-neutral-400">
           
           {/* Column 1: Spatial Location & Coordinates */}
           <div className="flex flex-col md:items-start justify-center gap-1.5 text-center md:text-left">
@@ -56,20 +56,6 @@ export const InteractiveFooter: React.FC<InteractiveFooterProps> = ({ onSmoothSc
             <span className="text-neutral-300 font-medium">
               34.0522° N, 118.2437° W // LAX
             </span>
-          </div>
-
-          {/* Column 2: The Chosen One Quote */}
-          <div className="flex items-center justify-center text-center px-4">
-            <motion.p 
-              className="text-[9px] md:text-[10px] text-neutral-500 font-mono leading-relaxed max-w-sm uppercase tracking-widest"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              "Anakin, You were the chosen one! It was said that you would destroy the Sith, not join them! Bring balance to the Force, not leave it in darkness!"
-              <span className="inline-block animate-pulse">_</span>
-            </motion.p>
           </div>
 
           {/* Column 3: Real-time ticking chronometer */}
