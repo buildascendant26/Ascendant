@@ -24,9 +24,6 @@ export const InteractiveFooter: React.FC<InteractiveFooterProps> = ({ onSmoothSc
   return (
     <footer id="support" className="relative z-30 bg-black/50 pt-24 pb-12 px-6 md:px-12 w-full select-none overflow-hidden text-white">
       
-      {/* Bold horizontal top border for a strong structural presence */}
-      <div className="absolute top-0 left-0 w-full h-[2px] bg-white opacity-100" />
-
       <div className="max-w-7xl mx-auto flex flex-col items-center justify-between gap-12 text-center">
         
         {/* Hero Branding with raw visual power and contrast */}

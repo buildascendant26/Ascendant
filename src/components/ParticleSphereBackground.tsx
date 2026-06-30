@@ -247,7 +247,7 @@ export default function ParticleSphereBackground() {
         const sat = 0.55 + litness * 0.25;
         const light = Math.max(
           0.03,
-          Math.min(1, (0.20 + litness * 0.95) * twinkle * dustDim + frameScrollFlash)
+          Math.min(1, (0.16 + litness * 0.90) * twinkle * dustDim + frameScrollFlash)
         );
         sharedColor.setHSL(hue, sat, light);
 
