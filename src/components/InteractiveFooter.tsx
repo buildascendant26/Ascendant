@@ -48,7 +48,7 @@ export const InteractiveFooter: React.FC<InteractiveFooterProps> = ({ onSmoothSc
         </div>
 
         {/* Sparse yet highly high-contrast 3-column configuration */}
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-4 border-t border-neutral-800 pt-10 mt-4 text-[10px] font-mono tracking-widest text-neutral-400">
+        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4 border-t border-neutral-800 pt-10 mt-4 text-[10px] font-mono tracking-widest text-neutral-400">
           
           {/* Column 1: Spatial Location & Coordinates */}
           <div className="flex flex-col md:items-start justify-center gap-1.5 text-center md:text-left">
@@ -56,6 +56,17 @@ export const InteractiveFooter: React.FC<InteractiveFooterProps> = ({ onSmoothSc
             <span className="text-neutral-300 font-medium">
               34.0522° N, 118.2437° W // LAX
             </span>
+          </div>
+
+          {/* Column 2: Contact Information */}
+          <div className="flex flex-col items-center justify-center gap-1.5 text-center">
+            <span className="text-white font-bold block uppercase text-[8px] tracking-[0.25em]">CONTACT</span>
+            <a href="tel:7259327937" className="text-neutral-300 font-medium hover:text-white transition-colors">
+              7259327937
+            </a>
+            <a href="mailto:support@ascendant2026.tech" className="text-neutral-300 font-medium hover:text-white transition-colors">
+              support@ascendant2026.tech
+            </a>
           </div>
 
           {/* Column 3: Real-time ticking chronometer */}

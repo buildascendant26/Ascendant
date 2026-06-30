@@ -56,7 +56,7 @@ export const RegistrationPage: React.FC = () => {
     function onKeyDown(e: KeyboardEvent) {
       if (e.ctrlKey && e.key === "d") {
         e.preventDefault();
-        navigate("/");
+        navigate("/", { state: { skipLoading: true } });
       }
     }
     window.addEventListener("keydown", onKeyDown);
@@ -156,7 +156,7 @@ export const RegistrationPage: React.FC = () => {
           >
             <div className="flex items-center gap-2 mr-4">
               <button
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/", { state: { skipLoading: true } })}
                 className="w-3 h-3 rounded-full bg-red-500/80 border border-red-600/80 hover:bg-red-500 transition-colors cursor-pointer"
                 title="Cancel"
               />
@@ -170,7 +170,7 @@ export const RegistrationPage: React.FC = () => {
               [term] brochure — ascendant 2026
             </div>
             <button
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/", { state: { skipLoading: true } })}
               className="px-2.5 py-0.5 border border-white/10 hover:border-white/30 text-[9px] font-mono rounded text-neutral-450 hover:text-white transition-all cursor-pointer bg-neutral-900/40"
             >
               CLOSE
@@ -293,7 +293,7 @@ export const RegistrationPage: React.FC = () => {
 
             {/* Clickable bottom return bar */}
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/", { state: { skipLoading: true } })}
             className="shrink-0 text-center text-[10px] tracking-widest select-none py-3 border-t border-neutral-900 bg-neutral-950/80 hover:bg-neutral-900 hover:text-white transition-all text-neutral-60 cursor-pointer"
           >
             CTRL+D — RETURN TO LANDING PAGE

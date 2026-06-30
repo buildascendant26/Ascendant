@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { MenuDrawer } from "./components/MenuDrawer";
 import { Manifesto } from "./components/Manifesto";
 import { Timeline } from "./components/Timeline";
@@ -23,9 +23,10 @@ import { TerminalGlitchOverlay } from "./components/TerminalGlitchOverlay";
 import { AscendantSymbol } from "./components/AscendantSymbol";
 
 export default function App() {
+  const location = useLocation();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(!(location.state as any)?.skipLoading);
   // Ref for direct DOM updates — avoids React re-renders on every scroll tick
   const progressBarRef = React.useRef<HTMLDivElement>(null);
 
