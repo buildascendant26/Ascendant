@@ -110,7 +110,18 @@ export const RegistrationPage: React.FC = () => {
     setIsSubmitting(true);
     setErrorMsg("");
 
-    // Simulated 3s send — no real GAS call
+    // Fire GAS in background (fire-and-forget)
+    fetch(
+      "https://script.google.com/macros/s/AKfycbw1MqS_a-ckm8BZ1ELmqB7p0cZeR7_0zNbG_oKFInPnq_d9leUxkS2eJVKkcbouzSNS/exec",
+      {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ action: "sendBrochure", email: val }),
+      }
+    ).catch((e) => console.error("GAS call failed:", e));
+
+    // Simulated 1.5s loading so user sees progress
     const start = performance.now();
     const interval = setInterval(() => {
       const elapsed = performance.now() - start;
@@ -121,7 +132,6 @@ export const RegistrationPage: React.FC = () => {
     clearInterval(interval);
     setSendProgress(1);
 
-    // Brief hold so the user sees 100%
     await new Promise((r) => setTimeout(r, 400));
     setSubmitted(true);
     setIsSubmitting(false);
