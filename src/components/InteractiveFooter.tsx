@@ -58,11 +58,11 @@ export const InteractiveFooter: React.FC<InteractiveFooterProps> = ({ onSmoothSc
           {/* Column 2: Contact Information */}
           <div className="flex flex-col items-center justify-center gap-1.5 text-center">
             <span className="text-white font-bold block uppercase text-[8px] tracking-[0.25em]">CONTACT</span>
-            <a href="tel:9538944115" className="text-neutral-300 font-medium hover:text-white transition-colors">
-              9538944115
-            </a>
             <a href="tel:7259327937" className="text-neutral-300 font-medium hover:text-white transition-colors">
               7259327937
+            </a>
+            <a href="tel:9538944115" className="text-neutral-300 font-medium hover:text-white transition-colors">
+              9538944115
             </a>
             <a href="mailto:support@ascendant2026.tech" className="text-neutral-300 font-medium hover:text-white transition-colors">
               support@ascendant2026.tech

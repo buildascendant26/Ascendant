@@ -145,7 +145,7 @@ export const Timeline: React.FC = () => {
     <section id="program" className="min-h-[70vh] py-12 md:py-16 px-4 md:px-8 w-full border-b border-neutral-900 bg-black/50 relative overflow-hidden">
       <TimelineBackground activeDay={activeDay} />
       <div className="max-w-2xl mx-auto space-y-8 relative z-10">
-        
+
         {/* Title */}
         <div className="text-center space-y-3">
           <p className="font-mono text-[10px] tracking-[0.25em] text-neutral-400 uppercase">02 / CHRONOLOGY</p>
@@ -163,9 +163,8 @@ export const Timeline: React.FC = () => {
             <button
               id="date-toggle-17"
               onClick={() => { setActiveDay('17'); setExpandedSlotId('slot-1'); }}
-              className={`flex items-center gap-2 px-4 py-1.5 rounded-full font-mono text-[11px] tracking-wider transition-all duration-300 ${
-                activeDay === '17' ? 'bg-white text-black font-semibold' : 'text-neutral-400 hover:text-white'
-              }`}
+              className={`flex items-center gap-2 px-4 py-1.5 rounded-full font-mono text-[11px] tracking-wider transition-all duration-300 ${activeDay === '17' ? 'bg-white text-black font-semibold' : 'text-neutral-400 hover:text-white'
+                }`}
             >
               <Calendar className="w-3 h-3" />
               DAY I: 17 JULY
@@ -173,9 +172,8 @@ export const Timeline: React.FC = () => {
             <button
               id="date-toggle-18"
               onClick={() => { setActiveDay('18'); setExpandedSlotId('slot-7'); }}
-              className={`flex items-center gap-2 px-4 py-1.5 rounded-full font-mono text-[11px] tracking-wider transition-all duration-300 ${
-                activeDay === '18' ? 'bg-white text-black font-semibold' : 'text-neutral-400 hover:text-white'
-              }`}
+              className={`flex items-center gap-2 px-4 py-1.5 rounded-full font-mono text-[11px] tracking-wider transition-all duration-300 ${activeDay === '18' ? 'bg-white text-black font-semibold' : 'text-neutral-400 hover:text-white'
+                }`}
             >
               <Calendar className="w-3 h-3" />
               DAY II: 18 JULY
@@ -191,9 +189,8 @@ export const Timeline: React.FC = () => {
             return (
               <div
                 key={`${slot.id}-${activeDay}`}
-                className={`border rounded-xl transition-all duration-300 overflow-hidden bg-neutral-950/70 border-neutral-900 hover:border-neutral-800 ${
-                  isExpanded ? 'border-neutral-800 bg-neutral-950' : ''
-                }`}
+                className={`border rounded-xl transition-all duration-300 overflow-hidden bg-neutral-950/70 border-neutral-900 hover:border-neutral-800 ${isExpanded ? 'border-neutral-800 bg-neutral-950' : ''
+                  }`}
               >
                 {/* Accordion Row Header */}
                 <button

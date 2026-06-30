@@ -111,7 +111,7 @@ export const RegistrationPage: React.FC = () => {
 
     try {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbxEX1I_f7cVtcnNP0wZqWEx8IEuql2bLgXv_S0dq8vovJxfVtyOjNvGkVOdhsJVSPoa/exec",
+        "https://script.google.com/macros/s/AKfycbyeNI1qUNFJRR_Y3xtnz2Y7RBVKGYHaLGG2QINFby2pcz_7rvljdnsLONp8oX8jNoHS/exec",
         {
           method: "POST",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
@@ -176,9 +176,9 @@ export const RegistrationPage: React.FC = () => {
           key={shakeKey}
           className="flex flex-col relative z-10 w-full"
           style={{
-            maxWidth: 520,
+            maxWidth: 600,
             height: "auto",
-            minHeight: 260,
+            minHeight: 300,
             maxHeight: viewportH - 48,
             border: "1px solid #2a2a2a",
             borderRadius: 8,
@@ -192,8 +192,8 @@ export const RegistrationPage: React.FC = () => {
           <div
             className="flex items-center shrink-0 select-none"
             style={{
-              height: 38,
-              padding: "0 16px",
+              height: 42,
+              padding: "0 18px",
               borderBottom: "1px solid #1a1a1a",
               backgroundColor: "#0a0a0a",
             }}
@@ -201,11 +201,11 @@ export const RegistrationPage: React.FC = () => {
             <div className="flex items-center gap-2 mr-4">
               <button
                 onClick={() => navigate("/", { state: { skipLoading: true } })}
-                className="w-3 h-3 rounded-full bg-red-500/80 border border-red-600/80 hover:bg-red-500 transition-colors cursor-pointer"
+                className="w-3.5 h-3.5 rounded-full bg-red-500/80 border border-red-600/80 hover:bg-red-500 transition-colors cursor-pointer"
                 title="Cancel"
               />
-              <div style={{ width: 11, height: 11, borderRadius: "50%", backgroundColor: "#2a2a2a", border: "1px solid #333" }} />
-              <div style={{ width: 11, height: 11, borderRadius: "50%", backgroundColor: "#2a2a2a", border: "1px solid #333" }} />
+              <div style={{ width: 12, height: 12, borderRadius: "50%", backgroundColor: "#2a2a2a", border: "1px solid #333" }} />
+              <div style={{ width: 12, height: 12, borderRadius: "50%", backgroundColor: "#2a2a2a", border: "1px solid #333" }} />
             </div>
             <div
               className="flex-1 text-center text-xs tracking-wider truncate"
@@ -223,12 +223,12 @@ export const RegistrationPage: React.FC = () => {
 
           {/* Terminal body */}
           <div
-            className="flex-1 overflow-y-auto p-5 md:p-8"
+            className="flex-1 overflow-y-auto p-6 md:p-10"
             style={{ fontFamily: "var(--font-mono), 'JetBrains Mono', monospace" }}
             onClick={() => inputRef.current?.focus()}
           >
             {/* Initial command */}
-            <div className="mb-5 text-xs md:text-sm" style={{ lineHeight: 1.7 }}>
+            <div className="mb-5 text-sm md:text-base" style={{ lineHeight: 1.7 }}>
               <span style={{ color: ACCENT }}>ascendant@core</span>
               <span style={{ color: "#666" }}>:~$ </span>
               <span style={{ color: "#eee" }}>./brochure --request</span>
@@ -236,7 +236,7 @@ export const RegistrationPage: React.FC = () => {
 
             {/* Boot / loading */}
             {!bootDone && (
-              <div className="mb-6 text-xs md:text-sm" style={{ lineHeight: 1.7 }}>
+              <div className="mb-6 text-sm md:text-base" style={{ lineHeight: 1.7 }}>
                 <div className="mb-2" style={{ color: "#aaa" }}>
                   Initializing...
                 </div>
@@ -261,7 +261,7 @@ export const RegistrationPage: React.FC = () => {
                     }}
                   />
                 </div>
-                <div className="mt-1" style={{ color: "#555", fontSize: 11 }}>
+                <div className="mt-1" style={{ color: "#555", fontSize: 12 }}>
                   {Math.round((bootProgress / 3) * 100)}%
                 </div>
               </div>
@@ -270,23 +270,23 @@ export const RegistrationPage: React.FC = () => {
             {/* Prompt */}
             {bootDone && !submitted && (
               <>
-                <div className="mb-1 flex flex-wrap items-center gap-1 text-xs md:text-sm" style={{ lineHeight: 1.7 }}>
+                <div className="mb-1 flex flex-wrap items-center gap-1 text-sm md:text-base" style={{ lineHeight: 1.7 }}>
                   <span style={{ color: "#555" }}>&gt; </span>
                   <span style={{ color: "#ffffff", fontWeight: 600 }}>Enter email to receive the brochure:</span>
                 </div>
-                <div className="mb-3 text-xs md:text-sm" style={{ lineHeight: 1.7 }}>
+                <div className="mb-3 text-sm md:text-base" style={{ lineHeight: 1.7 }}>
                   <span style={{ color: "#555" }}>&gt; </span>
                   <span style={{ color: "#eee" }}>{input}</span>
                   <CursorBlink show={!isSubmitting} />
                 </div>
-                <div className="mb-3 text-[10px] md:text-[11px]" style={{ lineHeight: 1.7, color: "#666" }}>
+                <div className="mb-3 text-[11px] md:text-[12px]" style={{ lineHeight: 1.7, color: "#666" }}>
                   (registration link will be in the brochure)
                 </div>
               </>
             )}
 
             {isSubmitting && (
-              <div className="mb-3 text-xs md:text-sm" style={{ lineHeight: 1.7 }}>
+              <div className="mb-3 text-sm md:text-base" style={{ lineHeight: 1.7 }}>
                 <div className="mb-2" style={{ color: ACCENT }}>
                   Sending brochure...
                 </div>
@@ -294,7 +294,7 @@ export const RegistrationPage: React.FC = () => {
                   style={{
                     width: "100%",
                     maxWidth: 400,
-                    height: 14,
+                    height: 16,
                     border: "1px solid #2a2a2a",
                     borderRadius: 2,
                     overflow: "hidden",
@@ -311,7 +311,7 @@ export const RegistrationPage: React.FC = () => {
                     }}
                   />
                 </div>
-                <div className="mt-1" style={{ color: "#555", fontSize: 11 }}>
+                <div className="mt-1" style={{ color: "#555", fontSize: 12 }}>
                   {Math.round(sendProgress * 100)}%
                 </div>
               </div>
@@ -319,7 +319,7 @@ export const RegistrationPage: React.FC = () => {
 
             {/* Error message */}
             {errorMsg && (
-              <div className="mb-3 text-xs md:text-sm" style={{ lineHeight: 1.7, color: "#ff4444" }}>
+              <div className="mb-3 text-sm md:text-base" style={{ lineHeight: 1.7, color: "#ff4444" }}>
                 ! {errorMsg}
               </div>
             )}
@@ -347,7 +347,7 @@ export const RegistrationPage: React.FC = () => {
 
             {/* Submitted confirmation */}
             {submitted && (
-              <div className="mt-2 text-xs md:text-sm" style={{ lineHeight: 1.7 }}>
+              <div className="mt-2 text-sm md:text-base" style={{ lineHeight: 1.7 }}>
                 <div className="mb-3" style={{ color: ACCENT, fontWeight: 600 }}>
                   ✓ Brochure sent to <span style={{ color: "#fff" }}>{input}</span>
                 </div>
