@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AsciiField } from "./AsciiField";
 
 const ACCENT = "#cba6f7";
+const SEND_PROGRESS_DURATION = 10000; // simulate 10s of progress
 
 export const RegistrationPage: React.FC = () => {
   const navigate = useNavigate();
@@ -13,7 +14,9 @@ export const RegistrationPage: React.FC = () => {
   const [input, setInput] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [sendProgress, setSendProgress] = useState(0);
   const [shakeKey, setShakeKey] = useState(0);
+  const [viewportH, setViewportH] = useState(window.innerHeight);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -51,6 +54,33 @@ export const RegistrationPage: React.FC = () => {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [input, submitted]);
+
+  // Simulated progress bar during the GAS send (which takes ~8-12s)
+  useEffect(() => {
+    if (!isSubmitting) {
+      setSendProgress(0);
+      return;
+    }
+    const start = performance.now();
+    const id = setInterval(() => {
+      const elapsed = performance.now() - start;
+      // Ease: fast start then slow down — caps at 0.92
+      const raw = Math.min(elapsed / SEND_PROGRESS_DURATION, 1);
+      const eased = raw * (2 - raw); // quadratic ease-out
+      setSendProgress(Math.min(0.92, eased));
+    }, 50);
+    return () => clearInterval(id);
+  }, [isSubmitting]);
+
+  // Track visual viewport height so the terminal shrinks when the mobile
+  // keyboard opens instead of getting cut off.
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+    const onResize = () => setViewportH(vv.height);
+    vv.addEventListener("resize", onResize);
+    return () => vv.removeEventListener("resize", onResize);
+  }, []);
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
@@ -120,10 +150,11 @@ export const RegistrationPage: React.FC = () => {
 
   return (
     <div
-      className="fixed inset-0 w-screen h-screen h-[100dvh] z-50 bg-black flex items-center justify-center select-none overflow-hidden"
+      className="fixed inset-0 w-screen z-50 bg-black flex items-center justify-center select-none overflow-hidden"
       style={{
         opacity: visible ? 1 : 0,
         transition: "opacity 0.35s ease",
+        height: viewportH,
       }}
     >
       <AsciiField progress={bootDone ? (submitted ? 1 : 0.8) : bootProgress / 3} />
@@ -135,7 +166,7 @@ export const RegistrationPage: React.FC = () => {
             maxWidth: 520,
             height: "auto",
             minHeight: 260,
-            maxHeight: "82dvh",
+            maxHeight: viewportH - 48,
             border: "1px solid #2a2a2a",
             borderRadius: 8,
             overflow: "hidden",
@@ -242,8 +273,34 @@ export const RegistrationPage: React.FC = () => {
             )}
 
             {isSubmitting && (
-              <div className="mb-3 text-xs md:text-sm" style={{ lineHeight: 1.7, color: ACCENT }}>
-                Sending brochure...
+              <div className="mb-3 text-xs md:text-sm" style={{ lineHeight: 1.7 }}>
+                <div className="mb-2" style={{ color: ACCENT }}>
+                  Sending brochure...
+                </div>
+                <div
+                  style={{
+                    width: "100%",
+                    maxWidth: 400,
+                    height: 14,
+                    border: "1px solid #2a2a2a",
+                    borderRadius: 2,
+                    overflow: "hidden",
+                    backgroundColor: "transparent",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: `${sendProgress * 100}%`,
+                      height: "100%",
+                      backgroundColor: ACCENT,
+                      transition: "width 0.2s ease",
+                      opacity: 0.7,
+                    }}
+                  />
+                </div>
+                <div className="mt-1" style={{ color: "#555", fontSize: 11 }}>
+                  {Math.round(sendProgress * 100)}%
+                </div>
               </div>
             )}
 

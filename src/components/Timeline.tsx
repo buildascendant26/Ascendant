@@ -148,7 +148,7 @@ export const Timeline: React.FC = () => {
         
         {/* Title */}
         <div className="text-center space-y-3">
-          <p className="font-mono text-[10px] tracking-[0.25em] text-neutral-500 uppercase">02 / CHRONOLOGY</p>
+          <p className="font-mono text-[10px] tracking-[0.25em] text-neutral-400 uppercase">02 / CHRONOLOGY</p>
           <h2 className="font-display text-2xl md:text-4xl font-bold tracking-tight text-white">
             Program Chronology
           </h2>
@@ -211,7 +211,7 @@ export const Timeline: React.FC = () => {
                       <h4 className="font-display text-sm md:text-base font-bold text-white tracking-tight">
                         <ScrambleText as="span" text={slot.title} trigger={activeDay} />
                       </h4>
-                      <p className="text-[11px] text-neutral-500 italic font-light">
+                      <p className="text-[11px] text-neutral-400 italic font-light">
                         <ScrambleText as="span" text={slot.subtitle} trigger={activeDay} />
                       </p>
                     </div>
@@ -222,7 +222,7 @@ export const Timeline: React.FC = () => {
                     <span className={`px-1.5 py-0.5 text-[8px] font-mono uppercase tracking-wider border rounded ${getCategoryTheme(slot.category)}`}>
                       {slot.category}
                     </span>
-                    <span className="text-[10px] text-neutral-500 font-mono hidden sm:inline">
+                    <span className="text-[10px] text-neutral-400 font-mono hidden sm:inline">
                       {slot.duration}
                     </span>
                   </div>
@@ -242,7 +242,7 @@ export const Timeline: React.FC = () => {
                         {/* Summary Block */}
                         <div className="space-y-2">
                           <p className="font-light leading-relaxed text-neutral-400"><ScrambleText as="span" text={slot.description} trigger={activeDay} /></p>
-                          <div className="flex items-center gap-4 text-[10px] font-mono text-neutral-500">
+                          <div className="flex items-center gap-4 text-[10px] font-mono text-neutral-400">
                             <span className="flex items-center gap-1">
                               <MapPin className="w-3 h-3 text-neutral-400" />
                               <ScrambleText as="span" text={slot.venue} trigger={activeDay} />

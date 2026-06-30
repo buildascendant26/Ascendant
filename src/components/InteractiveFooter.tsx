@@ -80,7 +80,7 @@ export const InteractiveFooter: React.FC<InteractiveFooterProps> = ({ onSmoothSc
         </div>
 
         {/* Absolute minimum footprint trademark declaration */}
-        <div className="text-[9px] text-neutral-600 font-mono tracking-[0.15em] pt-4 uppercase cursor-default">
+        <div className="text-[9px] text-neutral-400 font-mono tracking-[0.15em] pt-4 uppercase cursor-default">
           © 2026 ASCENDANT. ALL INTEGRITY AND AUTONOMY RESERVED.
         </div>
 

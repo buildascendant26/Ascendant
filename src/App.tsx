@@ -3,24 +3,27 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { MenuDrawer } from "./components/MenuDrawer";
 import { Manifesto } from "./components/Manifesto";
 import { Timeline } from "./components/Timeline";
-import { BoldQuote } from "./components/BoldQuote";
 import { VideoLoader } from "./components/VideoLoader";
-import { WaveContour } from "./components/WaveContour";
-import { FloatingParticles } from "./components/FloatingParticles";
-import { InteractiveDotGrid } from "./components/InteractiveDotGrid";
 import { InteractiveFooter } from "./components/InteractiveFooter";
 import CountdownTimer from "./components/CountdownTimer";
 import ascendantLogo from "./components/ascendant_logo.png";
 import { MapPin } from "lucide-react";
-import ParticleSphereBackground from "./components/ParticleSphereBackground";
-import { TerminalGlitchOverlay } from "./components/TerminalGlitchOverlay";
 import { AscendantSymbol } from "./components/AscendantSymbol";
+
+// Lazy-loaded heavy components — splits Three.js (~700KB), GSAP, and canvas
+// animations into separate chunks that load on-demand
+const ParticleSphereBackground = lazy(() => import("./components/ParticleSphereBackground"));
+const BoldQuote = lazy(() => import("./components/BoldQuote").then(m => ({ default: m.BoldQuote })));
+const WaveContour = lazy(() => import("./components/WaveContour").then(m => ({ default: m.WaveContour })));
+const FloatingParticles = lazy(() => import("./components/FloatingParticles").then(m => ({ default: m.FloatingParticles })));
+const InteractiveDotGrid = lazy(() => import("./components/InteractiveDotGrid").then(m => ({ default: m.InteractiveDotGrid })));
+const TerminalGlitchOverlay = lazy(() => import("./components/TerminalGlitchOverlay").then(m => ({ default: m.TerminalGlitchOverlay })));
 
 export default function App() {
   const location = useLocation();
@@ -76,7 +79,9 @@ export default function App() {
     <div className="relative min-h-screen text-white selection:bg-white selection:text-black font-sans overflow-hidden">
       {/* Persistent particle-sphere background — global layer behind
           everything, scroll-driven dolly + idle breathing. */}
-      <ParticleSphereBackground />
+      <Suspense fallback={null}>
+        <ParticleSphereBackground />
+      </Suspense>
 
       {/* Dynamic interactive video loading overlay */}
       <AnimatePresence>
@@ -99,11 +104,11 @@ export default function App() {
 
       {/* Dynamic interactive dot grid that responds elegantly to the cursor */}
       <div className="relative z-[14] pointer-events-none">
-        {!isLoading && <InteractiveDotGrid />}
+        {!isLoading && <Suspense fallback={null}><InteractiveDotGrid /></Suspense>}
       </div>
 
       {/* DOM overlay text scramble triggered as each depth section enters view */}
-      {!isLoading && <TerminalGlitchOverlay />}
+      {!isLoading && <Suspense fallback={null}><TerminalGlitchOverlay /></Suspense>}
 
       {/* Sleek top screen progressive scroll indicator — scaleX is GPU composited */}
       <div
@@ -119,7 +124,7 @@ export default function App() {
         className="relative w-full min-h-screen min-h-[100dvh] flex flex-col justify-between pt-2 md:pt-4 px-6 md:px-12 pb-6 md:pb-12 z-20"
       >
         {/* Subtle, slowly drifting floating dust particle effect */}
-        {!isLoading && <FloatingParticles />}
+        {!isLoading && <Suspense fallback={null}><FloatingParticles /></Suspense>}
 
         {/* Top Header Row — 3-column grid guarantees Ascendant logo stays dead center */}
         <div className="w-full grid grid-cols-[1fr_auto_1fr] items-center relative z-30">
@@ -130,6 +135,9 @@ export default function App() {
                     src="/dps_logo.png"
                     alt="Delhi Public School Bangalore East"
                     className="h-full object-contain"
+                    width={64}
+                    height={64}
+                    fetchPriority="high"
                   />
                 </div>
                 <p className="font-mono text-[9px] md:text-[10px] text-neutral-400 tracking-[0.25em] uppercase text-left w-full ml-3">
@@ -145,6 +153,9 @@ export default function App() {
                 alt="Ascendant Logo"
                 className="w-full h-full object-contain brightness-110 contrast-125"
                 referrerPolicy="no-referrer"
+                width={48}
+                height={48}
+                decoding="async"
               />
             </div>
           </div>
@@ -152,6 +163,7 @@ export default function App() {
           <div className="flex items-center justify-end">
             <button
               id="menu-open-toggle-btn"
+              aria-label="Open menu"
               onClick={() => setIsMenuOpen(true)}
               className="group flex flex-col gap-1.5 justify-center items-end p-2 transition-all duration-300 cursor-pointer"
             >
@@ -260,7 +272,7 @@ export default function App() {
               }}
               className="absolute inset-0 w-full h-full flex items-center justify-center"
             >
-              <WaveContour />
+              <Suspense fallback={null}><WaveContour /></Suspense>
             </motion.div>
           </div>
         </div>
@@ -291,7 +303,7 @@ export default function App() {
         <Timeline />
 
         {/* 03: BOLD QUOTE OUTRO */}
-        <BoldQuote />
+        <Suspense fallback={null}><BoldQuote /></Suspense>
       </main>
 
       {/* Interactive Cybernetic Telemetry Footer */}

@@ -63,7 +63,7 @@ export const VideoLoader: React.FC<VideoLoaderProps> = ({ onComplete }) => {
         webkit-playsinline="true"
         disablePictureInPicture
         disableRemotePlayback
-        preload="auto"
+        preload="metadata"
         onEnded={safeComplete}
         // On mobile, if video errors or stalls, auto-skip to main page
         onError={safeComplete}

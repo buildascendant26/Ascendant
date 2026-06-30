@@ -36,7 +36,7 @@ const IDLE_MS = 500;
 function particleCountFor(width: number) {
   // Denser globe than the original demo (22k), scaled down on narrow
   // viewports where weaker mobile GPUs need to hit the same frame budget.
-  return width < 768 ? 18000 : 34000;
+  return width < 768 ? 12000 : 34000;
 }
 
 export default function ParticleSphereBackground() {
