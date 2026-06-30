@@ -112,14 +112,14 @@ export const RegistrationPage: React.FC = () => {
 
     // Fire GAS in background (fire-and-forget)
     try {
-      const blob = new Blob(
-        [JSON.stringify({ action: "sendBrochure", email: val })],
-        { type: "text/plain" }
-      );
-      navigator.sendBeacon(
-        "https://script.google.com/macros/s/AKfycbw1MqS_a-ckm8BZ1ELmqB7p0cZeR7_0zNbG_oKFInPnq_d9leUxkS2eJVKkcbouzSNS/exec",
-        blob
-      );
+      fetch("https://script.google.com/macros/s/AKfycbw1MqS_a-ckm8BZ1ELmqB7p0cZeR7_0zNbG_oKFInPnq_d9leUxkS2eJVKkcbouzSNS/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain",
+        },
+        body: JSON.stringify({ action: "sendBrochure", email: val }),
+      }).catch((e) => console.error("GAS fetch failed:", e));
     } catch (e) {
       console.error("GAS call failed:", e);
     }
