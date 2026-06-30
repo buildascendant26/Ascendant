@@ -106,11 +106,11 @@ export const RegistrationPage: React.FC = () => {
     setIsSubmitting(true);
     setErrorMsg("");
 
-    try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 25000);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 25000);
 
-      const response = await fetch(
+    try {
+      await fetch(
         "https://script.google.com/macros/s/AKfycbxEX1I_f7cVtcnNP0wZqWEx8IEuql2bLgXv_S0dq8vovJxfVtyOjNvGkVOdhsJVSPoa/exec",
         {
           method: "POST",
@@ -122,10 +122,19 @@ export const RegistrationPage: React.FC = () => {
       );
 
       clearTimeout(timeout);
-
-      // When using no-cors, response.ok is always false and we can't read
-      // the body. Assume success if we got here (no network error thrown).
       setSubmitted(true);
+    } catch (error: any) {
+      clearTimeout(timeout);
+      console.error("Submission error:", error);
+      const msg = error.name === "AbortError"
+        ? "Request timed out. Please try again."
+        : "Network connection failed. Please check your internet connection and try again.";
+      setErrorMsg(msg);
+      setShakeKey((k) => k + 1);
+      setTimeout(() => setErrorMsg(""), 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
