@@ -111,10 +111,10 @@ export const RegistrationPage: React.FC = () => {
     const start = performance.now();
     const interval = setInterval(() => {
       const elapsed = performance.now() - start;
-      setSendProgress(Math.min(elapsed / 3000, 1));
+      setSendProgress(Math.min(elapsed / 1500, 1));
     }, 50);
 
-    await new Promise((r) => setTimeout(r, 3000));
+    await new Promise((r) => setTimeout(r, 1500));
     clearInterval(interval);
     setSendProgress(1);
 
