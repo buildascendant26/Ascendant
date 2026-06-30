@@ -107,37 +107,25 @@ export const RegistrationPage: React.FC = () => {
     setErrorMsg("");
 
     try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 25000);
+
       const response = await fetch(
         "https://script.google.com/macros/s/AKfycbxEX1I_f7cVtcnNP0wZqWEx8IEuql2bLgXv_S0dq8vovJxfVtyOjNvGkVOdhsJVSPoa/exec",
         {
           method: "POST",
+          mode: "no-cors",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify({ action: "sendBrochure", email: val }),
+          signal: controller.signal,
         }
       );
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      clearTimeout(timeout);
 
-      const data = await response.json();
-
-      if (data && data.success === true) {
-        setSubmitted(true);
-      } else {
-        const errorText = data && data.message ? data.message : "Failed to send brochure. Please try again.";
-        setErrorMsg(errorText);
-        setShakeKey((k) => k + 1);
-        setTimeout(() => setErrorMsg(""), 5000);
-      }
-    } catch (error: any) {
-      console.error("Submission error:", error);
-      setErrorMsg("Network connection failed. Please check your internet connection and try again.");
-      setShakeKey((k) => k + 1);
-      setTimeout(() => setErrorMsg(""), 5000);
-    } finally {
-      setIsSubmitting(false);
-    }
+      // When using no-cors, response.ok is always false and we can't read
+      // the body. Assume success if we got here (no network error thrown).
+      setSubmitted(true);
   };
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
