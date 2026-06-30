@@ -51,10 +51,13 @@ export const RegistrationPage: React.FC = () => {
     focusInput();
   }, [bootDone, focusInput]);
 
+  // Only scroll on submit state changes
   useEffect(() => {
-    const t = setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 80);
-    return () => clearTimeout(t);
-  }, [input, submitted, isSubmitting]);
+    if (submitted || isSubmitting) {
+      const t = setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 80);
+      return () => clearTimeout(t);
+    }
+  }, [submitted, isSubmitting]);
 
   // Simulated progress bar during the GAS send (which takes ~8-12s)
   useEffect(() => {
@@ -310,7 +313,7 @@ export const RegistrationPage: React.FC = () => {
               onKeyDown={handleKeyDown}
               disabled={isSubmitting}
               className="absolute opacity-0 pointer-events-none"
-              style={{ left: 0, bottom: 0, width: 1, height: 1, border: 0, padding: 0, fontSize: 16, background: "transparent" }}
+              style={{ position: "absolute", top: 0, left: 0, width: 1, height: 1, border: 0, padding: 0, fontSize: 16, background: "transparent" }}
               aria-hidden="true"
               tabIndex={-1}
               autoFocus
