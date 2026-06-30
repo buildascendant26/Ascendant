@@ -225,18 +225,20 @@ export const RegistrationPage: React.FC = () => {
 
             {/* Prompt */}
             {bootDone && !submitted && (
-              <div className="mb-3 flex flex-wrap items-center gap-1 text-xs md:text-sm" style={{ lineHeight: 1.7 }}>
-                <span style={{ color: "#555" }}>&gt; </span>
-                <span style={{ color: "#ffffff", fontWeight: 600 }}>Enter your email to receive the brochure:</span>
-              </div>
-            )}
-
-            {bootDone && !submitted && (
-              <div className="mb-3 text-xs md:text-sm" style={{ lineHeight: 1.7 }}>
-                <span style={{ color: "#555" }}>&gt; </span>
-                <span style={{ color: "#eee" }}>{input}</span>
-                <CursorBlink show={!isSubmitting} />
-              </div>
+              <>
+                <div className="mb-1 flex flex-wrap items-center gap-1 text-xs md:text-sm" style={{ lineHeight: 1.7 }}>
+                  <span style={{ color: "#555" }}>&gt; </span>
+                  <span style={{ color: "#ffffff", fontWeight: 600 }}>Enter email to receive the brochure:</span>
+                </div>
+                <div className="mb-3 text-xs md:text-sm" style={{ lineHeight: 1.7 }}>
+                  <span style={{ color: "#555" }}>&gt; </span>
+                  <span style={{ color: "#eee" }}>{input}</span>
+                  <CursorBlink show={!isSubmitting} />
+                </div>
+                <div className="mb-3 text-[10px] md:text-[11px]" style={{ lineHeight: 1.7, color: "#666" }}>
+                  (registration link will be in the brochure)
+                </div>
+              </>
             )}
 
             {isSubmitting && (

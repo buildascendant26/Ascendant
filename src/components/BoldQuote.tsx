@@ -650,7 +650,6 @@ export const BoldQuote: React.FC<BoldQuoteProps> = ({ isLoader = false, onEnter 
               <span className="w-2 h-2 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
               {isLoader ? "00 / SENSORY CALIBRATION" : "03 / CONCLAVE ESSENCE"}
             </motion.div>
-            <div className="w-12 h-1 bg-white rounded-full" />
           </div>
 
           <div className="space-y-0.5 sm:space-y-1 md:space-y-1.5">

@@ -44,6 +44,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ isOpen, onClose, onNavig
     { num: '01', label: 'THE PHASES', target: 'vision', icon: <Compass className="w-4 h-4 text-neutral-400" /> },
     { num: '02', label: 'CHRONOLOGY', target: 'program', icon: <Moon className="w-4 h-4 text-neutral-400" /> },
     { num: '03', label: 'THE ESSENCE', target: 'summit-quote', icon: <Quote className="w-4 h-4 text-neutral-400" /> },
+    { num: '04', label: 'SUPPORT', target: 'support', icon: <ArrowRight className="w-4 h-4 text-neutral-400" /> },
   ];
 
   return (
