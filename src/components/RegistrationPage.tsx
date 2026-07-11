@@ -93,7 +93,7 @@ export const RegistrationPage: React.FC = () => {
     setErrorMsg("");
 
     await Promise.race([
-      fetch("https://script.google.com/macros/s/AKfycbycm9irArkwBxiLoM4D_ScRUHjnLp4UKBJunwCmX_27Eq7PdY2Q9mjKUxZU-j6ZLMn-/exec", {
+      fetch("https://script.google.com/macros/s/AKfycby2Hp_jt6_7JiaYm9ICGRxRHzyPZQW5dVJyktD4dxysQawCgo9XLZ1J0dnNagz8Ond4/exec", {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "text/plain" },
