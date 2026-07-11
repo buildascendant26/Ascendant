@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { AsciiField } from "./AsciiField";
 
 const ACCENT = "#cba6f7";
-const SEND_PROGRESS_DURATION = 10000; // simulate 10s of progress
 
 export const RegistrationPage: React.FC = () => {
   const navigate = useNavigate();
@@ -59,23 +58,6 @@ export const RegistrationPage: React.FC = () => {
     }
   }, [submitted, isSubmitting]);
 
-  // Simulated progress bar during the GAS send (which takes ~8-12s)
-  useEffect(() => {
-    if (!isSubmitting) {
-      setSendProgress(0);
-      return;
-    }
-    const start = performance.now();
-    const id = setInterval(() => {
-      const elapsed = performance.now() - start;
-      // Ease: fast start then slow down — caps at 0.92
-      const raw = Math.min(elapsed / SEND_PROGRESS_DURATION, 1);
-      const eased = raw * (2 - raw); // quadratic ease-out
-      setSendProgress(Math.min(0.92, eased));
-    }, 50);
-    return () => clearInterval(id);
-  }, [isSubmitting]);
-
   // Track visual viewport height so the terminal shrinks when the mobile
   // keyboard opens instead of getting cut off.
   useEffect(() => {
@@ -110,26 +92,18 @@ export const RegistrationPage: React.FC = () => {
     setIsSubmitting(true);
     setErrorMsg("");
 
-    // Fire GAS in background (fire-and-forget) — email arrives in ~10s
-    fetch("https://script.google.com/macros/s/AKfycbx9jUfAhsbMGmq_exiJH83c_-WKB2FIkMHrdmA93-btRCv0pYuMo_xw83FfamSEe5ry/exec", {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "text/plain" },
-      body: JSON.stringify({ action: "sendBrochure", email: val }),
-    }).catch((e) => console.error("GAS fetch failed:", e));
+    await Promise.race([
+      fetch("https://script.google.com/macros/s/AKfycbywxqgtc_EQqeVC_ZhXlQCiXV955rG4GrBF1PlZobswdPdQpgJrd0-fGNwdhCk0bYry/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ action: "sendBrochure", email: val }),
+      }).catch((e) => console.error("GAS fetch failed:", e)),
+      new Promise((r) => setTimeout(r, 20000)),
+    ]);
 
-    // 1.5s simulated progress
-    const start = performance.now();
-    const interval = setInterval(() => {
-      const elapsed = performance.now() - start;
-      setSendProgress(Math.min(elapsed / 1500, 1));
-    }, 50);
-
-    await new Promise((r) => setTimeout(r, 1500));
-    clearInterval(interval);
     setSendProgress(1);
-
-    await new Promise((r) => setTimeout(r, 400));
+    await new Promise((r) => setTimeout(r, 200));
     setSubmitted(true);
     setIsSubmitting(false);
   };
@@ -280,20 +254,20 @@ export const RegistrationPage: React.FC = () => {
                     borderRadius: 2,
                     overflow: "hidden",
                     backgroundColor: "transparent",
+                    position: "relative",
                   }}
                 >
                   <div
+                    className={sendProgress === 0 ? "indeterminate" : ""}
                     style={{
-                      width: `${sendProgress * 100}%`,
+                      width: sendProgress === 0 ? "35%" : `${sendProgress * 100}%`,
                       height: "100%",
                       backgroundColor: ACCENT,
-                      transition: "width 0.2s ease",
+                      transition: sendProgress > 0 ? "width 0.2s ease" : "none",
                       opacity: 0.7,
+                      ...(sendProgress === 0 ? { position: "absolute", inset: 0 } : {}),
                     }}
                   />
-                </div>
-                <div className="mt-1" style={{ color: "#555", fontSize: 12 }}>
-                  {Math.round(sendProgress * 100)}%
                 </div>
               </div>
             )}
@@ -365,6 +339,13 @@ export const RegistrationPage: React.FC = () => {
           40% { transform: translateX(8px); }
           60% { transform: translateX(-6px); }
           80% { transform: translateX(6px); }
+        }
+        .indeterminate {
+          animation: indeterminateSlide 1.4s ease-in-out infinite;
+        }
+        @keyframes indeterminateSlide {
+          0% { left: -35%; }
+          100% { left: 100%; }
         }
       `}</style>
     </div>
