@@ -111,7 +111,7 @@ export const RegistrationPage: React.FC = () => {
     setErrorMsg("");
 
     // Fire GAS in background (fire-and-forget) — email arrives in ~10s
-    fetch("https://script.google.com/macros/s/AKfycbxZZ2PIBH_Jhl_905797088_tOWfbeJNQG-T5qSaKcpOcbDTOglbge0JB2cApGRuNXo/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbx9jUfAhsbMGmq_exiJH83c_-WKB2FIkMHrdmA93-btRCv0pYuMo_xw83FfamSEe5ry/exec", {
       method: "POST",
       mode: "no-cors",
       headers: { "Content-Type": "text/plain" },
