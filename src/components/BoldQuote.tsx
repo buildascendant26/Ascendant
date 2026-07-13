@@ -23,7 +23,7 @@ export const BoldQuote: React.FC<BoldQuoteProps> = ({ isLoader = false, onEnter 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // Custom high-tech interactive decryption scramble state
-  const [displayWord, setDisplayWord] = React.useState("world.");
+  const [displayWord, setDisplayWord] = React.useState("build.");
   const scrambleInterval = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Custom high-tech loader states
@@ -524,7 +524,7 @@ export const BoldQuote: React.FC<BoldQuoteProps> = ({ isLoader = false, onEnter 
 
   const triggerScramble = () => {
     if (scrambleInterval.current) clearInterval(scrambleInterval.current);
-    const target = "world.";
+    const target = "build.";
     const glyphs = "$%#@&01?!*xzΔΩΞ⊞⊠⏚";
     let iterations = 0;
     
@@ -650,14 +650,13 @@ export const BoldQuote: React.FC<BoldQuoteProps> = ({ isLoader = false, onEnter 
               <span className="w-2 h-2 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
               {isLoader ? "00 / SENSORY CALIBRATION" : "03 / CONCLAVE ESSENCE"}
             </motion.div>
-            <div className="w-12 h-1 bg-white rounded-full" />
           </div>
 
           <div className="space-y-0.5 sm:space-y-1 md:space-y-1.5">
             {[
-              { id: 0, prefix: "We do not build" },
-              { id: 1, prefix: "to fit the ", highlight: "world." },
-              { id: 2, prefix: "We build to move it." }
+              { id: 0, prefix: "The future isn't" },
+              { id: 1, prefix: "something we wait for," },
+              { id: 2, prefix: "it's something we ", highlight: "build." }
             ].map((item, index) => (
               <div key={index} className="overflow-visible py-1">
                 <motion.h2
@@ -724,7 +723,7 @@ export const BoldQuote: React.FC<BoldQuoteProps> = ({ isLoader = false, onEnter 
                 </button>
                 <div className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <span>SENSORY COUPLING STEADY • TAP "WORLD" TRIGGER FOR SHOCKWAVE</span>
+                  <span>SENSORY COUPLING STEADY • TAP "BUILD" TRIGGER FOR SHOCKWAVE</span>
                 </div>
               </motion.div>
             )}

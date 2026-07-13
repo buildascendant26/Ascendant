@@ -44,11 +44,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(
-        ('ontouchstart' in window) || 
-        navigator.maxTouchPoints > 0 || 
-        window.innerWidth < 768
-      );
+      setIsMobile(window.innerWidth < 768);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -56,43 +52,43 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
     const timers: ReturnType<typeof setTimeout>[] = [];
     let t = 0;
 
-    t += 400;
+    t += 200;
     timers.push(setTimeout(() => setPhase("typing"), t));
 
     for (let i = 1; i <= COMMAND.length; i++) {
-      t += rand(20, 50);
+      t += rand(10, 25);
       timers.push(setTimeout(() => setTypedChars(i), t));
     }
 
-    t += 400;
+    t += 200;
     timers.push(setTimeout(() => setPhase("booting"), t));
 
     for (let i = 0; i < BOOT_LOG.length; i++) {
-      t += rand(400, 800);
+      t += rand(200, 400);
       timers.push(setTimeout(() => setVisibleLines(i + 1), t));
     }
 
-    t += 400;
+    t += 200;
     timers.push(setTimeout(() => {
       setShowReady(true);
       setPhase("ready");
     }, t));
 
-    t += 1800;
+    t += 800;
     timers.push(setTimeout(() => {
       setPhase("fading");
       setLogOpacity(0);
       setLogTranslateY(-12);
     }, t));
 
-    t += 500;
+    t += 300;
     timers.push(setTimeout(() => {
       setPhase("title");
       setTitleOpacity(1);
       setTitleScale(1);
     }, t));
 
-    t += 1000;
+    t += 600;
     timers.push(setTimeout(() => {
       setPhase("prompt");
       setPromptOpacity(1);
@@ -149,9 +145,9 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
           willChange: "opacity, transform",
         }}
       >
-        <div style={{ width: "100%", maxWidth: 560, padding: "0 1.25rem" }}>
+        <div style={{ width: "fit-content", maxWidth: "90vw", padding: "0 1.25rem" }}>
           {(phase === "cursor" || phase === "typing" || phase === "booting" || phase === "ready") && (
-            <div style={{ fontSize: 12, color: "#ffffff", marginBottom: 20, display: "flex", alignItems: "center", wordBreak: "break-all" }}>
+            <div style={{ fontSize: isMobile ? 12 : 14, color: "#ffffff", marginBottom: 20, display: "flex", alignItems: "center", wordBreak: "break-all" }}>
               <span>{typedCommand}</span>
               {showCursor && (
                 <span className="boot-cursor" style={{ color: "#ffffff", marginLeft: 2, animation: "blinkCursor 0.8s step-end infinite" }}>█</span>
@@ -159,7 +155,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
             </div>
           )}
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? 4 : 6 }}>
             {BOOT_LOG.slice(0, visibleLines).map((line, i) => {
               const isOk = line.startsWith("[ OK ]");
               const rest = isOk ? line.slice(6) : line;
@@ -167,7 +163,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
                 <div
                   key={i}
                   style={{
-                    fontSize: 13,
+                    fontSize: isMobile ? 13 : 14,
                     color: "#ffffff",
                     animation: "fadeInLine 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards",
                     transformOrigin: "left center",
@@ -190,7 +186,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
             <div
               style={{
                 marginTop: 20,
-                fontSize: 13,
+                fontSize: isMobile ? 13 : 14,
                 color: "#ffffff",
                 animation: "slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards",
               }}
@@ -218,23 +214,27 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
       >
         <div
           style={{
-            fontSize: 26,
+            fontSize: isMobile ? 18 : 22,
             fontWeight: 700,
-            letterSpacing: "0.3em",
+            letterSpacing: isMobile ? "0.15em" : "0.3em",
             color: "#ffffff",
             textTransform: "uppercase",
             marginBottom: 12,
+            textAlign: "center",
+            whiteSpace: "nowrap",
           }}
         >
           ASCENDANT 2026
         </div>
         <div
           style={{
-            fontSize: 12,
-            letterSpacing: "0.2em",
+            fontSize: isMobile ? 11 : 11,
+            letterSpacing: isMobile ? "0.1em" : "0.2em",
             color: "#555555",
             textTransform: "uppercase",
-            marginBottom: 48,
+            marginBottom: isMobile ? 32 : 48,
+            textAlign: "center",
+            whiteSpace: "nowrap",
           }}
         >
           The Future Boots Here.
@@ -251,14 +251,14 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
         >
           <div
             style={{
-              fontSize: 11,
-              letterSpacing: "0.2em",
-              color: "#666666",
+              fontSize: isMobile ? 12 : 13,
+              letterSpacing: "0.25em",
+              color: "#888888",
               textTransform: "uppercase",
               animation: promptOpacity === 1 ? "pulsePrompt 2.5s ease-in-out infinite" : "none",
             }}
           >
-            {isMobile ? "CLICK TO ENTER" : "PRESS ENTER"}
+            {isMobile ? "CLICK TO ENTER" : "CLICK ENTER"}
           </div>
         </div>
       </div>

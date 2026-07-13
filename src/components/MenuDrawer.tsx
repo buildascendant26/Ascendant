@@ -44,6 +44,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ isOpen, onClose, onNavig
     { num: '01', label: 'THE PHASES', target: 'vision', icon: <Compass className="w-4 h-4 text-neutral-400" /> },
     { num: '02', label: 'CHRONOLOGY', target: 'program', icon: <Moon className="w-4 h-4 text-neutral-400" /> },
     { num: '03', label: 'THE ESSENCE', target: 'summit-quote', icon: <Quote className="w-4 h-4 text-neutral-400" /> },
+    { num: '04', label: 'SUPPORT', target: 'support', icon: <ArrowRight className="w-4 h-4 text-neutral-400" /> },
   ];
 
   return (
@@ -55,7 +56,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ isOpen, onClose, onNavig
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4, ease: 'easeInOut' }}
-          className="fixed inset-0 z-50 flex flex-col justify-between bg-black/95 backdrop-blur-xl p-6 md:p-16 text-white bg-dot-grid"
+          className="fixed inset-0 z-50 flex flex-col justify-between bg-black/95 backdrop-blur-xl p-6 md:p-16 text-white bg-dot-grid overflow-y-auto"
         >
           {/* Header */}
           <div className="flex justify-between items-center">
@@ -97,26 +98,6 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ isOpen, onClose, onNavig
                       {item.num}
                     </span>
                     <div className="relative overflow-hidden flex items-center gap-4">
-                      {item.target === 'home' && (
-                        <div className="overflow-hidden w-0 group-hover:w-[5.83em] transition-all duration-300">
-                          <img src="/menu-home.gif" alt="" className="h-[5.07em] w-auto object-contain shrink-0" />
-                        </div>
-                      )}
-                      {item.target === 'vision' && (
-                        <div className="overflow-hidden w-0 group-hover:w-[9.38em] transition-all duration-300">
-                          <img src="/menu-phases.gif" alt="" className="h-[8.17em] w-auto object-contain shrink-0" />
-                        </div>
-                      )}
-                      {item.target === 'summit-quote' && (
-                        <div className="overflow-hidden w-0 group-hover:w-[9.38em] transition-all duration-300">
-                          <img src="/menu-essence.gif" alt="" className="h-[8.17em] w-auto object-contain shrink-0" />
-                        </div>
-                      )}
-                      {item.target === 'program' && (
-                        <div className="overflow-hidden w-0 group-hover:w-[9.38em] transition-all duration-300">
-                          <img src="/menu-chronology.gif" alt="" className="h-[8.17em] w-auto object-contain shrink-0" />
-                        </div>
-                      )}
                       <span className="font-display text-4xl md:text-7xl font-bold tracking-tight text-neutral-300 group-hover:text-white transition-colors duration-300 block">
                         {item.label}
                       </span>
@@ -144,10 +125,9 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ isOpen, onClose, onNavig
             </div>
             <div>
               <p className="text-neutral-400 font-medium uppercase tracking-wider mb-1">Transmission</p>
-              <div className="flex gap-4 mt-1">
-                <a href="#discord" className="hover:text-white transition-colors">Discord</a>
-                <a href="#instagram" className="hover:text-white transition-colors">Instagram</a>
-                <a href="#spotify" className="hover:text-white transition-colors">Spotify Channel</a>
+              <div className="flex flex-col gap-1 mt-1">
+                <a href="tel:7259327937" className="hover:text-white transition-colors">7259327937</a>
+                <a href="mailto:support@ascendant2026.tech" className="hover:text-white transition-colors">support@ascendant2026.tech</a>
               </div>
             </div>
           </div>

@@ -30,65 +30,65 @@ export const Manifesto: React.FC = () => {
   const phases: HackathonPhase[] = [
     {
       id: 1,
-      phaseNum: "Day I",
-      title: "Capture the Flag",
+      phaseNum: "Phase 1",
+      title: "Capture the Flag (CTF)",
       subtitle: "Uncover & Decrypt",
-      description: "Solve technical challenges, find hidden ciphers, and capture flags. Completing this stage reveals the final build statement.",
+      description: "A cybersecurity challenge where teams solve puzzles, exploit vulnerabilities, decode clues, and uncover hidden flags.",
       icon: <Terminal className="w-6 h-6 text-emerald-400" />,
       duration: "10:00 AM - 1:00 PM",
-      focusKeywords: ["Reverse Engineering", "File Cryptography", "Logical Decryption"],
+      focusKeywords: ["Problem-solving", "Logical reasoning", "Cybersecurity", "Team collaboration"],
       systemSpecs: [
-        { label: "Execution Mode", value: "Offline Sandbox" },
-        { label: "Target System", value: "Conclave Servers" },
-        { label: "Flag Format", value: "ASCENDANT{flag_value}" },
-        { label: "Unlock Condition", value: "Extract core keys" }
+        { label: "Core Objective", value: "Uncover hidden flags" },
+        { label: "Scoring Method", value: "Based on number and difficulty" },
+        { label: "Challenge Type", value: "Puzzles and Vulnerabilities" },
+        { label: "Environment", value: "Under pressure" }
       ],
       detailedClues: [
-        "Hidden challenges hosted on the local sandbox network.",
-        "Secure access through workstations mapped inside the atrium.",
-        "Analytical puzzles requiring basic logic parsing and cipher keys."
+        "Test your problem-solving ability in a timed environment.",
+        "Apply logical reasoning to decode clues.",
+        "Earn points based on the number and difficulty of challenges completed."
       ]
     },
     {
       id: 2,
-      phaseNum: "Day I",
+      phaseNum: "Phase 2",
       title: "Open Build",
-      subtitle: "Design & Compile",
-      description: "Teams architecture and develop their core projects, utilizing any safe frameworks and tools to build out custom interfaces.",
+      subtitle: "Develop & Create",
+      description: "Following the CTF, teams will receive a problem statement and begin developing a solution from scratch.",
       icon: <Cpu className="w-6 h-6 text-purple-400" />,
-      duration: "2:00 PM - 5:30 PM",
-      focusKeywords: ["React Prototyping", "UI Organization", "Frontend Frameworks"],
+      duration: "Day 1 2:00 PM - Day 2 10:00 AM",
+      focusKeywords: ["Brainstorm ideas", "Design UX", "Build functional prototypes", "Innovative solutions"],
       systemSpecs: [
-        { label: "Tech Stack", value: "Absolute Autonomy" },
-        { label: "Code Focus", value: "Clean state & layout" },
-        { label: "Visual Style", value: "Direct, human-centered" },
-        { label: "Local Persistence", value: "Client Storage" }
+        { label: "Project Scope", value: "Develop solution from scratch" },
+        { label: "Allowed Domains", value: "AI, Web, Cyber, Automation, Social Impact" },
+        { label: "Primary Goal", value: "Create meaningful solutions" },
+        { label: "Approach", value: "Think boldly" }
       ],
       detailedClues: [
-        "Unrestricted access to standard NPM libraries and layouts.",
-        "Mentoring support available on-site and in standard channels.",
-        "Focus on polished interface states and direct usable features."
+        "Brainstorm ideas and design intuitive user experiences.",
+        "Build functional prototypes that address the problem statement.",
+        "Develop innovative technology solutions across various domains."
       ]
     },
     {
       id: 3,
-      phaseNum: "Day II",
-      title: "The Pitch",
+      phaseNum: "Phase 3",
+      title: "Final Pitch",
       subtitle: "Demonstrate & Present",
-      description: "Present completed applications live to our panel of judges, demonstrating structural code quality and visual alignment.",
+      description: "Teams will present their projects before a panel of judges consisting of industry professionals, educators, and technology experts.",
       icon: <Trophy className="w-6 h-6 text-amber-400" />,
       duration: "10:00 AM - 5:00 PM",
-      focusKeywords: ["Live Demo", "User Flow Highlights", "Functional Review"],
+      focusKeywords: ["Showcase problem", "Present solution", "Technical implementation", "Real-world impact"],
       systemSpecs: [
-        { label: "Presentation", value: "Live Screen Feed" },
-        { label: "Q&A Window", value: "3 minutes with Judges" },
-        { label: "Scoring Weight", value: "40% Design / 60% Functionality" },
-        { label: "Sync Status", value: "Live Node Verification" }
+        { label: "Audience", value: "Industry professionals & experts" },
+        { label: "Evaluation Criteria 1", value: "Creativity & Technical excellence" },
+        { label: "Evaluation Criteria 2", value: "Usability & Presentation" },
+        { label: "Key Focus", value: "Overall impact and scalability" }
       ],
       detailedClues: [
-        "Present live builds directly from sandboxed staging URLs.",
-        "Validate operational components under standard test scenarios.",
-        "Answer targeted codebase implementation and design questions."
+        "Showcase the specific problem your team addressed.",
+        "Highlight your solution, innovation, and technical implementation.",
+        "Demonstrate the real-world impact and scalability of your project."
       ]
     }
   ];
@@ -108,15 +108,15 @@ export const Manifesto: React.FC = () => {
         
         {/* Section Header */}
         <div className="mb-12 md:mb-18 space-y-4 max-w-3xl">
-          <p className="font-mono text-xs tracking-[0.25em] text-neutral-500 uppercase flex items-center gap-2">
+          <p className="font-mono text-xs tracking-[0.25em] text-neutral-400 uppercase flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-neutral-800 animate-pulse-slow" />
-            01 / MISSION PHASES
+            01 / COMPETITION FORMAT
           </p>
           <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight text-white leading-tight">
-            Conclave Phases
+            A Three-Phase Challenge
           </h2>
           <p className="text-neutral-400 text-sm md:text-base leading-relaxed font-light">
-            Ascendant is structured across three key stages. Focus on coding challenges, open-ended software prototyping, and clean live presentations.
+            Ascendant 2026 is not just a hackathon—it's a complete test of technical skill, creativity, teamwork, and execution. Participants will progress through three exciting phases, each designed to challenge a different aspect of innovation.
           </p>
         </div>
 
@@ -155,7 +155,7 @@ export const Manifesto: React.FC = () => {
 
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-3">
-                      <span className="font-mono text-xs text-neutral-500 tracking-wider font-semibold uppercase">
+                      <span className="font-mono text-xs text-neutral-400 tracking-wider font-semibold uppercase">
                         {phase.phaseNum}
                       </span>
                       {isActive && (
@@ -181,7 +181,7 @@ export const Manifesto: React.FC = () => {
             })}
 
             {/* Quick specifications legend footer */}
-            <div className="pt-6 px-4 flex items-center justify-center text-[11px] font-mono text-neutral-500 border-t border-neutral-900">
+            <div className="pt-6 px-4 flex items-center justify-center text-[11px] font-mono text-neutral-400 border-t border-neutral-900">
               <TypewriterText text="THIS TOO SHALL PASS" speed={60} />
             </div>
           </div>
@@ -202,12 +202,12 @@ export const Manifesto: React.FC = () => {
                       <h3 className="font-display text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
                         <ScrambleText as="span" text={activePhase.title} trigger={activePhaseId} />
                       </h3>
-                      <p className="text-xs font-mono text-neutral-500 italic">
+                      <p className="text-xs font-mono text-neutral-400 italic">
                         <ScrambleText as="span" text={activePhase.subtitle} trigger={activePhaseId} />
                       </p>
                     </div>
                     <div className="px-4 py-2 bg-neutral-900 rounded-xl border border-neutral-800 text-right shrink-0">
-                      <p className="text-[10px] font-mono text-neutral-500 uppercase">
+                      <p className="text-[10px] font-mono text-neutral-400 uppercase">
                         <ScrambleText as="span" text="Duration Window" trigger={activePhaseId} />
                       </p>
                       <p className="text-xs font-mono font-bold text-white">
@@ -218,7 +218,7 @@ export const Manifesto: React.FC = () => {
 
                   {/* Core Description block with clean style */}
                   <div className="space-y-3">
-                    <h5 className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest font-semibold">
+                    <h5 className="font-mono text-[10px] text-neutral-400 uppercase tracking-widest font-semibold">
                       <ScrambleText as="span" text="Objective Definition" trigger={activePhaseId} />
                     </h5>
                     <p className="text-neutral-300 text-sm md:text-base leading-relaxed font-light">
@@ -228,7 +228,7 @@ export const Manifesto: React.FC = () => {
 
                   {/* Operational Tags / Focus */}
                   <div className="space-y-3">
-                    <h5 className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest font-semibold">
+                    <h5 className="font-mono text-[10px] text-neutral-400 uppercase tracking-widest font-semibold">
                       <ScrambleText as="span" text="Cognitive Focus Parameters" trigger={activePhaseId} />
                     </h5>
                     <div className="flex flex-wrap gap-2">
@@ -247,7 +247,7 @@ export const Manifesto: React.FC = () => {
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4">
                     {activePhase.systemSpecs.map((spec) => (
                       <div key={spec.label} className="p-3 bg-neutral-900/40 rounded-xl border border-neutral-900 min-w-0">
-                        <p className="text-[9px] font-mono text-neutral-500 uppercase tracking-wider truncate">
+                        <p className="text-[9px] font-mono text-neutral-400 uppercase tracking-wider truncate">
                           <ScrambleText as="span" text={spec.label} trigger={activePhaseId} />
                         </p>
                         <p className="text-[10px] sm:text-xs font-mono font-semibold text-white mt-1 break-all line-clamp-2">
@@ -259,7 +259,7 @@ export const Manifesto: React.FC = () => {
 
                   {/* Technical protocols / clues */}
                   <div className="space-y-3 pt-2">
-                    <h5 className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest font-semibold">
+                    <h5 className="font-mono text-[10px] text-neutral-400 uppercase tracking-widest font-semibold">
                       <ScrambleText as="span" text="Transmission Protocol Guidelines" trigger={activePhaseId} />
                     </h5>
                     <ul className="space-y-2">

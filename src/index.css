@@ -1,4 +1,4 @@
-  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap');
+  /* Google Fonts loaded via HTML <link> in index.html for earlier discovery */
   @import "tailwindcss";
 
   @theme {

@@ -30,23 +30,23 @@ export const Timeline: React.FC = () => {
     {
       id: 'slot-2',
       date: '17',
-      time: '08:30 - 09:00',
+      time: '08:30 - 09:30',
       title: 'Breakfast',
       subtitle: 'Morning fueling & networking',
       description: 'Enjoy a normal hot breakfast to kickstart your day. Network with other participants, meet potential partners, and prepare your mindset before the sessions kick off.',
       venue: 'Dining Hall',
-      duration: '30 min',
+      duration: '60 min',
       category: 'experience'
     },
     {
       id: 'slot-3',
       date: '17',
-      time: '09:00 - 10:00',
+      time: '09:30 - 10:00',
       title: 'Opening Ceremony',
       subtitle: 'Introduction & rules overview',
       description: 'An exciting welcome session! Meet the organizing team, sponsors, and esteemed judges. We will cover the competition structure, evaluation criteria, and reveal key guidelines to guide your project.',
       venue: 'Main Stage',
-      duration: '60 min',
+      duration: '30 min',
       category: 'keynote'
     },
     {
@@ -98,23 +98,34 @@ export const Timeline: React.FC = () => {
     {
       id: 'slot-8',
       date: '18',
-      time: '10:00 - 17:00',
+      time: '10:00 - 15:00',
       title: 'Pitch & Judge',
       subtitle: 'Project demonstrations & panel screening',
       description: 'The grand showcase. Present your fully functional projects live on stage to our panel of judges. Step-by-step, demonstrate your core features, explain your design choices, and address jury questions.',
       venue: 'Main Stage',
-      duration: '420 min',
+      duration: '300 min',
       category: 'keynote'
+    },
+    {
+      id: 'slot-break',
+      date: '18',
+      time: '15:00 - 16:00',
+      title: 'Break',
+      subtitle: 'Afternoon rest',
+      description: 'Take a break before the final ceremony. Network and relax after presenting your projects.',
+      venue: 'Dining Hall',
+      duration: '60 min',
+      category: 'experience'
     },
     {
       id: 'slot-9',
       date: '18',
-      time: '17:00 - 17:30',
+      time: '16:00 - 17:30',
       title: 'Closing Ceremony & Prizes',
       subtitle: 'Winning announcements & prize distribution',
       description: 'Celebrate the breakthroughs of all participants. We\'ll recap the hackathon highlights, announce the winning builds, distribute custom trophies and prizes, and celebrate the conclusion of the event.',
       venue: 'Main Stage',
-      duration: '30 min',
+      duration: '90 min',
       category: 'keynote'
     },
   ];
@@ -134,10 +145,10 @@ export const Timeline: React.FC = () => {
     <section id="program" className="min-h-[70vh] py-12 md:py-16 px-4 md:px-8 w-full border-b border-neutral-900 bg-black/50 relative overflow-hidden">
       <TimelineBackground activeDay={activeDay} />
       <div className="max-w-2xl mx-auto space-y-8 relative z-10">
-        
+
         {/* Title */}
         <div className="text-center space-y-3">
-          <p className="font-mono text-[10px] tracking-[0.25em] text-neutral-500 uppercase">02 / CHRONOLOGY</p>
+          <p className="font-mono text-[10px] tracking-[0.25em] text-neutral-400 uppercase">02 / CHRONOLOGY</p>
           <h2 className="font-display text-2xl md:text-4xl font-bold tracking-tight text-white">
             Program Chronology
           </h2>
@@ -152,9 +163,8 @@ export const Timeline: React.FC = () => {
             <button
               id="date-toggle-17"
               onClick={() => { setActiveDay('17'); setExpandedSlotId('slot-1'); }}
-              className={`flex items-center gap-2 px-4 py-1.5 rounded-full font-mono text-[11px] tracking-wider transition-all duration-300 ${
-                activeDay === '17' ? 'bg-white text-black font-semibold' : 'text-neutral-400 hover:text-white'
-              }`}
+              className={`flex items-center gap-2 px-4 py-1.5 rounded-full font-mono text-[11px] tracking-wider transition-all duration-300 ${activeDay === '17' ? 'bg-white text-black font-semibold' : 'text-neutral-400 hover:text-white'
+                }`}
             >
               <Calendar className="w-3 h-3" />
               DAY I: 17 JULY
@@ -162,9 +172,8 @@ export const Timeline: React.FC = () => {
             <button
               id="date-toggle-18"
               onClick={() => { setActiveDay('18'); setExpandedSlotId('slot-7'); }}
-              className={`flex items-center gap-2 px-4 py-1.5 rounded-full font-mono text-[11px] tracking-wider transition-all duration-300 ${
-                activeDay === '18' ? 'bg-white text-black font-semibold' : 'text-neutral-400 hover:text-white'
-              }`}
+              className={`flex items-center gap-2 px-4 py-1.5 rounded-full font-mono text-[11px] tracking-wider transition-all duration-300 ${activeDay === '18' ? 'bg-white text-black font-semibold' : 'text-neutral-400 hover:text-white'
+                }`}
             >
               <Calendar className="w-3 h-3" />
               DAY II: 18 JULY
@@ -180,9 +189,8 @@ export const Timeline: React.FC = () => {
             return (
               <div
                 key={`${slot.id}-${activeDay}`}
-                className={`border rounded-xl transition-all duration-300 overflow-hidden bg-neutral-950/70 border-neutral-900 hover:border-neutral-800 ${
-                  isExpanded ? 'border-neutral-800 bg-neutral-950' : ''
-                }`}
+                className={`border rounded-xl transition-all duration-300 overflow-hidden bg-neutral-950/70 border-neutral-900 hover:border-neutral-800 ${isExpanded ? 'border-neutral-800 bg-neutral-950' : ''
+                  }`}
               >
                 {/* Accordion Row Header */}
                 <button
@@ -200,7 +208,7 @@ export const Timeline: React.FC = () => {
                       <h4 className="font-display text-sm md:text-base font-bold text-white tracking-tight">
                         <ScrambleText as="span" text={slot.title} trigger={activeDay} />
                       </h4>
-                      <p className="text-[11px] text-neutral-500 italic font-light">
+                      <p className="text-[11px] text-neutral-400 italic font-light">
                         <ScrambleText as="span" text={slot.subtitle} trigger={activeDay} />
                       </p>
                     </div>
@@ -211,7 +219,7 @@ export const Timeline: React.FC = () => {
                     <span className={`px-1.5 py-0.5 text-[8px] font-mono uppercase tracking-wider border rounded ${getCategoryTheme(slot.category)}`}>
                       {slot.category}
                     </span>
-                    <span className="text-[10px] text-neutral-500 font-mono hidden sm:inline">
+                    <span className="text-[10px] text-neutral-400 font-mono hidden sm:inline">
                       {slot.duration}
                     </span>
                   </div>
@@ -231,7 +239,7 @@ export const Timeline: React.FC = () => {
                         {/* Summary Block */}
                         <div className="space-y-2">
                           <p className="font-light leading-relaxed text-neutral-400"><ScrambleText as="span" text={slot.description} trigger={activeDay} /></p>
-                          <div className="flex items-center gap-4 text-[10px] font-mono text-neutral-500">
+                          <div className="flex items-center gap-4 text-[10px] font-mono text-neutral-400">
                             <span className="flex items-center gap-1">
                               <MapPin className="w-3 h-3 text-neutral-400" />
                               <ScrambleText as="span" text={slot.venue} trigger={activeDay} />

@@ -22,11 +22,8 @@ export const InteractiveFooter: React.FC<InteractiveFooterProps> = ({ onSmoothSc
   }, []);
 
   return (
-    <footer className="relative z-30 bg-black/50 pt-24 pb-12 px-6 md:px-12 w-full select-none overflow-hidden text-white">
+    <footer id="support" className="relative z-30 bg-black/50 pt-24 pb-12 px-6 md:px-12 w-full select-none overflow-hidden text-white">
       
-      {/* Bold horizontal top border for a strong structural presence */}
-      <div className="absolute top-0 left-0 w-full h-[2px] bg-white opacity-100" />
-
       <div className="max-w-7xl mx-auto flex flex-col items-center justify-between gap-12 text-center">
         
         {/* Hero Branding with raw visual power and contrast */}
@@ -58,18 +55,18 @@ export const InteractiveFooter: React.FC<InteractiveFooterProps> = ({ onSmoothSc
             </span>
           </div>
 
-          {/* Column 2: The Chosen One Quote */}
-          <div className="flex items-center justify-center text-center px-4">
-            <motion.p 
-              className="text-[9px] md:text-[10px] text-neutral-500 font-mono leading-relaxed max-w-sm uppercase tracking-widest"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              "Anakin, You were the chosen one! It was said that you would destroy the Sith, not join them! Bring balance to the Force, not leave it in darkness!"
-              <span className="inline-block animate-pulse">_</span>
-            </motion.p>
+          {/* Column 2: Contact Information */}
+          <div className="flex flex-col items-center justify-center gap-1.5 text-center">
+            <span className="text-white font-bold block uppercase text-[8px] tracking-[0.25em]">CONTACT</span>
+            <a href="tel:7259327937" className="text-neutral-300 font-medium hover:text-white transition-colors">
+              7259327937
+            </a>
+            <a href="tel:9538944115" className="text-neutral-300 font-medium hover:text-white transition-colors">
+              9538944115
+            </a>
+            <a href="mailto:support@ascendant2026.tech" className="text-neutral-300 font-medium hover:text-white transition-colors">
+              support@ascendant2026.tech
+            </a>
           </div>
 
           {/* Column 3: Real-time ticking chronometer */}
@@ -83,7 +80,7 @@ export const InteractiveFooter: React.FC<InteractiveFooterProps> = ({ onSmoothSc
         </div>
 
         {/* Absolute minimum footprint trademark declaration */}
-        <div className="text-[9px] text-neutral-600 font-mono tracking-[0.15em] pt-4 uppercase cursor-default">
+        <div className="text-[9px] text-neutral-400 font-mono tracking-[0.15em] pt-4 uppercase cursor-default">
           © 2026 ASCENDANT. ALL INTEGRITY AND AUTONOMY RESERVED.
         </div>
 
