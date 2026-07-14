@@ -11,6 +11,7 @@ import { Manifesto } from "./components/Manifesto";
 import { Timeline } from "./components/Timeline";
 import { VideoLoader } from "./components/VideoLoader";
 import { InteractiveFooter } from "./components/InteractiveFooter";
+import { FaqSection } from "./components/FaqSection";
 import CountdownTimer from "./components/CountdownTimer";
 import ascendantLogo from "./components/ascendant_logo.png";
 import { MapPin } from "lucide-react";
@@ -311,6 +312,9 @@ export default function App() {
 
         {/* 03: BOLD QUOTE OUTRO */}
         <Suspense fallback={null}><BoldQuote /></Suspense>
+
+        {/* 04: FAQ */}
+        <FaqSection />
       </main>
 
       {/* Interactive Cybernetic Telemetry Footer */}
