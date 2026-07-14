@@ -235,7 +235,7 @@ export default function App() {
               </div>
             </motion.div>
 
-            {/* REGISTER NOW Button */}
+            {/* Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={!isLoading ? { opacity: 1, y: 0 } : {}}
@@ -244,16 +244,23 @@ export default function App() {
                 ease: [0.16, 1, 0.3, 1],
                 delay: 0.65,
               }}
-              className="mt-8 md:mt-10"
+              className="mt-8 md:mt-10 flex flex-wrap gap-4"
             >
+              <a
+                href="https://entrar.in/cd273632523539f0110095199b821c3c/ascendant_hackathon_2026/QVNtSTJGQm4yUEFFaDRkTnQ2MUQrdz09"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative flex items-center justify-center gap-4 pl-5 pr-8 py-3.5 bg-neutral-900/60 border border-white/10 hover:border-white/40 text-white rounded-xl transition-all duration-300 cursor-pointer text-xs md:text-sm font-semibold tracking-[0.25em] uppercase hover:bg-white hover:text-black hover:scale-[1.02] active:scale-[0.98] shadow-[0_8px_30px_rgba(0,0,0,0.5)] overflow-hidden"
+              >
+                <span>REGISTER NOW</span>
+                <span className="text-sm transition-transform duration-300 group-hover:translate-x-1.5">➔</span>
+              </a>
               <button
                 onClick={() => navigate("/register")}
                 className="group relative flex items-center justify-center gap-4 pl-5 pr-8 py-3.5 bg-neutral-900/60 border border-white/10 hover:border-white/40 text-white rounded-xl transition-all duration-300 cursor-pointer text-xs md:text-sm font-semibold tracking-[0.25em] uppercase hover:bg-white hover:text-black hover:scale-[1.02] active:scale-[0.98] shadow-[0_8px_30px_rgba(0,0,0,0.5)] overflow-hidden"
               >
-                <span>REGISTRATION &amp; BROCHURE</span>
-                <span className="text-sm transition-transform duration-300 group-hover:translate-x-1.5">
-                  ➔
-                </span>
+                <span>BROCHURE</span>
+                <span className="text-sm transition-transform duration-300 group-hover:translate-x-1.5">➔</span>
               </button>
             </motion.div>
           </div>
