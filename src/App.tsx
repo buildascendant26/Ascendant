@@ -310,11 +310,11 @@ export default function App() {
         {/* 02: CHRONOLOGY / EVENT TIMELINE */}
         <Timeline />
 
-        {/* 03: BOLD QUOTE OUTRO */}
-        <Suspense fallback={null}><BoldQuote /></Suspense>
-
-        {/* 04: FAQ */}
+        {/* 03: FAQ */}
         <FaqSection />
+
+        {/* 04: BOLD QUOTE OUTRO */}
+        <Suspense fallback={null}><BoldQuote /></Suspense>
       </main>
 
       {/* Interactive Cybernetic Telemetry Footer */}
