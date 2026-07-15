@@ -256,13 +256,15 @@ export default function App() {
                 <span>REGISTER NOW</span>
                 <span className="text-sm transition-transform duration-300 group-hover:translate-x-1.5">➔</span>
               </a>
-              <button
-                onClick={() => navigate("/register")}
+              <a
+                href="https://drive.google.com/file/d/1pdlzfvnAXFCRe1D8RUCNKSfNXak11gIs/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group relative flex items-center justify-center gap-4 pl-5 pr-8 py-3.5 bg-neutral-900/60 border border-white/10 hover:border-white/40 text-white rounded-xl transition-all duration-300 cursor-pointer text-xs md:text-sm font-semibold tracking-[0.25em] uppercase hover:bg-white hover:text-black hover:scale-[1.02] active:scale-[0.98] shadow-[0_8px_30px_rgba(0,0,0,0.5)] overflow-hidden"
               >
                 <span>BROCHURE</span>
                 <span className="text-sm transition-transform duration-300 group-hover:translate-x-1.5">➔</span>
-              </button>
+              </a>
             </motion.div>
           </div>
 
